@@ -1,0 +1,10 @@
+{
+  "verifiedWeight": 50,
+  "disputedPenalty": 15,
+  "falsePenalty": 20,
+  "unsupportedPenalty": 10,
+  "retrievalSufficiencyWeight": 5,
+  "manipulationPenaltyMultiplier": 15,
+  "qualityMultiplierBase": 0.7,
+  "qualityMultiplierRange": 0.3
+}
