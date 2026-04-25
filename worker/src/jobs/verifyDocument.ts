@@ -22,6 +22,25 @@ async function updateAnalysisStatus(analysisId: string, userId: string, status: 
   });
 }
 
+function averageConfidence(verdicts: any[]): number | null {
+  if (verdicts.length === 0) {
+    return null;
+  }
+  return verdicts.reduce((sum, verdict) => sum + Number(verdict.confidence ?? 0), 0) / verdicts.length;
+}
+
+function averageEvidenceQuality(claims: any[]): number | null {
+  const tiers = claims.flatMap((claim) =>
+    [...(claim.supportingEvidence ?? []), ...(claim.contradictingEvidence ?? [])].map((evidence: any) =>
+      Number(evidence.reliabilityTier ?? 4),
+    ),
+  );
+  if (tiers.length === 0) {
+    return null;
+  }
+  return tiers.reduce((sum, tier) => sum + tier, 0) / tiers.length;
+}
+
 export async function processVerificationJob(job: Job): Promise<void> {
   const { analysisId, documentId, userId } = job.data as {
     analysisId: string;
@@ -67,6 +86,7 @@ export async function processVerificationJob(job: Job): Promise<void> {
       });
     }
 
+    await updateAnalysisStatus(analysisId, userId, "RERANKING");
     await updateAnalysisStatus(analysisId, userId, "JUDGING");
 
     const verifyStart = Date.now();
@@ -129,12 +149,62 @@ export async function processVerificationJob(job: Job): Promise<void> {
     await Analysis.findByIdAndUpdate(analysisId, {
       claims: updatedClaims,
       ...counts,
-      status: "SCORING",
       processingTimeMs: Date.now() - startTime,
+      avgConfidence: averageConfidence(verifyResult.data.verdicts ?? []),
+      avgEvidenceQuality: averageEvidenceQuality(updatedClaims),
     });
-    await emitToUser(userId, "analysis:status", {
+
+    await updateAnalysisStatus(analysisId, userId, "MANIPULATION");
+
+    const manipResult = await axios.post(
+      `${ML_SERVICE_URL}/process/manipulate`,
+      {
+        originalText: doc.cleanedText,
+        claims: updatedClaims,
+        verdicts: verifyResult.data.verdicts,
+      },
+      { timeout: 60_000 },
+    );
+
+    await emitToUser(userId, "manipulation:detected", {
       analysisId,
-      status: "SCORING",
+      manipulationTactics: manipResult.data.tacticsDetected,
+      overallManipulationScore: manipResult.data.overallManipulationScore,
+      manipulationLabel: manipResult.data.manipulationLabel,
+    });
+
+    await updateAnalysisStatus(analysisId, userId, "SCORING");
+
+    const scoreStart = Date.now();
+    const scoreResult = await axios.post(
+      `${ML_SERVICE_URL}/process/score`,
+      {
+        claims: updatedClaims,
+        verdicts: verifyResult.data.verdicts,
+        manipulationResult: manipResult.data,
+      },
+      { timeout: 30_000 },
+    );
+    const scoringLatency = Date.now() - scoreStart;
+
+    await Analysis.findByIdAndUpdate(analysisId, {
+      status: "COMPLETE",
+      manipulationTactics: manipResult.data.tacticsDetected,
+      credibilityScore: scoreResult.data.credibilityScore,
+      confidenceBand: scoreResult.data.confidenceBand,
+      credibilityLabel: scoreResult.data.credibilityLabel,
+      scoreBreakdown: scoreResult.data.scoreBreakdown,
+      summary: scoreResult.data.summary,
+      completedAt: new Date(),
+      processingTimeMs: Date.now() - startTime,
+      errorMessage: null,
+    });
+
+    await emitToUser(userId, "analysis:complete", {
+      analysisId,
+      credibilityScore: scoreResult.data.credibilityScore,
+      credibilityLabel: scoreResult.data.credibilityLabel,
+      summary: scoreResult.data.summary,
     });
 
     await PerformanceLog.create({
@@ -144,7 +214,7 @@ export async function processVerificationJob(job: Job): Promise<void> {
       retrievalLatencyMs: retrievalLatency,
       rerankerLatencyMs: 0,
       judgmentLatencyMs: judgeLatency,
-      scoringLatencyMs: 0,
+      scoringLatencyMs: scoringLatency,
       cacheHitRate: 0,
       claimsCount: analysis.claims.length,
       chunksRetrieved: analysis.claims.length * 6,

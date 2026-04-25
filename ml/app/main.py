@@ -1,3 +1,4 @@
+import asyncio
 import os
 import time
 
@@ -7,7 +8,9 @@ from fastapi import FastAPI
 from app.cache import ping as redis_ping
 from app.pipeline.extract_claims import ExtractRequest, extract_claims
 from app.pipeline.ingest import IngestRequest, process_ingest
+from app.pipeline.manipulation import ManipulationRequest, detect_manipulation
 from app.pipeline.retrieve import RetrieveRequest, retrieve_evidence
+from app.pipeline.score import ScoreRequest, calculate_score, write_weights
 from app.pipeline.verify import VerifyRequest, verify_claims
 
 
@@ -20,7 +23,19 @@ EVIDENCE_INDEX_NAME = "veridex-evidence"
 async def ensure_elasticsearch_index() -> None:
     es = AsyncElasticsearch([ELASTICSEARCH_URL])
     try:
-        exists = await es.indices.exists(index=EVIDENCE_INDEX_NAME)
+        exists = False
+        last_error: Exception | None = None
+        for _ in range(12):
+            try:
+                exists = await es.indices.exists(index=EVIDENCE_INDEX_NAME)
+                last_error = None
+                break
+            except Exception as exc:
+                last_error = exc
+                await asyncio.sleep(5)
+        if last_error:
+            raise last_error
+
         if not exists:
             await es.indices.create(
                 index=EVIDENCE_INDEX_NAME,
@@ -77,3 +92,19 @@ async def retrieve_endpoint(req: RetrieveRequest):
 @app.post("/process/verify")
 async def verify_endpoint(req: VerifyRequest):
     return await verify_claims(req)
+
+
+@app.post("/process/manipulate")
+async def manipulate_endpoint(req: ManipulationRequest):
+    return await detect_manipulation(req)
+
+
+@app.post("/process/score")
+async def score_endpoint(req: ScoreRequest):
+    return await calculate_score(req)
+
+
+@app.post("/config/scoring-weights")
+async def update_weights(weights: dict):
+    write_weights(weights)
+    return {"updated": True}

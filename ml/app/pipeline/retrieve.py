@@ -1,15 +1,15 @@
+from __future__ import annotations
+
 import asyncio
 import os
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 import numpy as np
 from elasticsearch import AsyncElasticsearch
 from pinecone import Pinecone
 from pydantic import BaseModel, Field
-from sentence_transformers import CrossEncoder, SentenceTransformer
-from transformers import pipeline as hf_pipeline
 
 from app.cache import (
     get_embedding_cache,
@@ -17,6 +17,9 @@ from app.cache import (
     set_embedding_cache,
     set_retrieval_cache,
 )
+
+if TYPE_CHECKING:
+    from sentence_transformers import CrossEncoder, SentenceTransformer
 
 
 ELASTICSEARCH_URL = os.environ.get("ELASTICSEARCH_URL", "http://localhost:9200")
@@ -26,6 +29,8 @@ PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "veridex-kb")
 
 def _load_dense_model() -> SentenceTransformer | None:
     try:
+        from sentence_transformers import SentenceTransformer
+
         return SentenceTransformer("all-MiniLM-L6-v2")
     except Exception:
         return None
@@ -33,6 +38,8 @@ def _load_dense_model() -> SentenceTransformer | None:
 
 def _load_reranker() -> CrossEncoder | None:
     try:
+        from sentence_transformers import CrossEncoder
+
         return CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
     except Exception:
         return None
@@ -40,14 +47,43 @@ def _load_reranker() -> CrossEncoder | None:
 
 def _load_nli_pipeline() -> Any:
     try:
+        from transformers import pipeline as hf_pipeline
+
         return hf_pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
     except Exception:
         return None
 
 
-dense_model = _load_dense_model()
-reranker = _load_reranker()
-nli_pipeline = _load_nli_pipeline()
+dense_model: "SentenceTransformer | None" = None
+reranker: "CrossEncoder | None" = None
+nli_pipeline: Any = None
+_dense_model_loaded = False
+_reranker_loaded = False
+_nli_pipeline_loaded = False
+
+
+def _get_dense_model() -> SentenceTransformer | None:
+    global dense_model, _dense_model_loaded
+    if not _dense_model_loaded:
+        dense_model = _load_dense_model()
+        _dense_model_loaded = True
+    return dense_model
+
+
+def _get_reranker() -> CrossEncoder | None:
+    global reranker, _reranker_loaded
+    if not _reranker_loaded:
+        reranker = _load_reranker()
+        _reranker_loaded = True
+    return reranker
+
+
+def _get_nli_pipeline() -> Any:
+    global nli_pipeline, _nli_pipeline_loaded
+    if not _nli_pipeline_loaded:
+        nli_pipeline = _load_nli_pipeline()
+        _nli_pipeline_loaded = True
+    return nli_pipeline
 
 
 class EvidenceChunkDTO(BaseModel):
@@ -113,10 +149,11 @@ async def _encode_text(text: str) -> list[float]:
     if cached:
         return cached
 
-    if dense_model is None:
+    model = _get_dense_model()
+    if model is None:
         return []
 
-    vector = await asyncio.to_thread(dense_model.encode, text)
+    vector = await asyncio.to_thread(model.encode, text)
     if hasattr(vector, "tolist"):
         encoded = vector.tolist()
     else:
@@ -126,7 +163,7 @@ async def _encode_text(text: str) -> list[float]:
 
 
 async def _pinecone_query(claim_text: str, claim: dict[str, Any], req: RetrieveRequest) -> list[dict[str, Any]]:
-    if dense_model is None or not PINECONE_API_KEY or not PINECONE_INDEX_NAME:
+    if not PINECONE_API_KEY or not PINECONE_INDEX_NAME:
         return []
 
     embedding = await _encode_text(claim_text)
@@ -250,10 +287,11 @@ def _fuse_results(
 
 
 async def _rerank_chunks(claim_text: str, chunks: list[dict[str, Any]], strategy: str) -> list[dict[str, Any]]:
-    if strategy == "hybrid_reranked" and chunks and reranker is not None:
+    active_reranker = _get_reranker() if strategy == "hybrid_reranked" and chunks else None
+    if active_reranker is not None:
         pairs = [(claim_text, chunk["chunkText"]) for chunk in chunks]
         try:
-            scores = await asyncio.to_thread(reranker.predict, pairs)
+            scores = await asyncio.to_thread(active_reranker.predict, pairs)
         except Exception:
             scores = [chunk.get("rrfScore") or chunk.get("denseScore") or chunk.get("bm25Score", 0.0) for chunk in chunks]
 
@@ -268,7 +306,8 @@ async def _rerank_chunks(claim_text: str, chunks: list[dict[str, Any]], strategy
 
 
 async def _diversify_chunks(chunks: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    if dense_model is None:
+    active_dense_model = _get_dense_model() if chunks else None
+    if active_dense_model is None:
         return chunks[:6]
 
     selected: list[dict[str, Any]] = []
@@ -276,7 +315,7 @@ async def _diversify_chunks(chunks: list[dict[str, Any]]) -> list[dict[str, Any]
 
     for chunk in chunks:
         try:
-            embedding = await asyncio.to_thread(dense_model.encode, chunk["chunkText"])
+            embedding = await asyncio.to_thread(active_dense_model.encode, chunk["chunkText"])
         except Exception:
             selected.append(chunk)
             if len(selected) == 6:
@@ -307,7 +346,8 @@ async def _apply_nli(claim_text: str, chunks: list[dict[str, Any]]) -> list[dict
     if not chunks:
         return chunks
 
-    if nli_pipeline is None:
+    active_nli_pipeline = _get_nli_pipeline()
+    if active_nli_pipeline is None:
         for chunk in chunks:
             chunk["nliStance"] = "neutral"
             chunk["nliConfidence"] = 0.0
@@ -317,7 +357,7 @@ async def _apply_nli(claim_text: str, chunks: list[dict[str, Any]]) -> list[dict
     for chunk in chunks:
         try:
             result = await asyncio.to_thread(
-                nli_pipeline,
+                active_nli_pipeline,
                 chunk["chunkText"],
                 candidate_labels=["entailment", "contradiction", "neutral"],
                 hypothesis_template="This evidence {} the claim: " + claim_text,

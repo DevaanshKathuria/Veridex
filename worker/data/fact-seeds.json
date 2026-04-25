@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "fact-001",
+    "text": "The capital of France is Paris.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/France"
+  },
+  {
+    "id": "fact-002",
+    "text": "The capital of Germany is Berlin.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Germany"
+  },
+  {
+    "id": "fact-003",
+    "text": "The capital of India is New Delhi.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/India"
+  },
+  {
+    "id": "fact-004",
+    "text": "The capital of Japan is Tokyo.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Japan"
+  },
+  {
+    "id": "fact-005",
+    "text": "The capital of Canada is Ottawa.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Canada"
+  },
+  {
+    "id": "fact-006",
+    "text": "The capital of Australia is Canberra.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Australia"
+  },
+  {
+    "id": "fact-007",
+    "text": "The capital of Brazil is Brasilia.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Brazil"
+  },
+  {
+    "id": "fact-008",
+    "text": "The capital of South Korea is Seoul.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/South_Korea"
+  },
+  {
+    "id": "fact-009",
+    "text": "The capital of China is Beijing.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/China"
+  },
+  {
+    "id": "fact-010",
+    "text": "The capital of Russia is Moscow.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Russia"
+  },
+  {
+    "id": "fact-011",
+    "text": "Mount Everest is Earth's highest mountain above sea level.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Mount-Everest"
+  },
+  {
+    "id": "fact-012",
+    "text": "The Nile is commonly described as one of the world's longest rivers.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Nile-River"
+  },
+  {
+    "id": "fact-013",
+    "text": "The Amazon River is located in South America.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Amazon-River"
+  },
+  {
+    "id": "fact-014",
+    "text": "The Sahara is the largest hot desert in the world.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Sahara-desert-Africa"
+  },
+  {
+    "id": "fact-015",
+    "text": "The Pacific Ocean is the largest ocean on Earth.",
+    "source": "NOAA",
+    "url": "https://oceanservice.noaa.gov/facts/biggestocean.html"
+  },
+  {
+    "id": "fact-016",
+    "text": "Greenland is the world's largest island that is not a continent.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Greenland"
+  },
+  {
+    "id": "fact-017",
+    "text": "Antarctica is the coldest continent on Earth.",
+    "source": "NASA",
+    "url": "https://climate.nasa.gov"
+  },
+  {
+    "id": "fact-018",
+    "text": "The equator is at zero degrees latitude.",
+    "source": "National Geographic",
+    "url": "https://education.nationalgeographic.org/resource/equator/"
+  },
+  {
+    "id": "fact-019",
+    "text": "The Prime Meridian passes through Greenwich, London.",
+    "source": "Royal Museums Greenwich",
+    "url": "https://www.rmg.co.uk"
+  },
+  {
+    "id": "fact-020",
+    "text": "Lake Baikal is the world's deepest freshwater lake.",
+    "source": "UNESCO",
+    "url": "https://whc.unesco.org/en/list/754/"
+  },
+  {
+    "id": "fact-021",
+    "text": "The Andes are the longest continental mountain range.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Andes-Mountains"
+  },
+  {
+    "id": "fact-022",
+    "text": "The Dead Sea lies below sea level.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Dead-Sea"
+  },
+  {
+    "id": "fact-023",
+    "text": "The capital of Egypt is Cairo.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Egypt"
+  },
+  {
+    "id": "fact-024",
+    "text": "The capital of Mexico is Mexico City.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Mexico"
+  },
+  {
+    "id": "fact-025",
+    "text": "The capital of Italy is Rome.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Italy"
+  },
+  {
+    "id": "fact-026",
+    "text": "The capital of Spain is Madrid.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Spain"
+  },
+  {
+    "id": "fact-027",
+    "text": "The capital of Argentina is Buenos Aires.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Argentina"
+  },
+  {
+    "id": "fact-028",
+    "text": "The capital of South Africa is Pretoria for executive administration.",
+    "source": "South African Government",
+    "url": "https://www.gov.za/about-sa"
+  },
+  {
+    "id": "fact-029",
+    "text": "The capital of Kenya is Nairobi.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Kenya"
+  },
+  {
+    "id": "fact-030",
+    "text": "The capital of Nigeria is Abuja.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Nigeria"
+  },
+  {
+    "id": "fact-031",
+    "text": "The capital of Saudi Arabia is Riyadh.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Saudi_Arabia"
+  },
+  {
+    "id": "fact-032",
+    "text": "The capital of Turkey is Ankara.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Turkey"
+  },
+  {
+    "id": "fact-033",
+    "text": "The capital of Indonesia is Jakarta.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Indonesia"
+  },
+  {
+    "id": "fact-034",
+    "text": "The capital of Thailand is Bangkok.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Thailand"
+  },
+  {
+    "id": "fact-035",
+    "text": "The capital of Vietnam is Hanoi.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Vietnam"
+  },
+  {
+    "id": "fact-036",
+    "text": "The capital of Bangladesh is Dhaka.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Bangladesh"
+  },
+  {
+    "id": "fact-037",
+    "text": "The capital of Pakistan is Islamabad.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Pakistan"
+  },
+  {
+    "id": "fact-038",
+    "text": "The capital of Nepal is Kathmandu.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Nepal"
+  },
+  {
+    "id": "fact-039",
+    "text": "The capital of Sri Lanka is Sri Jayawardenepura Kotte.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Sri_Lanka"
+  },
+  {
+    "id": "fact-040",
+    "text": "The capital of Norway is Oslo.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Norway"
+  },
+  {
+    "id": "fact-041",
+    "text": "The capital of Sweden is Stockholm.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Sweden"
+  },
+  {
+    "id": "fact-042",
+    "text": "The capital of Finland is Helsinki.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Finland"
+  },
+  {
+    "id": "fact-043",
+    "text": "The capital of Denmark is Copenhagen.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Denmark"
+  },
+  {
+    "id": "fact-044",
+    "text": "The capital of Ireland is Dublin.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Ireland"
+  },
+  {
+    "id": "fact-045",
+    "text": "The capital of Portugal is Lisbon.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Portugal"
+  },
+  {
+    "id": "fact-046",
+    "text": "The capital of Greece is Athens.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Greece"
+  },
+  {
+    "id": "fact-047",
+    "text": "The capital of Poland is Warsaw.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Poland"
+  },
+  {
+    "id": "fact-048",
+    "text": "The capital of Ukraine is Kyiv.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Ukraine"
+  },
+  {
+    "id": "fact-049",
+    "text": "The capital of Israel is Jerusalem under Israeli law, while many countries maintain embassies in Tel Aviv.",
+    "source": "CIA World Factbook",
+    "url": "https://www.cia.gov/the-world-factbook/"
+  },
+  {
+    "id": "fact-050",
+    "text": "The capital of Chile is Santiago.",
+    "source": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Chile"
+  },
+  {
+    "id": "fact-051",
+    "text": "Water boils at 100 degrees Celsius at standard atmospheric pressure.",
+    "source": "NIST",
+    "url": "https://www.nist.gov"
+  },
+  {
+    "id": "fact-052",
+    "text": "The speed of light in a vacuum is exactly 299,792,458 meters per second.",
+    "source": "NIST",
+    "url": "https://physics.nist.gov"
+  },
+  {
+    "id": "fact-053",
+    "text": "The human genome contains approximately 3 billion base pairs.",
+    "source": "NIH",
+    "url": "https://www.genome.gov"
+  },
+  {
+    "id": "fact-054",
+    "text": "DNA is composed of nucleotides containing adenine, thymine, cytosine, and guanine.",
+    "source": "NIH",
+    "url": "https://www.genome.gov"
+  },
+  {
+    "id": "fact-055",
+    "text": "The chemical symbol for gold is Au.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/79/gold"
+  },
+  {
+    "id": "fact-056",
+    "text": "The chemical symbol for sodium is Na.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/11/sodium"
+  },
+  {
+    "id": "fact-057",
+    "text": "Carbon dioxide has the chemical formula CO2.",
+    "source": "NOAA",
+    "url": "https://www.noaa.gov"
+  },
+  {
+    "id": "fact-058",
+    "text": "Earth completes one rotation in about 24 hours.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/earth/"
+  },
+  {
+    "id": "fact-059",
+    "text": "Earth orbits the Sun once in about 365.25 days.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/earth/"
+  },
+  {
+    "id": "fact-060",
+    "text": "The Moon is Earth's only natural satellite.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/moon/"
+  },
+  {
+    "id": "fact-061",
+    "text": "Mars is often called the Red Planet because of iron oxide on its surface.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/mars/"
+  },
+  {
+    "id": "fact-062",
+    "text": "Jupiter is the largest planet in the Solar System.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/jupiter/"
+  },
+  {
+    "id": "fact-063",
+    "text": "Photosynthesis converts light energy into chemical energy in plants and some microorganisms.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/science/photosynthesis"
+  },
+  {
+    "id": "fact-064",
+    "text": "Mitochondria generate most of the ATP used by eukaryotic cells.",
+    "source": "NIH",
+    "url": "https://www.ncbi.nlm.nih.gov/books/"
+  },
+  {
+    "id": "fact-065",
+    "text": "Penicillin was discovered by Alexander Fleming in 1928.",
+    "source": "Nobel Prize",
+    "url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/facts/"
+  },
+  {
+    "id": "fact-066",
+    "text": "Insulin is a hormone that helps regulate blood glucose.",
+    "source": "NIH",
+    "url": "https://www.niddk.nih.gov"
+  },
+  {
+    "id": "fact-067",
+    "text": "The pH of pure water at 25 degrees Celsius is approximately 7.",
+    "source": "USGS",
+    "url": "https://www.usgs.gov"
+  },
+  {
+    "id": "fact-068",
+    "text": "Helium is the second lightest chemical element.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/2/helium"
+  },
+  {
+    "id": "fact-069",
+    "text": "The SI unit of electric current is the ampere.",
+    "source": "BIPM",
+    "url": "https://www.bipm.org"
+  },
+  {
+    "id": "fact-070",
+    "text": "The SI unit of thermodynamic temperature is the kelvin.",
+    "source": "BIPM",
+    "url": "https://www.bipm.org"
+  },
+  {
+    "id": "fact-071",
+    "text": "The SI unit of amount of substance is the mole.",
+    "source": "BIPM",
+    "url": "https://www.bipm.org"
+  },
+  {
+    "id": "fact-072",
+    "text": "The atomic number of carbon is 6.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/6/carbon"
+  },
+  {
+    "id": "fact-073",
+    "text": "The atomic number of oxygen is 8.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/8/oxygen"
+  },
+  {
+    "id": "fact-074",
+    "text": "The atomic number of hydrogen is 1.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/1/hydrogen"
+  },
+  {
+    "id": "fact-075",
+    "text": "The boiling point of nitrogen is about -196 degrees Celsius at one atmosphere.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/7/nitrogen"
+  },
+  {
+    "id": "fact-076",
+    "text": "The boiling point of oxygen is about -183 degrees Celsius at one atmosphere.",
+    "source": "Royal Society of Chemistry",
+    "url": "https://www.rsc.org/periodic-table/element/8/oxygen"
+  },
+  {
+    "id": "fact-077",
+    "text": "The Sun is a G-type main-sequence star.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/sun/"
+  },
+  {
+    "id": "fact-078",
+    "text": "The Milky Way is a barred spiral galaxy.",
+    "source": "NASA",
+    "url": "https://science.nasa.gov/universe/galaxies/"
+  },
+  {
+    "id": "fact-079",
+    "text": "A light-year is a unit of distance, not time.",
+    "source": "NASA",
+    "url": "https://spaceplace.nasa.gov/light-year/"
+  },
+  {
+    "id": "fact-080",
+    "text": "Plate tectonics explains the movement of Earth's lithospheric plates.",
+    "source": "USGS",
+    "url": "https://www.usgs.gov/programs/earthquake-hazards/plate-tectonics"
+  },
+  {
+    "id": "fact-081",
+    "text": "Earthquakes are measured using magnitude scales such as moment magnitude.",
+    "source": "USGS",
+    "url": "https://www.usgs.gov/programs/earthquake-hazards"
+  },
+  {
+    "id": "fact-082",
+    "text": "Tsunamis can be generated by undersea earthquakes.",
+    "source": "NOAA",
+    "url": "https://www.noaa.gov/jetstream/tsunamis"
+  },
+  {
+    "id": "fact-083",
+    "text": "The ozone layer absorbs much of the Sun's ultraviolet radiation.",
+    "source": "NASA",
+    "url": "https://ozonewatch.gsfc.nasa.gov"
+  },
+  {
+    "id": "fact-084",
+    "text": "Greenhouse gases include carbon dioxide, methane, and nitrous oxide.",
+    "source": "EPA",
+    "url": "https://www.epa.gov/ghgemissions/overview-greenhouse-gases"
+  },
+  {
+    "id": "fact-085",
+    "text": "Methane has the chemical formula CH4.",
+    "source": "EPA",
+    "url": "https://www.epa.gov/methane"
+  },
+  {
+    "id": "fact-086",
+    "text": "The human heart has four chambers.",
+    "source": "NIH",
+    "url": "https://www.nhlbi.nih.gov/health/heart"
+  },
+  {
+    "id": "fact-087",
+    "text": "Red blood cells carry oxygen using hemoglobin.",
+    "source": "NIH",
+    "url": "https://www.ncbi.nlm.nih.gov/books/"
+  },
+  {
+    "id": "fact-088",
+    "text": "Bacteria are single-celled microorganisms.",
+    "source": "NIH",
+    "url": "https://www.ncbi.nlm.nih.gov/books/"
+  },
+  {
+    "id": "fact-089",
+    "text": "Viruses require host cells to replicate.",
+    "source": "NIH",
+    "url": "https://www.ncbi.nlm.nih.gov/books/"
+  },
+  {
+    "id": "fact-090",
+    "text": "Antibiotics treat bacterial infections, not viral infections.",
+    "source": "CDC",
+    "url": "https://www.cdc.gov/antibiotic-use/"
+  },
+  {
+    "id": "fact-091",
+    "text": "Vaccines train the immune system to recognize pathogens.",
+    "source": "CDC",
+    "url": "https://www.cdc.gov/vaccines/"
+  },
+  {
+    "id": "fact-092",
+    "text": "Measles is a highly contagious viral disease.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/measles"
+  },
+  {
+    "id": "fact-093",
+    "text": "Malaria is transmitted to humans by infected Anopheles mosquitoes.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/malaria"
+  },
+  {
+    "id": "fact-094",
+    "text": "Tuberculosis is caused by bacteria called Mycobacterium tuberculosis.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/tuberculosis"
+  },
+  {
+    "id": "fact-095",
+    "text": "HIV attacks the immune system.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/hiv-aids"
+  },
+  {
+    "id": "fact-096",
+    "text": "Diabetes is a chronic disease that affects blood glucose regulation.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/diabetes"
+  },
+  {
+    "id": "fact-097",
+    "text": "Cancer is a large group of diseases involving abnormal cell growth.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/cancer"
+  },
+  {
+    "id": "fact-098",
+    "text": "CRISPR-Cas9 is a genome editing technology.",
+    "source": "NIH",
+    "url": "https://www.genome.gov/about-genomics/policy-issues/Genome-Editing/What-are-genome-editing-and-CRISPR-Cas9"
+  },
+  {
+    "id": "fact-099",
+    "text": "Nuclear fusion powers the Sun and other stars.",
+    "source": "IAEA",
+    "url": "https://www.iaea.org/topics/energy/fusion/faqs"
+  },
+  {
+    "id": "fact-100",
+    "text": "The Planck constant is exactly 6.62607015 x 10^-34 joule seconds.",
+    "source": "NIST",
+    "url": "https://physics.nist.gov"
+  },
+  {
+    "id": "fact-101",
+    "text": "The United States Declaration of Independence was adopted on July 4, 1776.",
+    "source": "National Archives",
+    "url": "https://www.archives.gov/founding-docs/declaration"
+  },
+  {
+    "id": "fact-102",
+    "text": "The French Revolution began in 1789.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/event/French-Revolution"
+  },
+  {
+    "id": "fact-103",
+    "text": "World War I began in 1914.",
+    "source": "Imperial War Museums",
+    "url": "https://www.iwm.org.uk/history/first-world-war"
+  },
+  {
+    "id": "fact-104",
+    "text": "World War II began in Europe in 1939.",
+    "source": "Imperial War Museums",
+    "url": "https://www.iwm.org.uk/history/second-world-war"
+  },
+  {
+    "id": "fact-105",
+    "text": "The United Nations was founded in 1945.",
+    "source": "United Nations",
+    "url": "https://www.un.org/en/about-us/history-of-the-un"
+  },
+  {
+    "id": "fact-106",
+    "text": "India became independent from British rule in 1947.",
+    "source": "Government of India",
+    "url": "https://www.india.gov.in"
+  },
+  {
+    "id": "fact-107",
+    "text": "The People's Republic of China was proclaimed in 1949.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/China"
+  },
+  {
+    "id": "fact-108",
+    "text": "The Berlin Wall fell in 1989.",
+    "source": "Berlin Wall Foundation",
+    "url": "https://www.stiftung-berliner-mauer.de"
+  },
+  {
+    "id": "fact-109",
+    "text": "The Soviet Union dissolved in 1991.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Soviet-Union"
+  },
+  {
+    "id": "fact-110",
+    "text": "The September 11 attacks occurred in 2001.",
+    "source": "9/11 Memorial & Museum",
+    "url": "https://www.911memorial.org"
+  },
+  {
+    "id": "fact-111",
+    "text": "The Treaty of Versailles was signed in 1919.",
+    "source": "National Archives UK",
+    "url": "https://www.nationalarchives.gov.uk"
+  },
+  {
+    "id": "fact-112",
+    "text": "The Magna Carta was issued in 1215.",
+    "source": "British Library",
+    "url": "https://www.bl.uk/magna-carta"
+  },
+  {
+    "id": "fact-113",
+    "text": "The Battle of Hastings occurred in 1066.",
+    "source": "English Heritage",
+    "url": "https://www.english-heritage.org.uk"
+  },
+  {
+    "id": "fact-114",
+    "text": "Christopher Columbus reached the Caribbean in 1492.",
+    "source": "Library of Congress",
+    "url": "https://www.loc.gov"
+  },
+  {
+    "id": "fact-115",
+    "text": "The American Civil War lasted from 1861 to 1865.",
+    "source": "National Park Service",
+    "url": "https://www.nps.gov/civilwar"
+  },
+  {
+    "id": "fact-116",
+    "text": "The Emancipation Proclamation took effect on January 1, 1863.",
+    "source": "National Archives",
+    "url": "https://www.archives.gov/exhibits/featured-documents/emancipation-proclamation"
+  },
+  {
+    "id": "fact-117",
+    "text": "The Wright brothers made their first powered flight in 1903.",
+    "source": "Smithsonian",
+    "url": "https://airandspace.si.edu"
+  },
+  {
+    "id": "fact-118",
+    "text": "Apollo 11 landed humans on the Moon in 1969.",
+    "source": "NASA",
+    "url": "https://www.nasa.gov/mission/apollo-11/"
+  },
+  {
+    "id": "fact-119",
+    "text": "Sputnik 1 was launched by the Soviet Union in 1957.",
+    "source": "NASA",
+    "url": "https://www.nasa.gov/history/sputnik/"
+  },
+  {
+    "id": "fact-120",
+    "text": "Yuri Gagarin became the first human in space in 1961.",
+    "source": "NASA",
+    "url": "https://www.nasa.gov"
+  },
+  {
+    "id": "fact-121",
+    "text": "The first modern Olympic Games were held in Athens in 1896.",
+    "source": "Olympics",
+    "url": "https://olympics.com/ioc/athens-1896"
+  },
+  {
+    "id": "fact-122",
+    "text": "The Black Death pandemic struck Europe in the 14th century.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/event/Black-Death"
+  },
+  {
+    "id": "fact-123",
+    "text": "The printing press with movable type was developed by Johannes Gutenberg in the 15th century.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/biography/Johannes-Gutenberg"
+  },
+  {
+    "id": "fact-124",
+    "text": "The Industrial Revolution began in Britain in the 18th century.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/event/Industrial-Revolution"
+  },
+  {
+    "id": "fact-125",
+    "text": "The Cold War followed World War II and lasted until the early 1990s.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/event/Cold-War"
+  },
+  {
+    "id": "fact-126",
+    "text": "The European Union traces its origins to postwar European integration after 1945.",
+    "source": "European Union",
+    "url": "https://european-union.europa.eu"
+  },
+  {
+    "id": "fact-127",
+    "text": "The euro was introduced as an accounting currency in 1999.",
+    "source": "European Central Bank",
+    "url": "https://www.ecb.europa.eu/euro/intro/html/index.en.html"
+  },
+  {
+    "id": "fact-128",
+    "text": "The World Health Organization was established in 1948.",
+    "source": "WHO",
+    "url": "https://www.who.int/about/history"
+  },
+  {
+    "id": "fact-129",
+    "text": "The International Monetary Fund was established in 1944.",
+    "source": "IMF",
+    "url": "https://www.imf.org/en/About"
+  },
+  {
+    "id": "fact-130",
+    "text": "The World Bank was founded in 1944.",
+    "source": "World Bank",
+    "url": "https://www.worldbank.org/en/about/history"
+  },
+  {
+    "id": "fact-131",
+    "text": "The 2008 financial crisis included the collapse of Lehman Brothers.",
+    "source": "Federal Reserve History",
+    "url": "https://www.federalreservehistory.org/essays/lehman-brothers"
+  },
+  {
+    "id": "fact-132",
+    "text": "The Paris Agreement was adopted in 2015.",
+    "source": "United Nations Climate Change",
+    "url": "https://unfccc.int/process-and-meetings/the-paris-agreement"
+  },
+  {
+    "id": "fact-133",
+    "text": "The Kyoto Protocol was adopted in 1997.",
+    "source": "United Nations Climate Change",
+    "url": "https://unfccc.int/kyoto_protocol"
+  },
+  {
+    "id": "fact-134",
+    "text": "Nelson Mandela became president of South Africa in 1994.",
+    "source": "South African Government",
+    "url": "https://www.gov.za/about-sa/history"
+  },
+  {
+    "id": "fact-135",
+    "text": "Mahatma Gandhi led nonviolent campaigns against British rule in India.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/biography/Mahatma-Gandhi"
+  },
+  {
+    "id": "fact-136",
+    "text": "Martin Luther King Jr. delivered the “I Have a Dream” speech in 1963.",
+    "source": "National Park Service",
+    "url": "https://www.nps.gov/mlkm/learn/historyculture"
+  },
+  {
+    "id": "fact-137",
+    "text": "Rosa Parks was arrested in Montgomery, Alabama, in 1955.",
+    "source": "Library of Congress",
+    "url": "https://www.loc.gov"
+  },
+  {
+    "id": "fact-138",
+    "text": "The Ottoman Empire ended after World War I.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Ottoman-Empire"
+  },
+  {
+    "id": "fact-139",
+    "text": "The Roman Empire's western half fell in 476 CE.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Roman-Empire"
+  },
+  {
+    "id": "fact-140",
+    "text": "The Mughal Empire was founded by Babur in 1526.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/place/Mughal-dynasty"
+  },
+  {
+    "id": "fact-141",
+    "text": "The World Wide Web was invented by Tim Berners-Lee.",
+    "source": "CERN",
+    "url": "https://home.cern/science/computing/birth-web"
+  },
+  {
+    "id": "fact-142",
+    "text": "The first iPhone was introduced by Apple in 2007.",
+    "source": "Apple",
+    "url": "https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/"
+  },
+  {
+    "id": "fact-143",
+    "text": "Microsoft was founded in 1975.",
+    "source": "Microsoft",
+    "url": "https://news.microsoft.com/facts-about-microsoft/"
+  },
+  {
+    "id": "fact-144",
+    "text": "Apple was founded in 1976.",
+    "source": "Apple",
+    "url": "https://www.apple.com/newsroom/"
+  },
+  {
+    "id": "fact-145",
+    "text": "Google was founded in 1998.",
+    "source": "Google",
+    "url": "https://about.google/"
+  },
+  {
+    "id": "fact-146",
+    "text": "Amazon was founded in 1994.",
+    "source": "Amazon",
+    "url": "https://www.aboutamazon.com/about-us"
+  },
+  {
+    "id": "fact-147",
+    "text": "Facebook launched in 2004.",
+    "source": "Meta",
+    "url": "https://about.meta.com/company-info/"
+  },
+  {
+    "id": "fact-148",
+    "text": "Tesla was incorporated in 2003.",
+    "source": "Tesla",
+    "url": "https://www.tesla.com/about"
+  },
+  {
+    "id": "fact-149",
+    "text": "SpaceX was founded in 2002.",
+    "source": "SpaceX",
+    "url": "https://www.spacex.com"
+  },
+  {
+    "id": "fact-150",
+    "text": "OpenAI was founded in 2015.",
+    "source": "OpenAI",
+    "url": "https://openai.com/about/"
+  },
+  {
+    "id": "fact-151",
+    "text": "Linux was first released by Linus Torvalds in 1991.",
+    "source": "Linux Foundation",
+    "url": "https://www.linuxfoundation.org"
+  },
+  {
+    "id": "fact-152",
+    "text": "Python was created by Guido van Rossum.",
+    "source": "Python Software Foundation",
+    "url": "https://www.python.org/doc/essays/blurb/"
+  },
+  {
+    "id": "fact-153",
+    "text": "JavaScript was created at Netscape in 1995.",
+    "source": "MDN",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+  },
+  {
+    "id": "fact-154",
+    "text": "HTML is the standard markup language for web pages.",
+    "source": "WHATWG",
+    "url": "https://html.spec.whatwg.org"
+  },
+  {
+    "id": "fact-155",
+    "text": "TCP/IP is a foundational protocol suite of the Internet.",
+    "source": "Internet Society",
+    "url": "https://www.internetsociety.org/internet/history-internet/brief-history-internet/"
+  },
+  {
+    "id": "fact-156",
+    "text": "GPS is operated by the United States Space Force.",
+    "source": "GPS.gov",
+    "url": "https://www.gps.gov/systems/gps/"
+  },
+  {
+    "id": "fact-157",
+    "text": "Bluetooth is a short-range wireless technology standard.",
+    "source": "Bluetooth SIG",
+    "url": "https://www.bluetooth.com/learn-about-bluetooth/tech-overview/"
+  },
+  {
+    "id": "fact-158",
+    "text": "USB stands for Universal Serial Bus.",
+    "source": "USB-IF",
+    "url": "https://www.usb.org"
+  },
+  {
+    "id": "fact-159",
+    "text": "Wi-Fi is based on IEEE 802.11 standards.",
+    "source": "IEEE",
+    "url": "https://standards.ieee.org"
+  },
+  {
+    "id": "fact-160",
+    "text": "The QR code was invented by Denso Wave in 1994.",
+    "source": "Denso Wave",
+    "url": "https://www.qrcode.com/en/history/"
+  },
+  {
+    "id": "fact-161",
+    "text": "The first programmable electronic computer ENIAC was completed in 1945.",
+    "source": "University of Pennsylvania",
+    "url": "https://www.seas.upenn.edu/about/history-heritage/eniac/"
+  },
+  {
+    "id": "fact-162",
+    "text": "Alan Turing proposed the Turing test in 1950.",
+    "source": "Stanford Encyclopedia of Philosophy",
+    "url": "https://plato.stanford.edu/entries/turing-test/"
+  },
+  {
+    "id": "fact-163",
+    "text": "The transistor was invented at Bell Labs in 1947.",
+    "source": "Nobel Prize",
+    "url": "https://www.nobelprize.org/prizes/physics/1956/summary/"
+  },
+  {
+    "id": "fact-164",
+    "text": "Integrated circuits were developed in the late 1950s.",
+    "source": "Nobel Prize",
+    "url": "https://www.nobelprize.org/prizes/physics/2000/press-release/"
+  },
+  {
+    "id": "fact-165",
+    "text": "A semiconductor can conduct electricity under some conditions and insulate under others.",
+    "source": "Encyclopaedia Britannica",
+    "url": "https://www.britannica.com/science/semiconductor"
+  },
+  {
+    "id": "fact-166",
+    "text": "Cloud computing provides on-demand access to shared computing resources.",
+    "source": "NIST",
+    "url": "https://www.nist.gov/programs-projects/nist-cloud-computing-program-nccp"
+  },
+  {
+    "id": "fact-167",
+    "text": "Blockchain is a distributed ledger technology.",
+    "source": "NIST",
+    "url": "https://www.nist.gov/publications/blockchain-technology-overview"
+  },
+  {
+    "id": "fact-168",
+    "text": "Machine learning is a field of artificial intelligence based on learning patterns from data.",
+    "source": "IBM",
+    "url": "https://www.ibm.com/topics/machine-learning"
+  },
+  {
+    "id": "fact-169",
+    "text": "A neural network is a machine learning model inspired by connected nodes.",
+    "source": "IBM",
+    "url": "https://www.ibm.com/topics/neural-networks"
+  },
+  {
+    "id": "fact-170",
+    "text": "5G is the fifth generation of mobile network technology.",
+    "source": "Qualcomm",
+    "url": "https://www.qualcomm.com/5g/what-is-5g"
+  },
+  {
+    "id": "fact-171",
+    "text": "Gross domestic product measures the value of goods and services produced in an economy.",
+    "source": "World Bank",
+    "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD"
+  },
+  {
+    "id": "fact-172",
+    "text": "Inflation is a sustained increase in the general price level of goods and services.",
+    "source": "IMF",
+    "url": "https://www.imf.org/en/Publications/fandd/issues/Series/Back-to-Basics/Inflation"
+  },
+  {
+    "id": "fact-173",
+    "text": "The Federal Reserve is the central bank of the United States.",
+    "source": "Federal Reserve",
+    "url": "https://www.federalreserve.gov/aboutthefed.htm"
+  },
+  {
+    "id": "fact-174",
+    "text": "The European Central Bank manages monetary policy for the euro area.",
+    "source": "ECB",
+    "url": "https://www.ecb.europa.eu/ecb/html/index.en.html"
+  },
+  {
+    "id": "fact-175",
+    "text": "The Japanese yen is the currency of Japan.",
+    "source": "Bank of Japan",
+    "url": "https://www.boj.or.jp/en/"
+  },
+  {
+    "id": "fact-176",
+    "text": "The pound sterling is the currency of the United Kingdom.",
+    "source": "Bank of England",
+    "url": "https://www.bankofengland.co.uk"
+  },
+  {
+    "id": "fact-177",
+    "text": "The euro is the official currency of 20 European Union countries.",
+    "source": "European Union",
+    "url": "https://european-union.europa.eu/institutions-law-budget/euro_en"
+  },
+  {
+    "id": "fact-178",
+    "text": "The United States dollar is the official currency of the United States.",
+    "source": "U.S. Treasury",
+    "url": "https://home.treasury.gov"
+  },
+  {
+    "id": "fact-179",
+    "text": "The World Trade Organization began operating in 1995.",
+    "source": "WTO",
+    "url": "https://www.wto.org/english/thewto_e/whatis_e/tif_e/fact4_e.htm"
+  },
+  {
+    "id": "fact-180",
+    "text": "OPEC was founded in Baghdad in 1960.",
+    "source": "OPEC",
+    "url": "https://www.opec.org/opec_web/en/about_us/24.htm"
+  },
+  {
+    "id": "fact-181",
+    "text": "The IMF has 190 member countries.",
+    "source": "IMF",
+    "url": "https://www.imf.org/en/About"
+  },
+  {
+    "id": "fact-182",
+    "text": "The World Bank Group has five institutions.",
+    "source": "World Bank",
+    "url": "https://www.worldbank.org/en/who-we-are"
+  },
+  {
+    "id": "fact-183",
+    "text": "A tariff is a tax on imported goods.",
+    "source": "WTO",
+    "url": "https://www.wto.org"
+  },
+  {
+    "id": "fact-184",
+    "text": "A bond is a debt security.",
+    "source": "SEC",
+    "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds"
+  },
+  {
+    "id": "fact-185",
+    "text": "A stock represents ownership in a corporation.",
+    "source": "SEC",
+    "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+  },
+  {
+    "id": "fact-186",
+    "text": "Compound interest earns interest on previously earned interest.",
+    "source": "SEC",
+    "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
+  },
+  {
+    "id": "fact-187",
+    "text": "A recession is commonly associated with a significant decline in economic activity.",
+    "source": "NBER",
+    "url": "https://www.nber.org/research/business-cycle-dating"
+  },
+  {
+    "id": "fact-188",
+    "text": "The Gini coefficient measures income or wealth inequality.",
+    "source": "World Bank",
+    "url": "https://data.worldbank.org/indicator/SI.POV.GINI"
+  },
+  {
+    "id": "fact-189",
+    "text": "Purchasing power parity adjusts for price differences across countries.",
+    "source": "World Bank",
+    "url": "https://data.worldbank.org/indicator/PA.NUS.PPP"
+  },
+  {
+    "id": "fact-190",
+    "text": "The Consumer Price Index tracks changes in prices paid by consumers.",
+    "source": "BLS",
+    "url": "https://www.bls.gov/cpi/"
+  },
+  {
+    "id": "fact-191",
+    "text": "Unemployment rates measure people without jobs who are actively seeking work.",
+    "source": "BLS",
+    "url": "https://www.bls.gov/cps/definitions.htm#unemployed"
+  },
+  {
+    "id": "fact-192",
+    "text": "The S&P 500 tracks 500 large publicly traded U.S. companies.",
+    "source": "S&P Global",
+    "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/"
+  },
+  {
+    "id": "fact-193",
+    "text": "NASDAQ is an electronic stock exchange based in the United States.",
+    "source": "Nasdaq",
+    "url": "https://www.nasdaq.com"
+  },
+  {
+    "id": "fact-194",
+    "text": "The New York Stock Exchange is located on Wall Street in New York City.",
+    "source": "NYSE",
+    "url": "https://www.nyse.com"
+  },
+  {
+    "id": "fact-195",
+    "text": "Bitcoin was introduced in a 2008 white paper under the name Satoshi Nakamoto.",
+    "source": "Bitcoin.org",
+    "url": "https://bitcoin.org/bitcoin.pdf"
+  },
+  {
+    "id": "fact-196",
+    "text": "Ethereum launched in 2015.",
+    "source": "Ethereum Foundation",
+    "url": "https://ethereum.org/en/history/"
+  },
+  {
+    "id": "fact-197",
+    "text": "A central bank can influence interest rates through monetary policy.",
+    "source": "Federal Reserve",
+    "url": "https://www.federalreserve.gov/monetarypolicy.htm"
+  },
+  {
+    "id": "fact-198",
+    "text": "A trade deficit occurs when imports exceed exports.",
+    "source": "BEA",
+    "url": "https://www.bea.gov"
+  },
+  {
+    "id": "fact-199",
+    "text": "The Human Development Index combines life expectancy, education, and income indicators.",
+    "source": "UNDP",
+    "url": "https://hdr.undp.org/data-center/human-development-index"
+  },
+  {
+    "id": "fact-200",
+    "text": "Foreign direct investment involves cross-border ownership or control of business assets.",
+    "source": "OECD",
+    "url": "https://www.oecd.org/investment/"
+  }
+]

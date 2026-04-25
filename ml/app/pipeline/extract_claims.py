@@ -11,7 +11,6 @@ import numpy as np
 import spacy
 from openai import OpenAI
 from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
 
 from app.cache import get_embedding_cache, get_norm_cache, set_embedding_cache, set_norm_cache
 
@@ -28,7 +27,7 @@ def _load_extract_nlp() -> Any:
 
 nlp = _load_extract_nlp()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
-_embedder: SentenceTransformer | None = None
+_embedder: Any = None
 
 RELATIVE_TEMPORAL_PATTERN = re.compile(
     r"\b(last quarter|last month|last year|this quarter|this year|recently|yesterday|today|tomorrow|currently|now)\b",
@@ -105,9 +104,11 @@ class PendingClaim:
     sentence: dict[str, Any]
 
 
-def _get_embedder() -> SentenceTransformer:
+def _get_embedder() -> Any:
     global _embedder
     if _embedder is None:
+        from sentence_transformers import SentenceTransformer
+
         _embedder = SentenceTransformer("all-MiniLM-L6-v2")
     return _embedder
 

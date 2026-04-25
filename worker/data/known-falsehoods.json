@@ -1,0 +1,802 @@
+[
+  {
+    "id": "false-001",
+    "claim": "The Great Wall of China is visible from space with the naked eye.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the great wall of china is visible from space with the naked eye."
+  },
+  {
+    "id": "false-002",
+    "claim": "Humans only use 10% of their brain.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about humans only use 10% of their brain."
+  },
+  {
+    "id": "false-003",
+    "claim": "Vaccines cause autism.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about vaccines cause autism."
+  },
+  {
+    "id": "false-004",
+    "claim": "Antibiotics kill viruses.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about antibiotics kill viruses."
+  },
+  {
+    "id": "false-005",
+    "claim": "Cracking knuckles causes arthritis.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about cracking knuckles causes arthritis."
+  },
+  {
+    "id": "false-006",
+    "claim": "Sugar causes hyperactivity in children.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about sugar causes hyperactivity in children."
+  },
+  {
+    "id": "false-007",
+    "claim": "Cold weather alone causes the common cold.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about cold weather alone causes the common cold."
+  },
+  {
+    "id": "false-008",
+    "claim": "Vitamin C cures the common cold.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about vitamin c cures the common cold."
+  },
+  {
+    "id": "false-009",
+    "claim": "Microwaves make food radioactive.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about microwaves make food radioactive."
+  },
+  {
+    "id": "false-010",
+    "claim": "Organic food is always pesticide-free.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about organic food is always pesticide-free."
+  },
+  {
+    "id": "false-011",
+    "claim": "Brown eggs are more nutritious than white eggs.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about brown eggs are more nutritious than white eggs."
+  },
+  {
+    "id": "false-012",
+    "claim": "Carrots give humans perfect night vision.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about carrots give humans perfect night vision."
+  },
+  {
+    "id": "false-013",
+    "claim": "Detox teas remove toxins from the body.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about detox teas remove toxins from the body."
+  },
+  {
+    "id": "false-014",
+    "claim": "Eating fat always makes people fat.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about eating fat always makes people fat."
+  },
+  {
+    "id": "false-015",
+    "claim": "Gluten is harmful to everyone.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about gluten is harmful to everyone."
+  },
+  {
+    "id": "false-016",
+    "claim": "All bacteria are harmful to humans.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about all bacteria are harmful to humans."
+  },
+  {
+    "id": "false-017",
+    "claim": "You can catch HIV from casual contact.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about you can catch hiv from casual contact."
+  },
+  {
+    "id": "false-018",
+    "claim": "Homeopathy has been proven to cure cancer.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about homeopathy has been proven to cure cancer."
+  },
+  {
+    "id": "false-019",
+    "claim": "Napoleon Bonaparte was extremely short.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about napoleon bonaparte was extremely short."
+  },
+  {
+    "id": "false-020",
+    "claim": "Vikings wore horned helmets in battle.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about vikings wore horned helmets in battle."
+  },
+  {
+    "id": "false-021",
+    "claim": "Medieval people believed Earth was flat.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about medieval people believed earth was flat."
+  },
+  {
+    "id": "false-022",
+    "claim": "Marie Antoinette said “Let them eat cake.”",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about marie antoinette said “let them eat cake.”."
+  },
+  {
+    "id": "false-023",
+    "claim": "Einstein failed mathematics as a student.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about einstein failed mathematics as a student."
+  },
+  {
+    "id": "false-024",
+    "claim": "George Washington had wooden teeth.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about george washington had wooden teeth."
+  },
+  {
+    "id": "false-025",
+    "claim": "The Library of Alexandria was destroyed in one single fire.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the library of alexandria was destroyed in one single fire."
+  },
+  {
+    "id": "false-026",
+    "claim": "Gladiators always fought to the death.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about gladiators always fought to the death."
+  },
+  {
+    "id": "false-027",
+    "claim": "The pyramids were built by enslaved Israelites.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the pyramids were built by enslaved israelites."
+  },
+  {
+    "id": "false-028",
+    "claim": "Columbus proved Earth was round.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about columbus proved earth was round."
+  },
+  {
+    "id": "false-029",
+    "claim": "The Great Chicago Fire was caused by a cow kicking over a lantern.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the great chicago fire was caused by a cow kicking over a lantern."
+  },
+  {
+    "id": "false-030",
+    "claim": "Salem witches were burned at the stake.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about salem witches were burned at the stake."
+  },
+  {
+    "id": "false-031",
+    "claim": "The Roman vomitorium was a room for vomiting.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the roman vomitorium was a room for vomiting."
+  },
+  {
+    "id": "false-032",
+    "claim": "Betsy Ross definitely designed the first U.S. flag.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about betsy ross definitely designed the first u.s. flag."
+  },
+  {
+    "id": "false-033",
+    "claim": "The Emancipation Proclamation freed all enslaved people immediately.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the emancipation proclamation freed all enslaved people immediately."
+  },
+  {
+    "id": "false-034",
+    "claim": "The Dark Ages had no scientific progress.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the dark ages had no scientific progress."
+  },
+  {
+    "id": "false-035",
+    "claim": "The Pony Express lasted for decades.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the pony express lasted for decades."
+  },
+  {
+    "id": "false-036",
+    "claim": "The Declaration of Independence was signed by everyone on July 4, 1776.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the declaration of independence was signed by everyone on july 4, 1776."
+  },
+  {
+    "id": "false-037",
+    "claim": "Cleopatra was ethnically Egyptian.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about cleopatra was ethnically egyptian."
+  },
+  {
+    "id": "false-038",
+    "claim": "Medieval armor made knights unable to move.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about medieval armor made knights unable to move."
+  },
+  {
+    "id": "false-039",
+    "claim": "Lightning never strikes the same place twice.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about lightning never strikes the same place twice."
+  },
+  {
+    "id": "false-040",
+    "claim": "Goldfish have a three-second memory.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about goldfish have a three-second memory."
+  },
+  {
+    "id": "false-041",
+    "claim": "Bulls are enraged by the color red.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about bulls are enraged by the color red."
+  },
+  {
+    "id": "false-042",
+    "claim": "Ostriches bury their heads in sand.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about ostriches bury their heads in sand."
+  },
+  {
+    "id": "false-043",
+    "claim": "Humans evolved from modern chimpanzees.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about humans evolved from modern chimpanzees."
+  },
+  {
+    "id": "false-044",
+    "claim": "The seasons are caused by Earth being closer to the Sun in summer.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the seasons are caused by earth being closer to the sun in summer."
+  },
+  {
+    "id": "false-045",
+    "claim": "The Moon has a permanent dark side.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the moon has a permanent dark side."
+  },
+  {
+    "id": "false-046",
+    "claim": "There is no gravity in space.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about there is no gravity in space."
+  },
+  {
+    "id": "false-047",
+    "claim": "Sound travels through empty space.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about sound travels through empty space."
+  },
+  {
+    "id": "false-048",
+    "claim": "Diamonds are made from coal.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about diamonds are made from coal."
+  },
+  {
+    "id": "false-049",
+    "claim": "Glass is a slow-flowing liquid at room temperature.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about glass is a slow-flowing liquid at room temperature."
+  },
+  {
+    "id": "false-050",
+    "claim": "Toads give people warts.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about toads give people warts."
+  },
+  {
+    "id": "false-051",
+    "claim": "Shaving makes hair grow back thicker.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about shaving makes hair grow back thicker."
+  },
+  {
+    "id": "false-052",
+    "claim": "Hair and fingernails keep growing after death.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about hair and fingernails keep growing after death."
+  },
+  {
+    "id": "false-053",
+    "claim": "A penny dropped from a skyscraper can kill someone.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about a penny dropped from a skyscraper can kill someone."
+  },
+  {
+    "id": "false-054",
+    "claim": "The tongue has separate taste zones.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the tongue has separate taste zones."
+  },
+  {
+    "id": "false-055",
+    "claim": "Humans have only five senses.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about humans have only five senses."
+  },
+  {
+    "id": "false-056",
+    "claim": "Bananas grow on trees.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about bananas grow on trees."
+  },
+  {
+    "id": "false-057",
+    "claim": "Tomatoes are vegetables botanically.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about tomatoes are vegetables botanically."
+  },
+  {
+    "id": "false-058",
+    "claim": "The Sun is yellow in space.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the sun is yellow in space."
+  },
+  {
+    "id": "false-059",
+    "claim": "Private browsing makes users anonymous online.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about private browsing makes users anonymous online."
+  },
+  {
+    "id": "false-060",
+    "claim": "Mac computers cannot get malware.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about mac computers cannot get malware."
+  },
+  {
+    "id": "false-061",
+    "claim": "More megapixels always mean a better camera.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about more megapixels always mean a better camera."
+  },
+  {
+    "id": "false-062",
+    "claim": "Incognito mode hides your IP address.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about incognito mode hides your ip address."
+  },
+  {
+    "id": "false-063",
+    "claim": "Deleted files are always gone forever immediately.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about deleted files are always gone forever immediately."
+  },
+  {
+    "id": "false-064",
+    "claim": "Charging a phone overnight always ruins the battery.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about charging a phone overnight always ruins the battery."
+  },
+  {
+    "id": "false-065",
+    "claim": "5G towers spread COVID-19.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about 5g towers spread covid-19."
+  },
+  {
+    "id": "false-066",
+    "claim": "QR codes are always safe to scan.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about qr codes are always safe to scan."
+  },
+  {
+    "id": "false-067",
+    "claim": "Passwords should be changed every week for everyone.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about passwords should be changed every week for everyone."
+  },
+  {
+    "id": "false-068",
+    "claim": "AI systems are always objective.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about ai systems are always objective."
+  },
+  {
+    "id": "false-069",
+    "claim": "The cloud is not made of physical computers.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the cloud is not made of physical computers."
+  },
+  {
+    "id": "false-070",
+    "claim": "Bitcoin transactions are completely anonymous.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about bitcoin transactions are completely anonymous."
+  },
+  {
+    "id": "false-071",
+    "claim": "Putting a wet phone in rice reliably repairs it.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about putting a wet phone in rice reliably repairs it."
+  },
+  {
+    "id": "false-072",
+    "claim": "Airplane mode disables all phone tracking in every circumstance.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about airplane mode disables all phone tracking in every circumstance."
+  },
+  {
+    "id": "false-073",
+    "claim": "The capital of Australia is Sydney.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the capital of australia is sydney."
+  },
+  {
+    "id": "false-074",
+    "claim": "The capital of Canada is Toronto.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the capital of canada is toronto."
+  },
+  {
+    "id": "false-075",
+    "claim": "Mount Everest is in Europe.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about mount everest is in europe."
+  },
+  {
+    "id": "false-076",
+    "claim": "The Amazon River is in Africa.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the amazon river is in africa."
+  },
+  {
+    "id": "false-077",
+    "claim": "The Sahara is in South America.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the sahara is in south america."
+  },
+  {
+    "id": "false-078",
+    "claim": "Greenland is an independent continent.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about greenland is an independent continent."
+  },
+  {
+    "id": "false-079",
+    "claim": "The Pacific Ocean is the smallest ocean.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the pacific ocean is the smallest ocean."
+  },
+  {
+    "id": "false-080",
+    "claim": "The Nile flows through Brazil.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the nile flows through brazil."
+  },
+  {
+    "id": "false-081",
+    "claim": "Japan is located in the Atlantic Ocean.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about japan is located in the atlantic ocean."
+  },
+  {
+    "id": "false-082",
+    "claim": "The equator passes through Canada.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the equator passes through canada."
+  },
+  {
+    "id": "false-083",
+    "claim": "Antarctica has a permanent civilian population.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about antarctica has a permanent civilian population."
+  },
+  {
+    "id": "false-084",
+    "claim": "New Zealand is part of Scandinavia.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about new zealand is part of scandinavia."
+  },
+  {
+    "id": "false-085",
+    "claim": "The Dead Sea is an ocean.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the dead sea is an ocean."
+  },
+  {
+    "id": "false-086",
+    "claim": "The Andes are in Asia.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the andes are in asia."
+  },
+  {
+    "id": "false-087",
+    "claim": "Lake Baikal is in Canada.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about lake baikal is in canada."
+  },
+  {
+    "id": "false-088",
+    "claim": "The United Nations is a world government with binding control over all national laws.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the united nations is a world government with binding control over all national laws."
+  },
+  {
+    "id": "false-089",
+    "claim": "The World Health Organization can force countries to pass domestic laws.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the world health organization can force countries to pass domestic laws."
+  },
+  {
+    "id": "false-090",
+    "claim": "The European Union has always had the same member countries.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the european union has always had the same member countries."
+  },
+  {
+    "id": "false-091",
+    "claim": "The U.S. president can amend the Constitution alone.",
+    "verdict": "FALSE",
+    "debunkSource": "NASA",
+    "debunkUrl": "https://www.nasa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the u.s. president can amend the constitution alone."
+  },
+  {
+    "id": "false-092",
+    "claim": "NATO was founded after the Cold War ended.",
+    "verdict": "FALSE",
+    "debunkSource": "Scientific American",
+    "debunkUrl": "https://www.scientificamerican.com",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about nato was founded after the cold war ended."
+  },
+  {
+    "id": "false-093",
+    "claim": "The IMF is a private bank owned by one person.",
+    "verdict": "FALSE",
+    "debunkSource": "CDC",
+    "debunkUrl": "https://www.cdc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the imf is a private bank owned by one person."
+  },
+  {
+    "id": "false-094",
+    "claim": "The World Bank only lends to the United States.",
+    "verdict": "FALSE",
+    "debunkSource": "WHO",
+    "debunkUrl": "https://www.who.int",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about the world bank only lends to the united states."
+  },
+  {
+    "id": "false-095",
+    "claim": "Election polls are official vote counts.",
+    "verdict": "FALSE",
+    "debunkSource": "NIH",
+    "debunkUrl": "https://www.nih.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about election polls are official vote counts."
+  },
+  {
+    "id": "false-096",
+    "claim": "A single viral social media post is proof of election fraud.",
+    "verdict": "FALSE",
+    "debunkSource": "NOAA",
+    "debunkUrl": "https://www.noaa.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about a single viral social media post is proof of election fraud."
+  },
+  {
+    "id": "false-097",
+    "claim": "Public debt and annual budget deficit are the same thing.",
+    "verdict": "FALSE",
+    "debunkSource": "NIST",
+    "debunkUrl": "https://www.nist.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about public debt and annual budget deficit are the same thing."
+  },
+  {
+    "id": "false-098",
+    "claim": "All climate scientists reject human-caused climate change.",
+    "verdict": "FALSE",
+    "debunkSource": "Smithsonian",
+    "debunkUrl": "https://www.si.edu",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about all climate scientists reject human-caused climate change."
+  },
+  {
+    "id": "false-099",
+    "claim": "Humans can safely look directly at a solar eclipse without eye protection.",
+    "verdict": "FALSE",
+    "debunkSource": "National Archives",
+    "debunkUrl": "https://www.archives.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about humans can safely look directly at a solar eclipse without eye protection."
+  },
+  {
+    "id": "false-100",
+    "claim": "Drinking seawater is a safe way to treat dehydration.",
+    "verdict": "FALSE",
+    "debunkSource": "FTC",
+    "debunkUrl": "https://consumer.ftc.gov",
+    "explanation": "Reliable reference sources identify this as false or misleading; the claim oversimplifies, misstates, or contradicts established evidence about drinking seawater is a safe way to treat dehydration."
+  }
+]

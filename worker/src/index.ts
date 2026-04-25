@@ -5,6 +5,7 @@ import pino from "pino";
 
 import { processIngestionJob } from "./jobs/ingestDocument";
 import { processVerificationJob } from "./jobs/verifyDocument";
+import { createDeadLetterWorker, deadLetterQueue } from "./queues/deadLetterQueue";
 
 const logger = pino({ name: "veridex-worker" });
 
@@ -35,14 +36,38 @@ const connectToMongo = async (): Promise<void> => {
 const startWorkers = async (): Promise<void> => {
   await connectToMongo();
 
-  new Worker("ingestion-jobs", processIngestionJob, {
+  const ingestionWorker = new Worker("ingestion-jobs", processIngestionJob, {
     connection: redisConnection,
     concurrency,
   });
 
-  new Worker("verification-jobs", processVerificationJob, {
+  const verificationWorker = new Worker("verification-jobs", processVerificationJob, {
     connection: redisConnection,
     concurrency,
+  });
+
+  createDeadLetterWorker();
+
+  ingestionWorker.on("failed", async (job, err) => {
+    if (job && job.attemptsMade >= 3) {
+      await deadLetterQueue.add("dead-letter", {
+        originalQueue: "ingestion-jobs",
+        jobId: job.id,
+        jobData: job.data,
+        errorStack: err.stack,
+      });
+    }
+  });
+
+  verificationWorker.on("failed", async (job, err) => {
+    if (job && job.attemptsMade >= 3) {
+      await deadLetterQueue.add("dead-letter", {
+        originalQueue: "verification-jobs",
+        jobId: job.id,
+        jobData: job.data,
+        errorStack: err.stack,
+      });
+    }
   });
 
   logger.info("worker started");

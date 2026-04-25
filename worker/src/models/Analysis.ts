@@ -69,6 +69,22 @@ export interface IStanceBreakdown {
   neutral: number;
 }
 
+export interface IManipulationTactic {
+  tactic: string;
+  excerpt: string;
+  charOffset: number;
+  charEnd: number;
+  intensityScore: number;
+  explanation: string;
+}
+
+export interface IScoreBreakdown {
+  verifiedRatioContribution: number;
+  evidenceQualityContribution: number;
+  manipulationPenaltyApplied: number;
+  retrievalSufficiencyFactor: number;
+}
+
 export interface IClaim {
   claimId: string;
   claimText: string;
@@ -98,14 +114,24 @@ export interface IAnalysis {
   documentId: Types.ObjectId;
   status: AnalysisStatus;
   claims: IClaim[];
+  manipulationTactics: IManipulationTactic[];
+  credibilityScore: number | null;
+  confidenceBand: number | null;
+  credibilityLabel: "High" | "Moderate" | "Low" | "Very Low" | null;
+  scoreBreakdown: IScoreBreakdown | null;
+  summary: string | null;
   claimsCount: number;
   verifiedCount: number;
   disputedCount: number;
   falseCount: number;
   unsupportedCount: number;
   insufficientCount: number;
+  avgConfidence: number | null;
+  avgEvidenceQuality: number | null;
   processingTimeMs: number | null;
+  pipelineVersion: string;
   errorMessage: string | null;
+  completedAt: Date | null;
 }
 
 export type AnalysisDocument = HydratedDocument<IAnalysis>;
@@ -218,20 +244,52 @@ const ClaimSchema = new Schema<IClaim>(
   { _id: false },
 );
 
+const ManipulationTacticSchema = new Schema<IManipulationTactic>(
+  {
+    tactic: String,
+    excerpt: String,
+    charOffset: Number,
+    charEnd: Number,
+    intensityScore: Number,
+    explanation: String,
+  },
+  { _id: false },
+);
+
+const ScoreBreakdownSchema = new Schema<IScoreBreakdown>(
+  {
+    verifiedRatioContribution: Number,
+    evidenceQualityContribution: Number,
+    manipulationPenaltyApplied: Number,
+    retrievalSufficiencyFactor: Number,
+  },
+  { _id: false },
+);
+
 const AnalysisSchema = new Schema<IAnalysis>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     documentId: { type: Schema.Types.ObjectId, ref: "Document", required: true },
     status: { type: String, default: "QUEUED" },
     claims: { type: [ClaimSchema], default: [] },
+    manipulationTactics: { type: [ManipulationTacticSchema], default: [] },
+    credibilityScore: { type: Number, default: null },
+    confidenceBand: { type: Number, default: null },
+    credibilityLabel: { type: String, default: null },
+    scoreBreakdown: { type: ScoreBreakdownSchema, default: null },
+    summary: { type: String, default: null },
     claimsCount: { type: Number, default: 0 },
     verifiedCount: { type: Number, default: 0 },
     disputedCount: { type: Number, default: 0 },
     falseCount: { type: Number, default: 0 },
     unsupportedCount: { type: Number, default: 0 },
     insufficientCount: { type: Number, default: 0 },
+    avgConfidence: { type: Number, default: null },
+    avgEvidenceQuality: { type: Number, default: null },
     processingTimeMs: { type: Number, default: null },
+    pipelineVersion: { type: String, default: () => process.env.PIPELINE_VERSION ?? "1.0.0" },
     errorMessage: { type: String, default: null },
+    completedAt: { type: Date, default: null },
   },
   {
     collection: "analyses",

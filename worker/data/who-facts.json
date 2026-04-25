@@ -1,0 +1,182 @@
+[
+  {
+    "id": "who-001",
+    "text": "WHO was established on 7 April 1948.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-002",
+    "text": "WHO headquarters are in Geneva, Switzerland.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-003",
+    "text": "Measles is a highly contagious disease caused by a virus.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-004",
+    "text": "Malaria is a life-threatening disease spread to humans by some mosquitoes.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-005",
+    "text": "Tuberculosis is caused by Mycobacterium tuberculosis bacteria.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-006",
+    "text": "HIV can be transmitted through blood, breast milk, semen, and vaginal fluids.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-007",
+    "text": "Diabetes is a chronic metabolic disease characterized by elevated blood glucose.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-008",
+    "text": "Cancer is a leading cause of death worldwide.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-009",
+    "text": "Hypertension is diagnosed when blood pressure is too high.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-010",
+    "text": "Tobacco kills millions of people each year.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-011",
+    "text": "Air pollution is a major environmental risk to health.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-012",
+    "text": "Physical inactivity is a risk factor for noncommunicable diseases.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-013",
+    "text": "Antimicrobial resistance occurs when microbes no longer respond to medicines.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-014",
+    "text": "Depression is a common mental disorder.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-015",
+    "text": "Dementia affects memory, thinking, and everyday activities.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-016",
+    "text": "Obesity is abnormal or excessive fat accumulation that presents a health risk.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-017",
+    "text": "Exclusive breastfeeding is recommended for the first six months of life.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-018",
+    "text": "Vaccination is a proven tool for controlling infectious diseases.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-019",
+    "text": "Cholera is an acute diarrhoeal infection.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-020",
+    "text": "Ebola virus disease is a severe and often fatal illness in humans.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-021",
+    "text": "Rabies is a vaccine-preventable viral disease.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-022",
+    "text": "Polio is a highly infectious viral disease.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-023",
+    "text": "Hepatitis B is a viral infection that attacks the liver.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-024",
+    "text": "Hepatitis C is a liver disease caused by the hepatitis C virus.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-025",
+    "text": "Dengue is a viral infection transmitted through infected mosquitoes.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-026",
+    "text": "Yellow fever is an acute viral haemorrhagic disease transmitted by infected mosquitoes.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-027",
+    "text": "Influenza is an acute respiratory infection caused by influenza viruses.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-028",
+    "text": "COVID-19 is caused by the SARS-CoV-2 virus.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-029",
+    "text": "Safe drinking-water is essential to health.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  },
+  {
+    "id": "who-030",
+    "text": "Lead exposure can affect multiple body systems.",
+    "source": "WHO",
+    "url": "https://www.who.int/news-room/fact-sheets"
+  }
+]
