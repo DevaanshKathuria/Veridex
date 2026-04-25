@@ -9,11 +9,20 @@ const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET ?? "change_me_access";
 const REDIS_URL = process.env.REDIS_URL ?? "redis://127.0.0.1:6379";
 const SOCKET_EVENT_CHANNEL = "socket:user-events";
 
-const publisher = new IORedis(REDIS_URL, { maxRetriesPerRequest: null });
-const subscriber = new IORedis(REDIS_URL, { maxRetriesPerRequest: null });
+const publisher = new IORedis(REDIS_URL, {
+  lazyConnect: true,
+  maxRetriesPerRequest: null,
+  retryStrategy: () => null,
+});
+const subscriber = new IORedis(REDIS_URL, {
+  lazyConnect: true,
+  maxRetriesPerRequest: null,
+  retryStrategy: () => null,
+});
 
 let io: SocketIOServer | null = null;
 let subscribed = false;
+let redisWarningShown = false;
 
 type SocketPayload = {
   userId: string;
@@ -49,12 +58,27 @@ function getUserIdFromToken(token: string): string {
   return String(userId);
 }
 
+function warnRedisUnavailable(error: unknown): void {
+  if (redisWarningShown || process.env.NODE_ENV === "test") {
+    return;
+  }
+
+  const message = error instanceof Error ? error.message : "Unknown Redis error";
+  console.warn(`Redis socket bridge unavailable: ${message}`);
+  redisWarningShown = true;
+}
+
 async function ensureSubscriber(): Promise<void> {
   if (subscribed) {
     return;
   }
 
-  await subscriber.subscribe(SOCKET_EVENT_CHANNEL);
+  try {
+    await subscriber.subscribe(SOCKET_EVENT_CHANNEL);
+  } catch (error) {
+    warnRedisUnavailable(error);
+    return;
+  }
   subscriber.on("message", (channel, message) => {
     if (channel !== SOCKET_EVENT_CHANNEL || !io) {
       return;
@@ -69,6 +93,9 @@ async function ensureSubscriber(): Promise<void> {
   });
   subscribed = true;
 }
+
+publisher.on("error", warnRedisUnavailable);
+subscriber.on("error", warnRedisUnavailable);
 
 export function initSocket(server: HTTPServer): SocketIOServer {
   if (io) {
@@ -114,7 +141,11 @@ export function initSocket(server: HTTPServer): SocketIOServer {
 
 export async function emitToUser(userId: string, event: string, data: Record<string, unknown>): Promise<void> {
   const payload: SocketPayload = { userId, event, data };
-  await publisher.publish(SOCKET_EVENT_CHANNEL, JSON.stringify(payload));
+  try {
+    await publisher.publish(SOCKET_EVENT_CHANNEL, JSON.stringify(payload));
+  } catch (error) {
+    warnRedisUnavailable(error);
+  }
 }
 
 export { createServer };

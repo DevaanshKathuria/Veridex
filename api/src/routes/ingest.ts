@@ -1,6 +1,6 @@
 import { lookup } from "dns/promises";
 import { NextFunction, Request, Response, Router } from "express";
-import rateLimit from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import isLocalIp from "is-local-ip";
 import { JSDOM } from "jsdom";
 import multer from "multer";
@@ -11,6 +11,7 @@ import DocumentModel, { DocumentInputType } from "../models/Document";
 import { authMiddleware } from "../middleware/auth";
 import { validateRequest } from "../middleware/validateRequest";
 import { ingestionQueue } from "../lib/queues";
+import { AuthenticatedRequest } from "../types/auth";
 
 const { Readability } = require("@mozilla/readability") as {
   Readability: new (document: unknown) => { parse: () => null | { title?: string; textContent?: string; byline?: string } };
@@ -88,7 +89,7 @@ const ingestRateLimiter = rateLimit({
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.user?.userId ?? req.ip ?? "anonymous",
+  keyGenerator: (req) => (req as AuthenticatedRequest).user?.userId ?? ipKeyGenerator(req.ip ?? req.socket.remoteAddress ?? ""),
 });
 
 function parseDate(value: unknown): Date | null {
@@ -203,8 +204,9 @@ router.post(
   normalizeRequestBody,
   validateRequest(ingestBodySchema),
   async (req, res) => {
+    const authReq = req as AuthenticatedRequest;
     const { inputType, text, url, metadata } = req.body as z.infer<typeof ingestBodySchema>;
-    const userId = req.user!.userId;
+    const userId = authReq.user!.userId;
 
     let rawText = text?.trim() ?? "";
     let sourceUrl: string | null = null;

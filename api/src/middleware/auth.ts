@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+import { AuthenticatedRequest } from "../types/auth";
+
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET ?? "change_me_access";
 
 type AuthPayload = JwtPayload & {
@@ -10,7 +12,7 @@ type AuthPayload = JwtPayload & {
   email?: string;
 };
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
+export function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
     res.status(401).json({ message: "Missing or invalid authorization header" });
