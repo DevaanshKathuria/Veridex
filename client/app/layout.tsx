@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Navbar } from "@/components/layout/Navbar";
+import { Providers } from "@/components/layout/Providers";
+import { Toaster } from "@/components/layout/Toaster";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Veridex",
-  description: "Veridex client scaffold",
+  description: "Forensic claim verification and credibility scoring.",
 };
 
 export default function RootLayout({
@@ -26,10 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <TooltipProvider>{children}</TooltipProvider>
+      <body className={`${inter.variable} min-h-screen bg-background font-sans text-text-primary antialiased`}>
+        <Providers>
+          <Navbar />
+          <main>{children}</main>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
