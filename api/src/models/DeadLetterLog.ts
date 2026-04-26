@@ -6,6 +6,8 @@ export interface IDeadLetterLog {
   jobData: Record<string, unknown>;
   errorStack: string;
   failedAt: Date;
+  requeuedAt?: Date | null;
+  requeuedJobId?: string | null;
 }
 
 export type DeadLetterLogDocument = HydratedDocument<IDeadLetterLog>;
@@ -33,6 +35,14 @@ const DeadLetterLogSchema = new Schema<IDeadLetterLog>(
       type: Date,
       default: () => new Date(),
       required: true,
+    },
+    requeuedAt: {
+      type: Date,
+      default: null,
+    },
+    requeuedJobId: {
+      type: String,
+      default: null,
     },
   },
   {

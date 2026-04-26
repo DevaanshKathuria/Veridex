@@ -2,7 +2,7 @@ import { Job } from "bullmq";
 
 import axios from "axios";
 
-import { emitToUser } from "../lib/socket";
+import { emitToUser } from "../lib/emitToUser";
 import Analysis, { AnalysisStatus } from "../models/Analysis";
 import Document from "../models/Document";
 import PerformanceLog from "../models/PerformanceLog";
@@ -69,7 +69,7 @@ export async function processVerificationJob(job: Job): Promise<void> {
         claims: analysis.claims,
         strategy: "hybrid_reranked",
       },
-      { timeout: 60_000 },
+      { timeout: 300_000 },
     );
     const retrievalLatency = Date.now() - retrievalStart;
 

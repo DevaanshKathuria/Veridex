@@ -1,11 +1,9 @@
 import { Router } from "express";
 
-import analyzeRouter from "./analyze";
-import ingestRouter from "./ingest";
-
 const router = Router();
 
-router.use(ingestRouter);
-router.use(analyzeRouter);
+router.get("/", (_req, res) => {
+  res.status(200).json({ service: "veridex-api" });
+});
 
 export default router;

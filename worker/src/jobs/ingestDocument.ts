@@ -2,7 +2,7 @@ import { Job } from "bullmq";
 
 import axios from "axios";
 
-import { emitToUser } from "../lib/socket";
+import { emitToUser } from "../lib/emitToUser";
 import Document, { DocumentStatus } from "../models/Document";
 import IngestionLog from "../models/IngestionLog";
 

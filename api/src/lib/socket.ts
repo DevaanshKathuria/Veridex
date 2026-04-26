@@ -1,151 +1,65 @@
-import { createServer, Server as HTTPServer } from "http";
+import { Server as HTTPServer } from "http";
 
-import IORedis from "ioredis";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { Server as SocketIOServer } from "socket.io";
+import { Server } from "socket.io";
 
 const CLIENT_URL = process.env.CLIENT_URL ?? "http://localhost:3000";
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET ?? "change_me_access";
-const REDIS_URL = process.env.REDIS_URL ?? "redis://127.0.0.1:6379";
-const SOCKET_EVENT_CHANNEL = "socket:user-events";
 
-const publisher = new IORedis(REDIS_URL, {
-  lazyConnect: true,
-  maxRetriesPerRequest: null,
-  retryStrategy: () => null,
-});
-const subscriber = new IORedis(REDIS_URL, {
-  lazyConnect: true,
-  maxRetriesPerRequest: null,
-  retryStrategy: () => null,
-});
-
-let io: SocketIOServer | null = null;
-let subscribed = false;
-let redisWarningShown = false;
-
-type SocketPayload = {
-  userId: string;
-  event: string;
-  data: Record<string, unknown>;
-};
+let io: Server | null = null;
 
 type SocketJwtPayload = JwtPayload & {
-  sub?: string;
   userId?: string;
+  sub?: string;
   id?: string;
 };
 
-function extractToken(value?: string): string | null {
-  if (!value) {
-    return null;
-  }
-
-  return value.startsWith("Bearer ") ? value.slice("Bearer ".length).trim() : value.trim();
-}
-
-function getUserIdFromToken(token: string): string {
-  const decoded = jwt.verify(token, JWT_ACCESS_SECRET) as SocketJwtPayload | string;
-  if (typeof decoded === "string") {
-    throw new Error("Invalid JWT payload");
-  }
-
-  const userId = decoded.userId ?? decoded.sub ?? decoded.id;
-  if (!userId) {
-    throw new Error("Missing user id in JWT payload");
-  }
-
-  return String(userId);
-}
-
-function warnRedisUnavailable(error: unknown): void {
-  if (redisWarningShown || process.env.NODE_ENV === "test") {
-    return;
-  }
-
-  const message = error instanceof Error ? error.message : "Unknown Redis error";
-  console.warn(`Redis socket bridge unavailable: ${message}`);
-  redisWarningShown = true;
-}
-
-async function ensureSubscriber(): Promise<void> {
-  if (subscribed) {
-    return;
-  }
-
-  try {
-    await subscriber.subscribe(SOCKET_EVENT_CHANNEL);
-  } catch (error) {
-    warnRedisUnavailable(error);
-    return;
-  }
-  subscriber.on("message", (channel, message) => {
-    if (channel !== SOCKET_EVENT_CHANNEL || !io) {
-      return;
-    }
-
-    try {
-      const payload = JSON.parse(message) as SocketPayload;
-      io.to(payload.userId).emit(payload.event, payload.data);
-    } catch (error) {
-      console.error("Failed to process socket event payload", error);
-    }
-  });
-  subscribed = true;
-}
-
-publisher.on("error", warnRedisUnavailable);
-subscriber.on("error", warnRedisUnavailable);
-
-export function initSocket(server: HTTPServer): SocketIOServer {
+export function initSocket(httpServer: HTTPServer): Server {
   if (io) {
     return io;
   }
 
-  io = new SocketIOServer(server, {
-    cors: {
-      origin: CLIENT_URL,
-      credentials: true,
-    },
+  io = new Server(httpServer, {
+    cors: { origin: CLIENT_URL, credentials: true },
   });
 
   io.use((socket, next) => {
+    const token = socket.handshake.auth?.token;
+    if (typeof token !== "string" || !token.trim()) {
+      next(new Error("Unauthorized"));
+      return;
+    }
+
     try {
-      const authToken = typeof socket.handshake.auth.token === "string" ? socket.handshake.auth.token : undefined;
-      const headerToken =
-        typeof socket.handshake.headers.authorization === "string"
-          ? socket.handshake.headers.authorization
-          : undefined;
-      const token = extractToken(authToken) ?? extractToken(headerToken);
-      if (!token) {
-        next(new Error("Missing auth token"));
+      const decoded = jwt.verify(token.replace(/^Bearer\s+/i, ""), JWT_ACCESS_SECRET) as SocketJwtPayload | string;
+      if (typeof decoded === "string") {
+        next(new Error("Invalid token"));
         return;
       }
 
-      socket.data.userId = getUserIdFromToken(token);
+      const userId = decoded.userId ?? decoded.sub ?? decoded.id;
+      if (!userId) {
+        next(new Error("Invalid token"));
+        return;
+      }
+      socket.data.userId = String(userId);
       next();
-    } catch (error) {
-      next(error as Error);
+    } catch {
+      next(new Error("Invalid token"));
     }
   });
 
   io.on("connection", (socket) => {
-    const userId = String(socket.data.userId);
-    socket.join(userId);
+    const userId = socket.data.userId;
+    socket.join(`user:${userId}`);
+    socket.on("disconnect", () => undefined);
   });
-
-  void ensureSubscriber();
 
   return io;
 }
 
-export async function emitToUser(userId: string, event: string, data: Record<string, unknown>): Promise<void> {
-  const payload: SocketPayload = { userId, event, data };
-  try {
-    await publisher.publish(SOCKET_EVENT_CHANNEL, JSON.stringify(payload));
-  } catch (error) {
-    warnRedisUnavailable(error);
+export function emitToUser(userId: string, event: string, data: object): void {
+  if (io) {
+    io.to(`user:${userId}`).emit(event, data);
   }
 }
-
-export { createServer };

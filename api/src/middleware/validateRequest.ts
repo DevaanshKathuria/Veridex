@@ -6,8 +6,8 @@ export function validateRequest(schema: ZodTypeAny) {
     const result = schema.safeParse(req.body);
     if (!result.success) {
       res.status(400).json({
-        message: "Invalid request body",
-        errors: result.error.flatten(),
+        error: "Validation failed",
+        details: result.error.flatten(),
       });
       return;
     }

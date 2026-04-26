@@ -40,7 +40,7 @@ async def apply_temporal_reasoning(claim: dict[str, Any], verdict: dict[str, Any
     dated_evidence.sort(key=lambda item: item[0])
     earliest_date = dated_evidence[0][0]
     latest_date = dated_evidence[-1][0]
-    stances = {item[1].get("nliStance") for item in evidence if item.get("nliStance")}
+    stances = {item.get("nliStance") for item in evidence if item.get("nliStance")}
 
     if (latest_date - earliest_date).days > 365 and len(stances) > 1:
         return {

@@ -1,7 +1,7 @@
 import IORedis from "ioredis";
 
 const REDIS_URL = process.env.REDIS_URL ?? "redis://127.0.0.1:6379";
-const SOCKET_EVENT_CHANNEL = "socket:user-events";
+const SOCKET_EVENT_CHANNEL = "socket-events";
 
 const publisher = new IORedis(REDIS_URL, {
   maxRetriesPerRequest: null,

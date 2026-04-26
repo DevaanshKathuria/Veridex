@@ -1,13 +1,24 @@
-import { Server as HTTPServer } from "http";
+import { createServer, Server as HTTPServer } from "http";
 
+import cookieParser from "cookie-parser";
 import cors from "cors";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
 
-import routes from "./routes";
-import { createServer, initSocket } from "./lib/socket";
+import adminRouter from "./routes/admin";
+import analysesRouter from "./routes/analyses";
+import analyzeRouter from "./routes/analyze";
+import authRouter from "./routes/auth";
+import documentsRouter from "./routes/documents";
+import ingestRouter from "./routes/ingest";
+import metricsRouter from "./routes/metrics";
+import rootRouter from "./routes";
+import statsRouter from "./routes/stats";
+import { authMiddleware } from "./middleware/auth";
+import { initSocket } from "./lib/socket";
+import { startSocketBridge } from "./lib/socketBridge";
 
 export const app = express();
 
@@ -25,9 +36,9 @@ app.use(
   }),
 );
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use("/api", routes);
 
 app.get("/health", (_req, res) => {
   res.status(200).json({
@@ -35,6 +46,21 @@ app.get("/health", (_req, res) => {
     db: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
     timestamp: new Date(),
   });
+});
+
+app.use("/api/auth", authRouter);
+app.use("/api/ingest", authMiddleware, ingestRouter);
+app.use("/api/documents", authMiddleware, documentsRouter);
+app.use("/api/analyze", authMiddleware, analyzeRouter);
+app.use("/api/analyses", analysesRouter);
+app.use("/api/stats", authMiddleware, statsRouter);
+app.use("/api/admin", authMiddleware, adminRouter);
+app.use("/api/metrics", authMiddleware, metricsRouter);
+app.use("/api", rootRouter);
+
+app.use((err: Error & { status?: number }, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err);
+  res.status(err.status || 500).json({ error: err.message || "Internal server error" });
 });
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -60,6 +86,7 @@ const startServer = async (): Promise<void> => {
 
     server = createServer(app);
     initSocket(server);
+    await startSocketBridge();
 
     server.listen(PORT, () => {
       console.log(`API listening on port ${PORT}`);

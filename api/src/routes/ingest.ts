@@ -1,6 +1,5 @@
 import { lookup } from "dns/promises";
 import { NextFunction, Request, Response, Router } from "express";
-import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import isLocalIp from "is-local-ip";
 import { JSDOM } from "jsdom";
 import multer from "multer";
@@ -8,7 +7,7 @@ import axios from "axios";
 import { z } from "zod";
 
 import DocumentModel, { DocumentInputType } from "../models/Document";
-import { authMiddleware } from "../middleware/auth";
+import { ingestRateLimiter } from "../middleware/rateLimiter";
 import { validateRequest } from "../middleware/validateRequest";
 import { ingestionQueue } from "../lib/queues";
 import { AuthenticatedRequest } from "../types/auth";
@@ -83,14 +82,6 @@ const ingestBodySchema = z
       });
     }
   });
-
-const ingestRateLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req) => (req as AuthenticatedRequest).user?.userId ?? ipKeyGenerator(req.ip ?? req.socket.remoteAddress ?? ""),
-});
 
 function parseDate(value: unknown): Date | null {
   if (typeof value !== "string" || !value.trim()) {
@@ -197,8 +188,7 @@ function normalizeRequestBody(req: Request, _res: Response, next: NextFunction):
 }
 
 router.post(
-  "/ingest",
-  authMiddleware,
+  "/",
   ingestRateLimiter,
   upload.single("file"),
   normalizeRequestBody,
@@ -280,15 +270,15 @@ router.post(
       userId,
       inputType,
       rawText: inputType === "pdf_upload" ? ingestPreview.data.cleanedText : rawText,
-      cleanedText: "",
+      cleanedText: ingestPreview.data.cleanedText,
       sourceUrl,
       sourceTitle,
       sourceAuthor,
       sourceDate,
-      language: "unknown",
-      charCount: 0,
-      sentenceCount: 0,
-      sentences: [],
+      language: ingestPreview.data.language,
+      charCount: ingestPreview.data.charCount,
+      sentenceCount: ingestPreview.data.sentenceCount,
+      sentences: ingestPreview.data.sentences,
       status: "PENDING",
       contentHash: ingestPreview.data.contentHash,
       errorMessage: null,

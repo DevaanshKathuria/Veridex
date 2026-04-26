@@ -28,6 +28,7 @@
     "axios": "^1.15.2",
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.76.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-async-errors": "^3.1.1",
@@ -41,9 +42,13 @@
     "morgan": "^1.10.1",
     "multer": "^2.1.1",
     "nodemon": "^3.1.14",
+    "rate-limit-redis": "^4.3.1",
     "socket.io": "^4.8.3",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10"
   }
 }

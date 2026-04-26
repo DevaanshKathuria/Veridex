@@ -1,26 +1,17 @@
 import { Router } from "express";
-import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import axios from "axios";
 import { z } from "zod";
 
 import Analysis from "../models/Analysis";
 import Document from "../models/Document";
 import User from "../models/User";
-import { authMiddleware } from "../middleware/auth";
+import { analyzeRateLimiter } from "../middleware/rateLimiter";
 import { validateRequest } from "../middleware/validateRequest";
 import { verificationQueue } from "../lib/queues";
 import { AuthenticatedRequest } from "../types/auth";
 
 const router = Router();
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL ?? "http://localhost:8000";
-
-const analyzeRateLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 20,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req) => (req as AuthenticatedRequest).user?.userId ?? ipKeyGenerator(req.ip ?? req.socket.remoteAddress ?? ""),
-});
 
 const analyzeBodySchema = z.object({
   documentId: z.string().min(1),
@@ -32,8 +23,7 @@ const isSameDay = (left: Date, right: Date): boolean =>
   && left.getDate() === right.getDate();
 
 router.post(
-  "/analyze",
-  authMiddleware,
+  "/",
   analyzeRateLimiter,
   validateRequest(analyzeBodySchema),
   async (req, res) => {
@@ -132,49 +122,5 @@ router.post(
     res.status(201).json({ analysisId: analysis._id });
   },
 );
-
-router.get("/analyses", authMiddleware, async (req, res) => {
-  const authReq = req as AuthenticatedRequest;
-  const userId = authReq.user!.userId;
-  const page = Math.max(Number(req.query.page ?? 1), 1);
-  const limit = Math.min(Math.max(Number(req.query.limit ?? 10), 1), 50);
-  const skip = (page - 1) * limit;
-
-  const [items, total] = await Promise.all([
-    Analysis.find({ userId })
-      .select("-claims -manipulationTactics")
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit),
-    Analysis.countDocuments({ userId }),
-  ]);
-
-  res.status(200).json({
-    items,
-    pagination: {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    },
-  });
-});
-
-router.get("/analyses/:id", authMiddleware, async (req, res) => {
-  const authReq = req as AuthenticatedRequest;
-  const userId = authReq.user!.userId;
-
-  const analysis = await Analysis.findOne({
-    _id: req.params.id,
-    userId,
-  });
-
-  if (!analysis) {
-    res.status(404).json({ message: "Analysis not found" });
-    return;
-  }
-
-  res.status(200).json(analysis);
-});
 
 export default router;
