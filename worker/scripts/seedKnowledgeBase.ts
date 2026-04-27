@@ -8,6 +8,37 @@ import axios from "axios";
 import IORedis from "ioredis";
 import mongoose from "mongoose";
 
+function loadEnv(): void {
+  const candidates = [path.resolve(process.cwd(), ".env"), path.resolve(process.cwd(), "..", ".env")];
+  for (const filePath of candidates) {
+    try {
+      const contents = require("node:fs").readFileSync(filePath, "utf8") as string;
+      for (const line of contents.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) continue;
+        const [key, ...parts] = trimmed.split("=");
+        if (process.env[key] === undefined) process.env[key] = parts.join("=").replace(/^['"]|['"]$/g, "");
+      }
+    } catch {
+      // Ignore missing .env files; Docker Compose injects env directly.
+    }
+  }
+  if (!require("node:fs").existsSync("/.dockerenv")) {
+    const replacements: Record<string, [string, string]> = {
+      MONGODB_URI: ["mongodb://mongodb:", "mongodb://127.0.0.1:"],
+      REDIS_URL: ["redis://redis:", "redis://127.0.0.1:"],
+      ML_SERVICE_URL: ["http://ml:", "http://127.0.0.1:"],
+      ELASTICSEARCH_URL: ["http://elasticsearch:", "http://127.0.0.1:"],
+    };
+    for (const [key, [from, to]] of Object.entries(replacements)) {
+      const value = process.env[key];
+      if (value?.startsWith(from)) process.env[key] = value.replace(from, to);
+    }
+  }
+}
+
+loadEnv();
+
 type SeedChunk = {
   chunkId: string;
   chunkText: string;

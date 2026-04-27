@@ -1,0 +1,42 @@
+{
+  "datasetSize": 30,
+  "improvement": {
+    "bestStrategy": "hybrid",
+    "mrrImprovementPct": 191.2,
+    "recallAt5ImprovementPct": 50.000000000000014
+  },
+  "rows": [
+    {
+      "mrr": 0.2976190476190476,
+      "ndcg@5": 0.39823074631971933,
+      "recall@5": 0.6666666666666666,
+      "strategy": "dense_only",
+      "usedFallbackRanking": true,
+      "verifyAcc": 1.0
+    },
+    {
+      "mrr": 0.7833333333333333,
+      "ndcg@5": 0.814128343791064,
+      "recall@5": 0.9,
+      "strategy": "bm25_only",
+      "usedFallbackRanking": true,
+      "verifyAcc": 1.0
+    },
+    {
+      "mrr": 0.8666666666666667,
+      "ndcg@5": 0.9141283437910641,
+      "recall@5": 1.0,
+      "strategy": "hybrid",
+      "usedFallbackRanking": true,
+      "verifyAcc": 1.0
+    },
+    {
+      "mrr": 1.0,
+      "ndcg@5": 1.0,
+      "recall@5": 1.0,
+      "strategy": "hybrid_reranked",
+      "usedFallbackRanking": true,
+      "verifyAcc": 1.0
+    }
+  ]
+}

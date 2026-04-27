@@ -1,0 +1,20 @@
+{
+  "estimatedCostUsd": 0.8938,
+  "judgmentLatencyMs": {
+    "p50": 5950.5,
+    "p95": 6625.95
+  },
+  "meanCacheHitRate": 0.297,
+  "openaiTokensUsed": 178760,
+  "retrievalLatencyMs": {
+    "p50": 4713.5,
+    "p95": 5175.65
+  },
+  "sampleSize": 80,
+  "throughputAnalysesPerHour": 80,
+  "totalLatencyMs": {
+    "p50": 15656.5,
+    "p95": 17327.350000000002
+  },
+  "usedFixtureData": true
+}

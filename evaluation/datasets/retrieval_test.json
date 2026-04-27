@@ -1,0 +1,438 @@
+[
+  {
+    "id": "ret-001",
+    "claim": "The capital of Germany is Berlin.",
+    "claimType": "identity",
+    "groundTruthChunkIds": [
+      "wiki-germany-001",
+      "wiki-berlin-001"
+    ],
+    "relevantKeywords": [
+      "Germany",
+      "Berlin",
+      "capital"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-002",
+    "claim": "The capital of Japan is Tokyo.",
+    "claimType": "identity",
+    "groundTruthChunkIds": [
+      "wiki-japan-001",
+      "wiki-tokyo-001"
+    ],
+    "relevantKeywords": [
+      "Japan",
+      "Tokyo",
+      "capital"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-003",
+    "claim": "The Nile flows through Egypt.",
+    "claimType": "geographic",
+    "groundTruthChunkIds": [
+      "wiki-nile-001",
+      "wiki-egypt-001"
+    ],
+    "relevantKeywords": [
+      "Nile",
+      "Egypt",
+      "river"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-004",
+    "claim": "Mount Everest is located in the Himalayas.",
+    "claimType": "geographic",
+    "groundTruthChunkIds": [
+      "wiki-everest-001",
+      "wiki-himalayas-001"
+    ],
+    "relevantKeywords": [
+      "Everest",
+      "Himalayas"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-005",
+    "claim": "Canberra is the capital of Australia.",
+    "claimType": "identity",
+    "groundTruthChunkIds": [
+      "wiki-australia-001",
+      "wiki-canberra-001"
+    ],
+    "relevantKeywords": [
+      "Australia",
+      "Canberra",
+      "capital"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-006",
+    "claim": "The Amazon River passes through Brazil.",
+    "claimType": "geographic",
+    "groundTruthChunkIds": [
+      "wiki-amazon-river-001",
+      "wiki-brazil-001"
+    ],
+    "relevantKeywords": [
+      "Amazon",
+      "Brazil"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-007",
+    "claim": "Apple reported $383 billion in revenue for fiscal year 2023.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "company-apple-2023-001",
+      "apple-10k-2023-001"
+    ],
+    "relevantKeywords": [
+      "Apple",
+      "383 billion",
+      "2023"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-008",
+    "claim": "Tesla delivered more than 1.8 million vehicles in 2023.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "company-tesla-2023-001",
+      "tesla-deliveries-2023-001"
+    ],
+    "relevantKeywords": [
+      "Tesla",
+      "1.8 million",
+      "deliveries"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-009",
+    "claim": "India's real GDP growth was 8.2 percent in fiscal year 2023-24.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "worldbank-india-gdp-001",
+      "mospi-india-2024-001"
+    ],
+    "relevantKeywords": [
+      "India",
+      "GDP",
+      "8.2"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-010",
+    "claim": "The United States population exceeded 330 million in the 2020 census.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "us-census-2020-001",
+      "wiki-united-states-001"
+    ],
+    "relevantKeywords": [
+      "United States",
+      "population",
+      "330 million"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-011",
+    "claim": "Global atmospheric CO2 exceeded 420 ppm in 2023.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "noaa-co2-2023-001",
+      "climate-co2-001"
+    ],
+    "relevantKeywords": [
+      "CO2",
+      "420 ppm",
+      "2023"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-012",
+    "claim": "The WHO declared COVID-19 a pandemic on March 11, 2020.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "who-covid-pandemic-001",
+      "wiki-covid-pandemic-001"
+    ],
+    "relevantKeywords": [
+      "WHO",
+      "COVID-19",
+      "pandemic"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-013",
+    "claim": "Japan hosted the Summer Olympics in 1964.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "wiki-1964-olympics-001",
+      "wiki-japan-001"
+    ],
+    "relevantKeywords": [
+      "Japan",
+      "1964",
+      "Olympics"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-014",
+    "claim": "The Treaty of Versailles was signed in 1919.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "wiki-versailles-001",
+      "history-wwi-001"
+    ],
+    "relevantKeywords": [
+      "Treaty of Versailles",
+      "1919"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-015",
+    "claim": "The Berlin Wall fell in 1989.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "wiki-berlin-wall-001",
+      "history-cold-war-001"
+    ],
+    "relevantKeywords": [
+      "Berlin Wall",
+      "1989"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-016",
+    "claim": "The United Nations was founded in 1945.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "wiki-un-001",
+      "un-history-001"
+    ],
+    "relevantKeywords": [
+      "United Nations",
+      "1945"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-017",
+    "claim": "Apollo 11 landed humans on the Moon in 1969.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "nasa-apollo11-001",
+      "wiki-apollo11-001"
+    ],
+    "relevantKeywords": [
+      "Apollo 11",
+      "Moon",
+      "1969"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-018",
+    "claim": "The speed of light is 299,792,458 meters per second.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "nist-speed-light-001",
+      "wiki-speed-light-001"
+    ],
+    "relevantKeywords": [
+      "speed of light",
+      "299792458"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-019",
+    "claim": "Water boils at 100 degrees Celsius at standard pressure.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "nist-water-boiling-001",
+      "wiki-water-001"
+    ],
+    "relevantKeywords": [
+      "water",
+      "100 Celsius",
+      "pressure"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-020",
+    "claim": "Carbon dioxide is a greenhouse gas.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "epa-greenhouse-gases-001",
+      "wiki-carbon-dioxide-001"
+    ],
+    "relevantKeywords": [
+      "carbon dioxide",
+      "greenhouse gas"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-021",
+    "claim": "The human genome contains about 3 billion base pairs.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "nih-human-genome-001",
+      "wiki-human-genome-001"
+    ],
+    "relevantKeywords": [
+      "human genome",
+      "3 billion"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-022",
+    "claim": "mRNA vaccines use messenger RNA to instruct cells to make a protein.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "cdc-mrna-vaccine-001",
+      "who-vaccines-001"
+    ],
+    "relevantKeywords": [
+      "mRNA",
+      "vaccines",
+      "protein"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-023",
+    "claim": "Gold has the chemical symbol Au.",
+    "claimType": "scientific",
+    "groundTruthChunkIds": [
+      "nist-gold-001",
+      "wiki-gold-001"
+    ],
+    "relevantKeywords": [
+      "gold",
+      "Au"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-024",
+    "claim": "Microsoft owns LinkedIn.",
+    "claimType": "company_identity",
+    "groundTruthChunkIds": [
+      "company-microsoft-linkedin-001",
+      "wiki-linkedin-001"
+    ],
+    "relevantKeywords": [
+      "Microsoft",
+      "LinkedIn"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-025",
+    "claim": "Alphabet is Google's parent company.",
+    "claimType": "company_identity",
+    "groundTruthChunkIds": [
+      "company-alphabet-001",
+      "wiki-google-001"
+    ],
+    "relevantKeywords": [
+      "Alphabet",
+      "Google"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-026",
+    "claim": "Nvidia is headquartered in Santa Clara, California.",
+    "claimType": "company_identity",
+    "groundTruthChunkIds": [
+      "company-nvidia-001",
+      "wiki-nvidia-001"
+    ],
+    "relevantKeywords": [
+      "Nvidia",
+      "Santa Clara"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-027",
+    "claim": "OpenAI released ChatGPT in 2022.",
+    "claimType": "company_identity",
+    "groundTruthChunkIds": [
+      "company-openai-chatgpt-001",
+      "wiki-chatgpt-001"
+    ],
+    "relevantKeywords": [
+      "OpenAI",
+      "ChatGPT",
+      "2022"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-028",
+    "claim": "The euro was launched as an electronic currency in 1999.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "ecb-euro-history-001",
+      "wiki-euro-001"
+    ],
+    "relevantKeywords": [
+      "euro",
+      "1999"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-029",
+    "claim": "The International Monetary Fund was created in 1944.",
+    "claimType": "historical",
+    "groundTruthChunkIds": [
+      "imf-history-001",
+      "wiki-imf-001"
+    ],
+    "relevantKeywords": [
+      "IMF",
+      "1944"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  },
+  {
+    "id": "ret-030",
+    "claim": "The World Bank publishes GDP data for member countries.",
+    "claimType": "statistic",
+    "groundTruthChunkIds": [
+      "worldbank-data-001",
+      "worldbank-gdp-001"
+    ],
+    "relevantKeywords": [
+      "World Bank",
+      "GDP",
+      "data"
+    ],
+    "expectedRetrievalStrategy": "hybrid_reranked"
+  }
+]

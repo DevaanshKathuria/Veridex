@@ -1,0 +1,223 @@
+[
+  {
+    "id": "man-001",
+    "text": "This disastrous policy has already destroyed household budgets. The official inflation report shows prices rose again, and families are being crushed.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "emotional_language"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-002",
+    "text": "The corrupt minister announced a new contract while unemployment remained high. Citizens deserve the truth.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "emotional_language",
+        "ad_hominem"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-003",
+    "text": "The company posted a quarterly loss, proving its reckless leaders are ruining the business.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "emotional_language"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-004",
+    "text": "Crime rose 4 percent last year, and the city is becoming a nightmare for ordinary residents.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "emotional_language"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-005",
+    "text": "The hospital closed two wards, leaving vulnerable patients abandoned by a failed system.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "emotional_language"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-006",
+    "text": "BREAKING: The biggest tax hike in history is coming for every family!! The proposal raises several fees next year.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "sensational_framing"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-007",
+    "text": "BOMBSHELL documents show the agency missed its deadline. Officials released the timeline on Monday.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "sensational_framing"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-008",
+    "text": "SHOCKING numbers reveal the worst downturn since 2020. Retail sales fell for two months.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "sensational_framing"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-009",
+    "text": "The report proves a TOTAL collapse is underway!! Output declined in one sector.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "sensational_framing"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-010",
+    "text": "It is clear that the vaccine is dangerous despite limited evidence from the cited study.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "certainty_inflation"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-011",
+    "text": "Obviously the mayor lied about the budget because revenue estimates changed in April.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "certainty_inflation"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-012",
+    "text": "Without doubt, the new trade deal will destroy local farms, although the tariff data is preliminary.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "certainty_inflation"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-013",
+    "text": "The data undeniably proves remote work failed, but the survey covered only one firm.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "certainty_inflation"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-014",
+    "text": "You are either with the reformers or against the country. If we do not pass this bill, chaos will follow.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "false_dilemma"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-015",
+    "text": "Either the platform bans anonymous accounts or democracy will collapse. There is no middle ground.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "false_dilemma"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-016",
+    "text": "If we do not approve the project now, the entire region will be ruined.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "false_dilemma"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-017",
+    "text": "Act now before it's too late. Share this warning immediately because contaminated water could kill children.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "fear_appeal"
+      ],
+      "manipulationLabel": "High"
+    }
+  },
+  {
+    "id": "man-018",
+    "text": "Buy protection now before disaster strikes. Officials reported a rise in burglaries.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "fear_appeal"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-019",
+    "text": "The city says traffic deaths fell after the camera program began. The text omits that road redesigns were introduced at the same time.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "missing_context"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  },
+  {
+    "id": "man-020",
+    "text": "A school reports higher test scores after adopting tablets. The passage omits that the student population changed substantially.",
+    "groundTruth": {
+      "hasManipulation": true,
+      "tactics": [
+        "missing_context"
+      ],
+      "manipulationLabel": "Moderate"
+    }
+  }
+]
