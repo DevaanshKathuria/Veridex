@@ -4,8 +4,9 @@ import time
 
 from elasticsearch import AsyncElasticsearch
 from fastapi import FastAPI
+from pinecone import Pinecone
 
-from app.cache import ping as redis_ping
+from app.cache import ping as redis_ping, redis
 from app.pipeline.extract_claims import ExtractRequest, extract_claims
 from app.pipeline.ingest import IngestRequest, process_ingest
 from app.pipeline.manipulation import ManipulationRequest, detect_manipulation
@@ -20,43 +21,70 @@ EVIDENCE_INDEX_NAME = "veridex-evidence"
 
 
 @app.on_event("startup")
-async def ensure_elasticsearch_index() -> None:
+async def validate_environment_and_services() -> None:
+    required = ["OPENAI_API_KEY", "PINECONE_API_KEY", "ELASTICSEARCH_URL", "REDIS_URL"]
+    missing = [key for key in required if not os.environ.get(key)]
+    if missing:
+        raise RuntimeError(f"Missing required env var(s): {', '.join(missing)}")
+
+    failures: list[str] = []
+    try:
+        await redis.ping()
+    except Exception as exc:
+        failures.append(f"Redis: {exc}")
+
+    try:
+        pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
+        pc.list_indexes()
+    except Exception as exc:
+        failures.append(f"Pinecone: {exc}")
+
     es = AsyncElasticsearch([ELASTICSEARCH_URL])
     try:
-        exists = False
-        last_error: Exception | None = None
-        for _ in range(12):
-            try:
-                exists = await es.indices.exists(index=EVIDENCE_INDEX_NAME)
-                last_error = None
-                break
-            except Exception as exc:
-                last_error = exc
-                await asyncio.sleep(5)
-        if last_error:
-            raise last_error
+        try:
+            exists = False
+            last_error: Exception | None = None
+            for _ in range(12):
+                try:
+                    exists = await es.indices.exists(index=EVIDENCE_INDEX_NAME)
+                    last_error = None
+                    break
+                except Exception as exc:
+                    last_error = exc
+                    await asyncio.sleep(5)
+            if last_error:
+                raise last_error
 
-        if not exists:
-            await es.indices.create(
-                index=EVIDENCE_INDEX_NAME,
-                body={
-                    "mappings": {
-                        "properties": {
-                            "chunkId": {"type": "keyword"},
-                            "chunkText": {"type": "text", "analyzer": "english"},
-                            "source": {"type": "keyword"},
-                            "sourceType": {"type": "keyword"},
-                            "sourceUrl": {"type": "keyword"},
-                            "reliabilityTier": {"type": "integer"},
-                            "publicationDate": {"type": "date"},
-                            "topicTags": {"type": "keyword"},
-                            "language": {"type": "keyword"},
+            if not exists:
+                await es.indices.create(
+                    index=EVIDENCE_INDEX_NAME,
+                    body={
+                        "mappings": {
+                            "properties": {
+                                "chunkId": {"type": "keyword"},
+                                "chunkText": {"type": "text", "analyzer": "english"},
+                                "source": {"type": "keyword"},
+                                "sourceType": {"type": "keyword"},
+                                "sourceUrl": {"type": "keyword"},
+                                "reliabilityTier": {"type": "integer"},
+                                "publicationDate": {"type": "date"},
+                                "topicTags": {"type": "keyword"},
+                                "language": {"type": "keyword"},
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+        except Exception as exc:
+            failures.append(f"Elasticsearch: {exc}")
     finally:
         await es.close()
+
+    if failures:
+        for failure in failures:
+            print(f"External service connection failed: {failure}")
+        raise RuntimeError("One or more external services failed startup validation")
+
+    print("All external services connected")
 
 
 @app.get("/health")

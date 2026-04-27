@@ -3,6 +3,7 @@ import IORedis from "ioredis";
 import mongoose from "mongoose";
 import pino from "pino";
 
+import "./lib/loadEnv";
 import { processIngestionJob } from "./jobs/ingestDocument";
 import { processVerificationJob } from "./jobs/verifyDocument";
 import { createDeadLetterWorker, deadLetterQueue } from "./queues/deadLetterQueue";

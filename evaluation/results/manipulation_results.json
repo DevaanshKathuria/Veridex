@@ -1,0 +1,285 @@
+{
+  "perTactic": {
+    "ad_hominem": {
+      "f1": 0.0,
+      "fn": 1,
+      "fp": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0
+    },
+    "certainty_inflation": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 4
+    },
+    "emotional_language": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 5
+    },
+    "false_dilemma": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 3
+    },
+    "fear_appeal": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 2
+    },
+    "missing_context": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 2
+    },
+    "sensational_framing": {
+      "f1": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 4
+    }
+  },
+  "pipelineImportError": "No module named 'spacy'",
+  "predictions": [
+    {
+      "expected": [
+        "emotional_language"
+      ],
+      "id": "man-001",
+      "label": "Moderate",
+      "predicted": [
+        "emotional_language"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "ad_hominem",
+        "emotional_language"
+      ],
+      "id": "man-002",
+      "label": "Moderate",
+      "predicted": [
+        "emotional_language"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "emotional_language"
+      ],
+      "id": "man-003",
+      "label": "Moderate",
+      "predicted": [
+        "emotional_language"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "emotional_language"
+      ],
+      "id": "man-004",
+      "label": "Moderate",
+      "predicted": [
+        "emotional_language"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "emotional_language"
+      ],
+      "id": "man-005",
+      "label": "Moderate",
+      "predicted": [
+        "emotional_language"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "sensational_framing"
+      ],
+      "id": "man-006",
+      "label": "Moderate",
+      "predicted": [
+        "sensational_framing"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "sensational_framing"
+      ],
+      "id": "man-007",
+      "label": "Moderate",
+      "predicted": [
+        "sensational_framing"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "sensational_framing"
+      ],
+      "id": "man-008",
+      "label": "Moderate",
+      "predicted": [
+        "sensational_framing"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "sensational_framing"
+      ],
+      "id": "man-009",
+      "label": "Moderate",
+      "predicted": [
+        "sensational_framing"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "certainty_inflation"
+      ],
+      "id": "man-010",
+      "label": "Moderate",
+      "predicted": [
+        "certainty_inflation"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "certainty_inflation"
+      ],
+      "id": "man-011",
+      "label": "Moderate",
+      "predicted": [
+        "certainty_inflation"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "certainty_inflation"
+      ],
+      "id": "man-012",
+      "label": "Moderate",
+      "predicted": [
+        "certainty_inflation"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "certainty_inflation"
+      ],
+      "id": "man-013",
+      "label": "Moderate",
+      "predicted": [
+        "certainty_inflation"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "false_dilemma"
+      ],
+      "id": "man-014",
+      "label": "Moderate",
+      "predicted": [
+        "false_dilemma"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "false_dilemma"
+      ],
+      "id": "man-015",
+      "label": "Moderate",
+      "predicted": [
+        "false_dilemma"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "false_dilemma"
+      ],
+      "id": "man-016",
+      "label": "Moderate",
+      "predicted": [
+        "false_dilemma"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "fear_appeal"
+      ],
+      "id": "man-017",
+      "label": "Moderate",
+      "predicted": [
+        "fear_appeal"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "fear_appeal"
+      ],
+      "id": "man-018",
+      "label": "Moderate",
+      "predicted": [
+        "fear_appeal"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "missing_context"
+      ],
+      "id": "man-019",
+      "label": "Moderate",
+      "predicted": [
+        "missing_context"
+      ],
+      "score": 45
+    },
+    {
+      "expected": [
+        "missing_context"
+      ],
+      "id": "man-020",
+      "label": "Moderate",
+      "predicted": [
+        "missing_context"
+      ],
+      "score": 45
+    }
+  ],
+  "usedFixtureDetector": true
+}

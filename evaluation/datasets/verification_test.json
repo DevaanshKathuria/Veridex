@@ -1,0 +1,322 @@
+[
+  {
+    "id": "ver-001",
+    "claim": "The speed of light is approximately 300,000 km/s.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "scientific",
+    "difficulty": "easy",
+    "notes": "Rounded value of a physical constant."
+  },
+  {
+    "id": "ver-002",
+    "claim": "Paris is the capital of France.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "identity",
+    "difficulty": "easy",
+    "notes": "Common geographic fact."
+  },
+  {
+    "id": "ver-003",
+    "claim": "The United Nations was founded in 1945.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "historical",
+    "difficulty": "easy",
+    "notes": "UN Charter entered into force in 1945."
+  },
+  {
+    "id": "ver-004",
+    "claim": "Water freezes at 0 degrees Celsius at standard atmospheric pressure.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "scientific",
+    "difficulty": "easy",
+    "notes": "Standard physical property."
+  },
+  {
+    "id": "ver-005",
+    "claim": "The Berlin Wall fell in 1989.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "historical",
+    "difficulty": "easy",
+    "notes": "Established Cold War event."
+  },
+  {
+    "id": "ver-006",
+    "claim": "Microsoft owns LinkedIn.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "company_identity",
+    "difficulty": "easy",
+    "notes": "Microsoft completed the LinkedIn acquisition in 2016."
+  },
+  {
+    "id": "ver-007",
+    "claim": "The WHO was founded in 1948.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "historical",
+    "difficulty": "easy",
+    "notes": "WHO constitution came into force in 1948."
+  },
+  {
+    "id": "ver-008",
+    "claim": "Gold has the chemical symbol Au.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "scientific",
+    "difficulty": "easy",
+    "notes": "Periodic table fact."
+  },
+  {
+    "id": "ver-009",
+    "claim": "Apollo 11 landed humans on the Moon in 1969.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "historical",
+    "difficulty": "easy",
+    "notes": "NASA mission history."
+  },
+  {
+    "id": "ver-010",
+    "claim": "Canberra is the capital of Australia.",
+    "groundTruthVerdict": "VERIFIED",
+    "claimType": "identity",
+    "difficulty": "easy",
+    "notes": "Capital city fact."
+  },
+  {
+    "id": "ver-011",
+    "claim": "The Great Wall of China is visible from space with the naked eye.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Common myth contradicted by NASA and astronaut accounts."
+  },
+  {
+    "id": "ver-012",
+    "claim": "Humans only use 10% of their brain.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Neuroscience myth."
+  },
+  {
+    "id": "ver-013",
+    "claim": "Vaccines cause autism.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Rejected by large epidemiological studies."
+  },
+  {
+    "id": "ver-014",
+    "claim": "Antibiotics kill viruses.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Antibiotics treat bacterial infections."
+  },
+  {
+    "id": "ver-015",
+    "claim": "Cracking knuckles causes arthritis.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Common medical myth."
+  },
+  {
+    "id": "ver-016",
+    "claim": "Lightning never strikes the same place twice.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Lightning can repeatedly strike tall structures."
+  },
+  {
+    "id": "ver-017",
+    "claim": "The Earth is flat.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "easy",
+    "notes": "Contradicted by extensive scientific evidence."
+  },
+  {
+    "id": "ver-018",
+    "claim": "Sugar causes hyperactivity in children.",
+    "groundTruthVerdict": "FALSE",
+    "claimType": "known_falsehood",
+    "difficulty": "medium",
+    "notes": "Popular claim not supported by controlled studies."
+  },
+  {
+    "id": "ver-019",
+    "claim": "Remote work increases productivity for most software teams.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "workplace",
+    "difficulty": "medium",
+    "notes": "Studies vary by role, measurement, and organizational context."
+  },
+  {
+    "id": "ver-020",
+    "claim": "Universal basic income reduces poverty without reducing labor participation.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "policy",
+    "difficulty": "hard",
+    "notes": "Evidence differs across pilots and contexts."
+  },
+  {
+    "id": "ver-021",
+    "claim": "Nuclear power is the safest scalable energy source.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "energy",
+    "difficulty": "hard",
+    "notes": "Depends on risk metric and lifecycle framing."
+  },
+  {
+    "id": "ver-022",
+    "claim": "Social media use is the primary cause of adolescent depression.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "health",
+    "difficulty": "hard",
+    "notes": "Associations exist but causality and magnitude are debated."
+  },
+  {
+    "id": "ver-023",
+    "claim": "Raising minimum wages causes job losses.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "economic",
+    "difficulty": "hard",
+    "notes": "Empirical findings vary by labor market and policy size."
+  },
+  {
+    "id": "ver-024",
+    "claim": "Charter schools outperform public schools.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "education",
+    "difficulty": "medium",
+    "notes": "Performance varies across regions and operators."
+  },
+  {
+    "id": "ver-025",
+    "claim": "Artificial sweeteners help with long-term weight loss.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "health",
+    "difficulty": "medium",
+    "notes": "Clinical and observational evidence is mixed."
+  },
+  {
+    "id": "ver-026",
+    "claim": "Carbon capture will be cost-effective enough to meet 2050 climate targets.",
+    "groundTruthVerdict": "DISPUTED",
+    "claimType": "climate",
+    "difficulty": "hard",
+    "notes": "Future cost and deployment assumptions remain contested."
+  },
+  {
+    "id": "ver-027",
+    "claim": "A 2017 municipal audit in Latur found that ward-level streetlight repairs averaged 38 hours.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "local_government",
+    "difficulty": "hard",
+    "notes": "Specific local statistic likely absent from the seeded KB."
+  },
+  {
+    "id": "ver-028",
+    "claim": "The 1998 annual report of a small Kerala cooperative listed 17,432 active members.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "obscure_statistic",
+    "difficulty": "hard",
+    "notes": "Highly specific archival claim."
+  },
+  {
+    "id": "ver-029",
+    "claim": "A 2011 field survey counted 284 mature tamarind trees along a district road in Karnataka.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "local_environment",
+    "difficulty": "hard",
+    "notes": "Narrow local survey claim."
+  },
+  {
+    "id": "ver-030",
+    "claim": "A 2004 museum catalog recorded 73 bronze lamps in a private temple collection in Thanjavur.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "archive",
+    "difficulty": "hard",
+    "notes": "Specific catalog inventory claim."
+  },
+  {
+    "id": "ver-031",
+    "claim": "A local newspaper reported that three footbridges opened in Shillong in July 1996.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "local_history",
+    "difficulty": "hard",
+    "notes": "May require local newspaper archives."
+  },
+  {
+    "id": "ver-032",
+    "claim": "A 2019 procurement notice in Nagpur specified 14 solar-powered bus shelters.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "procurement",
+    "difficulty": "hard",
+    "notes": "Specific procurement detail."
+  },
+  {
+    "id": "ver-033",
+    "claim": "A small clinical trial in Pune in 2006 enrolled exactly 42 patients for a herbal cough syrup study.",
+    "groundTruthVerdict": "UNSUPPORTED",
+    "claimType": "clinical",
+    "difficulty": "hard",
+    "notes": "Very specific study claim."
+  },
+  {
+    "id": "ver-034",
+    "claim": "An unreleased internal memo from a private bank says its fraud losses doubled last week.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "private_document",
+    "difficulty": "hard",
+    "notes": "Private unreleased source cannot be verified from public evidence."
+  },
+  {
+    "id": "ver-035",
+    "claim": "A confidential cabinet note states that a new tax will be announced next month.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "private_document",
+    "difficulty": "hard",
+    "notes": "Future confidential policy claim."
+  },
+  {
+    "id": "ver-036",
+    "claim": "A private meeting between two CEOs finalized a merger that has not been announced.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "business",
+    "difficulty": "hard",
+    "notes": "No public evidence should exist."
+  },
+  {
+    "id": "ver-037",
+    "claim": "A lab has achieved room-temperature superconductivity but has not released data.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "scientific",
+    "difficulty": "hard",
+    "notes": "Extraordinary unpublished claim."
+  },
+  {
+    "id": "ver-038",
+    "claim": "A celebrity privately donated $5 million yesterday without any public record.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "private_event",
+    "difficulty": "hard",
+    "notes": "Specific private donation."
+  },
+  {
+    "id": "ver-039",
+    "claim": "An undisclosed security flaw currently affects every major bank in Europe.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "cybersecurity",
+    "difficulty": "hard",
+    "notes": "Broad but unsupported undisclosed security claim."
+  },
+  {
+    "id": "ver-040",
+    "claim": "A prototype drug cured all participants in a trial whose results remain unpublished.",
+    "groundTruthVerdict": "INSUFFICIENT_EVIDENCE",
+    "claimType": "health",
+    "difficulty": "hard",
+    "notes": "Unpublished trial outcome."
+  }
+]

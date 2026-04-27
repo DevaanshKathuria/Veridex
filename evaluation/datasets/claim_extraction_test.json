@@ -1,0 +1,692 @@
+[
+  {
+    "id": "ext-001",
+    "sentence": "Apple's revenue reached $383 billion in fiscal year 2023.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Apple's revenue reached $383 billion in fiscal year 2023.",
+          "claimType": "statistic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-002",
+    "sentence": "The speed of light in vacuum is exactly 299,792,458 meters per second.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The speed of light in vacuum is exactly 299,792,458 meters per second.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-003",
+    "sentence": "Paris is the capital of France.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Paris is the capital of France.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-004",
+    "sentence": "The United Nations was founded in 1945.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The United Nations was founded in 1945.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-005",
+    "sentence": "Mount Everest rises about 8,849 meters above sea level.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Mount Everest rises about 8,849 meters above sea level.",
+          "claimType": "statistic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-006",
+    "sentence": "The WHO declared COVID-19 a pandemic on March 11, 2020.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The WHO declared COVID-19 a pandemic on March 11, 2020.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-007",
+    "sentence": "Water freezes at 0 degrees Celsius at standard atmospheric pressure.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Water freezes at 0 degrees Celsius at standard atmospheric pressure.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-008",
+    "sentence": "The euro is used by many members of the European Union.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The euro is used by many members of the European Union.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-009",
+    "sentence": "The Amazon River flows through Brazil.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Amazon River flows through Brazil.",
+          "claimType": "geographic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-010",
+    "sentence": "The first iPhone was introduced by Apple in 2007.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The first iPhone was introduced by Apple in 2007.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-011",
+    "sentence": "The Pacific Ocean is the largest ocean on Earth.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Pacific Ocean is the largest ocean on Earth.",
+          "claimType": "geographic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-012",
+    "sentence": "The chemical symbol for gold is Au.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The chemical symbol for gold is Au.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-013",
+    "sentence": "The Federal Reserve is the central bank of the United States.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Federal Reserve is the central bank of the United States.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-014",
+    "sentence": "The Suez Canal connects the Mediterranean Sea and the Red Sea.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Suez Canal connects the Mediterranean Sea and the Red Sea.",
+          "claimType": "geographic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-015",
+    "sentence": "Japan hosted the Summer Olympics in 1964 and 2021.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Japan hosted the Summer Olympics in 1964 and 2021.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-016",
+    "sentence": "The human genome contains about 3 billion base pairs.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The human genome contains about 3 billion base pairs.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-017",
+    "sentence": "The World Bank classifies economies by gross national income per capita.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The World Bank classifies economies by gross national income per capita.",
+          "claimType": "economic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-018",
+    "sentence": "The Berlin Wall fell in November 1989.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Berlin Wall fell in November 1989.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-019",
+    "sentence": "Carbon dioxide is a greenhouse gas.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Carbon dioxide is a greenhouse gas.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-020",
+    "sentence": "Microsoft was founded by Bill Gates and Paul Allen.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Microsoft was founded by Bill Gates and Paul Allen.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-021",
+    "sentence": "India's GDP grew 8.2% and inflation fell to 4.7% in the second quarter.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "India's GDP grew 8.2% in the second quarter.",
+          "claimType": "statistic",
+          "isCompound": true
+        },
+        {
+          "claimText": "India's inflation fell to 4.7% in the second quarter.",
+          "claimType": "statistic",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-022",
+    "sentence": "Germany's capital is Berlin and its currency is the euro.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Germany's capital is Berlin.",
+          "claimType": "identity",
+          "isCompound": true
+        },
+        {
+          "claimText": "Germany's currency is the euro.",
+          "claimType": "identity",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-023",
+    "sentence": "Marie Curie won Nobel Prizes in Physics and Chemistry.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Marie Curie won a Nobel Prize in Physics.",
+          "claimType": "historical",
+          "isCompound": true
+        },
+        {
+          "claimText": "Marie Curie won a Nobel Prize in Chemistry.",
+          "claimType": "historical",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-024",
+    "sentence": "The Nile is often cited as the world's longest river, while the Amazon carries the largest volume of water.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Nile is often cited as the world's longest river.",
+          "claimType": "geographic",
+          "isCompound": true
+        },
+        {
+          "claimText": "The Amazon carries the largest volume of water.",
+          "claimType": "geographic",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-025",
+    "sentence": "Tesla delivered more than 1.8 million vehicles in 2023 and opened its first Gigafactory in Nevada.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Tesla delivered more than 1.8 million vehicles in 2023.",
+          "claimType": "statistic",
+          "isCompound": true
+        },
+        {
+          "claimText": "Tesla opened its first Gigafactory in Nevada.",
+          "claimType": "historical",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-026",
+    "sentence": "COVID-19 vaccines reduce severe disease, and mRNA vaccines teach cells to make a harmless spike protein fragment.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "COVID-19 vaccines reduce severe disease.",
+          "claimType": "scientific",
+          "isCompound": true
+        },
+        {
+          "claimText": "mRNA vaccines teach cells to make a harmless spike protein fragment.",
+          "claimType": "scientific",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-027",
+    "sentence": "The Treaty of Versailles was signed in 1919, and the League of Nations was created after World War I.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Treaty of Versailles was signed in 1919.",
+          "claimType": "historical",
+          "isCompound": true
+        },
+        {
+          "claimText": "The League of Nations was created after World War I.",
+          "claimType": "historical",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-028",
+    "sentence": "OpenAI released ChatGPT in 2022 and GPT-4 in 2023.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "OpenAI released ChatGPT in 2022.",
+          "claimType": "technology",
+          "isCompound": true
+        },
+        {
+          "claimText": "OpenAI released GPT-4 in 2023.",
+          "claimType": "technology",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-029",
+    "sentence": "The moon orbits Earth and reflects sunlight.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The moon orbits Earth.",
+          "claimType": "scientific",
+          "isCompound": true
+        },
+        {
+          "claimText": "The moon reflects sunlight.",
+          "claimType": "scientific",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-030",
+    "sentence": "Brazil is in South America and Portuguese is its official language.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Brazil is in South America.",
+          "claimType": "geographic",
+          "isCompound": true
+        },
+        {
+          "claimText": "Portuguese is Brazil's official language.",
+          "claimType": "identity",
+          "isCompound": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-031",
+    "sentence": "This is clearly the worst policy decision in recent memory.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-032",
+    "sentence": "Everyone knows this plan is ridiculous.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-033",
+    "sentence": "Why would any reasonable person support that proposal?",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-034",
+    "sentence": "The movie felt too long and emotionally empty.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-035",
+    "sentence": "In my view, the new interface is beautiful.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-036",
+    "sentence": "That speech was inspiring but deeply frustrating.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-037",
+    "sentence": "Maybe this is the beginning of a better era.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-038",
+    "sentence": "The best solution is obvious to anyone paying attention.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-039",
+    "sentence": "What a disastrous and embarrassing performance.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-040",
+    "sentence": "The policy should be rejected immediately.",
+    "groundTruth": {
+      "isFactual": false,
+      "claims": []
+    }
+  },
+  {
+    "id": "ext-041",
+    "sentence": "The iPhone launched in 2007, but it remains the most magical device ever made.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The iPhone launched in 2007.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-042",
+    "sentence": "Paris is the capital of France, and it is the most romantic city in the world.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Paris is the capital of France.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-043",
+    "sentence": "The Federal Reserve raised rates in 2022, which was obviously reckless.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Federal Reserve raised rates in 2022.",
+          "claimType": "economic",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-044",
+    "sentence": "NASA landed Apollo 11 on the Moon in 1969, a moment no one could ever surpass.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "NASA landed Apollo 11 on the Moon in 1969.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-045",
+    "sentence": "The WHO was founded in 1948, though its recent choices are controversial.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The WHO was founded in 1948.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-046",
+    "sentence": "Tokyo hosted the Olympics in 2021, and the ceremony was stunning.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Tokyo hosted the Olympics in 2021.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-047",
+    "sentence": "Carbon dioxide traps heat, which makes ignoring climate change foolish.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Carbon dioxide traps heat.",
+          "claimType": "scientific",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-048",
+    "sentence": "Microsoft owns LinkedIn, but the acquisition was too expensive.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "Microsoft owns LinkedIn.",
+          "claimType": "identity",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-049",
+    "sentence": "The euro launched in electronic form in 1999, and it was a bold experiment.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The euro launched in electronic form in 1999.",
+          "claimType": "historical",
+          "isCompound": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "ext-050",
+    "sentence": "The Nile flows through Egypt, making it an unforgettable river.",
+    "groundTruth": {
+      "isFactual": true,
+      "claims": [
+        {
+          "claimText": "The Nile flows through Egypt.",
+          "claimType": "geographic",
+          "isCompound": false
+        }
+      ]
+    }
+  }
+]

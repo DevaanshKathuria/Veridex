@@ -7,6 +7,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import morgan from "morgan";
 
+import "./lib/loadEnv";
 import adminRouter from "./routes/admin";
 import analysesRouter from "./routes/analyses";
 import analyzeRouter from "./routes/analyze";
@@ -21,6 +22,14 @@ import { initSocket } from "./lib/socket";
 import { startSocketBridge } from "./lib/socketBridge";
 
 export const app = express();
+
+const validateEnv = (): void => {
+  const required = ["MONGODB_URI", "REDIS_URL", "JWT_ACCESS_SECRET", "JWT_REFRESH_SECRET", "ML_SERVICE_URL"];
+  const missing = required.filter((key) => !process.env[key]);
+  if (missing.length) {
+    throw new Error(`Missing required env var${missing.length > 1 ? "s" : ""}: ${missing.join(", ")}`);
+  }
+};
 
 const PORT = Number(process.env.PORT ?? 4000);
 const CLIENT_URL = process.env.CLIENT_URL ?? "http://localhost:3000";
@@ -82,6 +91,7 @@ const connectToMongo = async (): Promise<void> => {
 
 const startServer = async (): Promise<void> => {
   try {
+    validateEnv();
     await connectToMongo();
 
     server = createServer(app);
