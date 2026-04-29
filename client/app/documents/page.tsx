@@ -56,17 +56,18 @@ export default function DocumentsPage() {
 
   return (
     <AuthGuard>
-      <div className="mx-auto max-w-7xl px-4 py-8">
+      <div className="mesh-bg min-h-[calc(100vh-52px)] px-4 py-8">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-semibold">Documents</h1>
             <p className="mt-1 text-sm text-text-secondary">Manage ingested source material.</p>
           </div>
-          <Button onClick={() => setDialogOpen(true)}><Plus className="size-4" /> Upload new document</Button>
+          <Button className="primary-glow" onClick={() => setDialogOpen(true)}><Plus className="size-4" /> Upload new document</Button>
         </div>
 
         {dialogOpen ? (
-          <Card className="mb-5 rounded-lg border border-border bg-surface">
+          <Card className="glass-card mb-5 rounded-[10px] border-border-dim">
             <CardHeader><CardTitle>New document</CardTitle></CardHeader>
             <CardContent>
               <form onSubmit={upload} className="space-y-3">
@@ -84,7 +85,7 @@ export default function DocumentsPage() {
           </Card>
         ) : null}
 
-        <Card className="rounded-lg border border-border bg-surface">
+        <Card className="rounded-[10px] border border-border-dim bg-surface">
           <CardContent>
             <Table>
               <TableHeader>
@@ -100,11 +101,11 @@ export default function DocumentsPage() {
               <TableBody>
                 {(query.data?.documents ?? []).map((doc) => (
                   <TableRow key={doc._id}>
-                    <TableCell>{doc.fileName || doc.title || "Untitled source"}</TableCell>
-                    <TableCell>{doc.inputType || doc.sourceType || "text"}</TableCell>
+                    <TableCell className="text-text-primary">{doc.fileName || doc.title || "Untitled source"}</TableCell>
+                    <TableCell className="font-mono text-xs text-text-secondary">{doc.inputType || doc.sourceType || "text"}</TableCell>
                     <TableCell><Badge variant="outline">{doc.status}</Badge></TableCell>
-                    <TableCell>{doc.charCount ?? "--"}</TableCell>
-                    <TableCell>{doc.createdAt ? new Date(doc.createdAt).toLocaleDateString() : "--"}</TableCell>
+                    <TableCell className="font-mono text-xs">{doc.charCount ?? "--"}</TableCell>
+                    <TableCell className="text-text-tertiary">{doc.createdAt ? new Date(doc.createdAt).toLocaleDateString() : "--"}</TableCell>
                     <TableCell className="flex gap-2">
                       <Button size="sm" variant="outline" disabled={doc.status !== "READY"} onClick={() => runAnalysis(doc._id)}>
                         {doc.status !== "READY" ? <Loader2 className="size-3 animate-spin" /> : null} Run Analysis
@@ -117,6 +118,7 @@ export default function DocumentsPage() {
             </Table>
           </CardContent>
         </Card>
+      </div>
       </div>
     </AuthGuard>
   );

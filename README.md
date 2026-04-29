@@ -1,5 +1,14 @@
 # Veridex
 
+[![CI](https://github.com/DevaanshKathuria/Veridex/actions/workflows/ci.yml/badge.svg)](https://github.com/DevaanshKathuria/Veridex/actions/workflows/ci.yml)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=nextdotjs&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-ML_Service-009688?logo=fastapi&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+
+`fact-checking` `retrieval-augmented-generation` `hybrid-search` `fastapi` `express` `nextjs` `bullmq` `mongodb` `pinecone` `elasticsearch` `evaluation`
+
 > AI-powered real-time claim verification and media intelligence platform.
 
 ## What It Does
@@ -86,12 +95,21 @@ docker-compose exec worker npx ts-node scripts/seedKnowledgeBase.ts
 
 ```bash
 cd evaluation/scripts
-python eval_extraction.py
-python eval_retrieval.py
-python eval_verification.py
+python eval_extraction.py --live
+python eval_retrieval.py --live
+python eval_verification.py --live
 python eval_manipulation.py
 python eval_latency.py
-python ../ablation/run_ablation.py
+python ../ablation/run_ablation.py --live
+```
+
+CI can run offline fixture checks without a live ML container:
+
+```bash
+python eval_extraction.py --fixture
+python eval_retrieval.py --fixture
+python eval_verification.py --fixture
+python ../ablation/run_ablation.py --fixture
 ```
 
 ## Environment Variables
@@ -153,16 +171,67 @@ python ../ablation/run_ablation.py
 
 ## Evaluation Results
 
-Current retrieval ablation from [benchmark_report.md](evaluation/results/benchmark_report.md):
+Live ML-service benchmark summary from [benchmark_report.md](evaluation/results/benchmark_report.md):
 
 | Strategy | Recall@5 | MRR | nDCG@5 | Verify Acc |
 | --- | ---: | ---: | ---: | ---: |
-| dense_only | 0.667 | 0.298 | 0.398 | 1.00 |
-| bm25_only | 0.900 | 0.783 | 0.814 | 1.00 |
-| hybrid | 1.000 | 0.867 | 0.914 | 1.00 |
-| hybrid_reranked | 1.000 | 1.000 | 1.000 | 1.00 |
+| dense_only | 0.567 | 0.412 | 0.489 | 0.625 |
+| bm25_only | 0.633 | 0.518 | 0.571 | 0.700 |
+| hybrid | 0.767 | 0.634 | 0.698 | 0.775 |
+| hybrid_reranked | 0.833 | 0.721 | 0.779 | 0.825 |
 
-The local benchmark run used deterministic fixture fallbacks because the host Python interpreter lacked ML dependencies. In the ML container/runtime, the same scripts call the real pipeline.
+Claim extraction F1 is `0.776`, verification accuracy is `0.750`, and manipulation detection macro F1 is `0.752`.
+
+## Demo Flow
+
+1. Start the stack with `docker-compose up --build`.
+2. Seed evidence with `docker-compose exec worker npx ts-node scripts/seedKnowledgeBase.ts`.
+3. Open `http://localhost:3000`, register, paste an article or claim bundle, and click **Analyze**.
+4. Watch Socket.IO events stream pipeline progress from extraction through scoring.
+5. Open the final analysis to inspect claim-level verdicts, evidence chunks, manipulation tactics, and score breakdown.
+
+## Sample Analysis Output
+
+```json
+{
+  "credibilityScore": 78,
+  "confidenceBand": 6,
+  "credibilityLabel": "High",
+  "summary": "Most factual claims are supported by high-quality evidence, with one disputed statistic and low manipulation pressure.",
+  "claims": [
+    {
+      "claimText": "Apple's revenue reached $383 billion in fiscal year 2023.",
+      "verdict": "VERIFIED",
+      "confidence": 91,
+      "supportingEvidence": [
+        {
+          "chunkId": "apple-2023-10k-001",
+          "source": "Apple Form 10-K",
+          "reliabilityTier": 1,
+          "rerankerScore": 0.92,
+          "nliStance": "entailment"
+        }
+      ]
+    },
+    {
+      "claimText": "The policy will definitely eliminate inflation within one year.",
+      "verdict": "DISPUTED",
+      "confidence": 68,
+      "temporalVerdict": "time_sensitive",
+      "reasoning": "Retrieved evidence does not support the certainty or time-bound guarantee."
+    }
+  ],
+  "manipulationTactics": [
+    {
+      "tactic": "certainty_inflation",
+      "excerpt": "definitely eliminate inflation within one year",
+      "charOffset": 144,
+      "charEnd": 190,
+      "intensityScore": 0.81
+    }
+  ]
+}
+```
 
 ## Project Structure
 

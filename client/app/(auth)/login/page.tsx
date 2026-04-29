@@ -2,22 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Input } from "@/components/ui/input";
 import { authAPI } from "@/lib/api";
+import { fadeUp } from "@/lib/animations";
 import { useAuthStore } from "@/stores/authStore";
 
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
+const schema = z.object({ email: z.string().email(), password: z.string().min(8) });
 type FormValues = z.infer<typeof schema>;
 
 export default function LoginPage() {
@@ -32,38 +29,43 @@ export default function LoginPage() {
     try {
       const { data } = await authAPI.login(values);
       setAuth(data.user, data.accessToken);
-      const nextPath = new URLSearchParams(window.location.search).get("next");
-      router.push(nextPath || "/dashboard");
+      router.push(new URLSearchParams(window.location.search).get("next") || "/dashboard");
     } catch {
       setError("Invalid email or password.");
     }
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-md rounded-lg border border-border bg-surface">
-        <CardHeader>
-          <CardTitle className="text-2xl">Log in to Veridex</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <Input placeholder="Email" type="email" {...register("email")} />
+    <div className="mesh-bg relative flex min-h-[calc(100vh-52px)] items-center justify-center overflow-hidden px-4 py-12">
+      <div className="ambient-field absolute inset-0" />
+      <motion.div initial="hidden" animate="visible" variants={fadeUp} className="glass-card glow-border-blue relative z-10 w-full max-w-[400px] rounded-2xl p-10">
+        <div className="mb-8 flex items-center gap-2 font-mono text-sm uppercase tracking-[0.18em] text-text-primary">
+          <span className="size-1.5 rounded-full bg-glow-emerald animate-pulse-glow" />
+          VERIDEX
+        </div>
+        <h1 className="text-2xl text-text-primary">Sign in</h1>
+        <p className="mt-2 text-sm text-text-secondary">Return to the forensic command center.</p>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+          <label className="block">
+            <span className="mb-2 block text-xs text-text-secondary">Email</span>
+            <Input type="email" {...register("email")} className={formState.errors.email ? "animate-[shake_0.35s] border-verdict-false" : ""} />
+          </label>
+          <label className="block">
+            <span className="mb-2 block text-xs text-text-secondary">Password</span>
             <div className="relative">
-              <Input placeholder="Password" type={showPassword ? "text" : "password"} {...register("password")} />
-              <button type="button" className="absolute right-2 top-2 text-text-secondary" onClick={() => setShowPassword((value) => !value)}>
+              <Input type={showPassword ? "text" : "password"} {...register("password")} className={formState.errors.password ? "animate-[shake_0.35s] border-verdict-false" : ""} />
+              <button type="button" className="absolute right-3 top-3 text-text-tertiary" onClick={() => setShowPassword((value) => !value)}>
                 {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
               </button>
             </div>
-            {(formState.errors.email || formState.errors.password || error) ? (
-              <p className="text-sm text-[#ff7b72]">{error || "Enter a valid email and an 8 character password."}</p>
-            ) : null}
-            <Button className="w-full" disabled={formState.isSubmitting}>{formState.isSubmitting ? "Signing in..." : "Log in"}</Button>
-          </form>
-          <p className="mt-4 text-center text-sm text-text-secondary">
-            New here? <Link href="/register" className="text-[#79c0ff]">Create an account</Link>
-          </p>
-        </CardContent>
-      </Card>
+          </label>
+          {(error || Object.keys(formState.errors).length) ? <p className="text-sm text-verdict-false">{error || "Enter valid credentials."}</p> : null}
+          <MagneticButton className="w-full" disabled={formState.isSubmitting}>{formState.isSubmitting ? <span className="shimmer h-4 w-24 rounded" /> : "Sign in"}</MagneticButton>
+        </form>
+        <p className="mt-6 text-center text-sm text-text-secondary">
+          New here? <Link href="/register" className="text-text-accent hover:text-glow-cyan">Create an account</Link>
+        </p>
+      </motion.div>
     </div>
   );
 }

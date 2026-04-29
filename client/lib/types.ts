@@ -27,6 +27,7 @@ export interface EvidenceChunk {
   publicationDate?: string;
   rerankerScore?: number;
   nliScore?: number;
+  nliConfidence?: number;
   stance?: string;
 }
 
@@ -41,6 +42,7 @@ export interface VerdictData {
 export interface ClaimDTO {
   claimId: string;
   text: string;
+  claimText?: string;
   sentence?: string;
   charOffset?: number;
   charEnd?: number;

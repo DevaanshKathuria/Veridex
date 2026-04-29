@@ -4,6 +4,8 @@ import json
 import math
 import os
 import sys
+import urllib.error
+import urllib.request
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -32,6 +34,24 @@ def write_results(name: str, payload: dict[str, Any]) -> None:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     with (RESULTS_DIR / name).open("w") as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
+
+
+def post_json(url: str, payload: dict[str, Any], timeout: int = 120) -> dict[str, Any]:
+    body = json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"ML service returned HTTP {exc.code} for {url}: {detail}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"Could not reach live ML service at {url}: {exc.reason}") from exc
 
 
 def word_similarity(a: str, b: str) -> float:
