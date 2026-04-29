@@ -6,45 +6,45 @@ Veridex is a service-oriented monorepo. The API owns user-facing contracts and p
 
 ```mermaid
 sequenceDiagram
-  participant Client as Next.js Client
-  participant API as Express API
-  participant Mongo as MongoDB
-  participant Redis as Redis/BullMQ
-  participant Worker as BullMQ Worker
-  participant ML as FastAPI ML
+  participant Browser
+  participant API
+  participant Worker
+  participant ML
+  participant DB as MongoDB
 
-  Client->>API: POST /api/ingest
-  API->>ML: POST /process/ingest
-  ML-->>API: cleaned text, sentences, contentHash
-  API->>Mongo: Create Document
-  API->>Redis: Enqueue ingestion job
-  API-->>Client: documentId
-  Worker->>Redis: Consume ingestion job
-  Worker->>Mongo: Mark Document READY
-  Worker->>Redis: Publish ingestion:complete
-  API->>Client: Socket event ingestion:complete
-
-  Client->>API: POST /api/analyze
-  API->>ML: POST /process/extract
-  ML-->>API: atomic claims
-  API->>Mongo: Create Analysis
-  API->>Redis: Enqueue verification job
-  API-->>Client: analysisId
-
-  Worker->>Mongo: Load Analysis + Document
-  Worker->>ML: POST /process/retrieve
-  ML-->>Worker: evidence map
-  Worker->>ML: POST /process/verify
-  ML-->>Worker: verdicts
-  Worker->>Redis: Publish verdict:ready events
-  API->>Client: Socket verdict:ready events
+  Browser->>API: POST /api/ingest { text }
+  API->>DB: Create Document (PENDING)
+  API->>Worker: Enqueue ingestion-job
+  API-->>Browser: { documentId }
+  
+  Worker->>ML: POST /process/ingest
+  ML-->>Worker: { cleanedText, sentences[] }
+  Worker->>ML: POST /process/extract
+  ML-->>Worker: { claims[] }
+  Worker->>DB: Update Document (READY, claims embedded)
+  Worker->>Browser: Socket: ingestion:complete
+  
+  Browser->>API: POST /api/analyze { documentId }
+  API->>DB: Create Analysis (QUEUED)
+  API->>Worker: Enqueue verification-job
+  API-->>Browser: { analysisId }
+  
+  Worker->>ML: POST /process/retrieve { claims[], strategy }
+  ML-->>Worker: { evidenceMap }
+  Worker->>Browser: Socket: retrieval:progress per claim
+  
+  Worker->>ML: POST /process/verify { claims[], evidenceMap }
+  ML-->>Worker: { verdicts[] }
+  Worker->>Browser: Socket: verdict:ready per claim
+  
   Worker->>ML: POST /process/manipulate
-  ML-->>Worker: manipulation tactics
+  ML-->>Worker: { tactics[], score }
+  Worker->>Browser: Socket: manipulation:detected
+  
   Worker->>ML: POST /process/score
-  ML-->>Worker: final score
-  Worker->>Mongo: Save COMPLETE analysis
-  Worker->>Redis: Publish analysis:complete
-  API->>Client: Socket analysis:complete
+  ML-->>Worker: { credibilityScore, label, summary }
+  Worker->>DB: Update Analysis (COMPLETE)
+  Worker->>Browser: Socket: analysis:complete
 ```
 
 ## Data Flow

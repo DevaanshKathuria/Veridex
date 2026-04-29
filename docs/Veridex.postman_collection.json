@@ -1,0 +1,362 @@
+{
+  "info": {
+    "name": "Veridex API",
+    "description": "Postman collection for local Veridex API testing.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "accessToken", "value": "" },
+    { "key": "documentId", "value": "" },
+    { "key": "analysisId", "value": "" },
+    { "key": "jobId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "API Health",
+          "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+          "response": [
+            {
+              "name": "Healthy",
+              "originalRequest": { "method": "GET", "url": "{{baseUrl}}/health" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"status\":\"ok\"}"
+            }
+          ]
+        },
+        {
+          "name": "API Root",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api" },
+          "response": [
+            {
+              "name": "API Metadata",
+              "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"name\":\"Veridex API\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.accessToken) pm.collectionVariables.set('accessToken', data.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Test User\",\"email\":\"test@example.com\",\"password\":\"password123\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [
+            {
+              "name": "Registered",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/auth/register" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"accessToken\":\"jwt\",\"user\":{\"id\":\"user_id\",\"name\":\"Test User\",\"email\":\"test@example.com\",\"plan\":\"FREE\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.accessToken) pm.collectionVariables.set('accessToken', data.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@example.com\",\"password\":\"password123\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [
+            {
+              "name": "Logged In",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/auth/login" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"accessToken\":\"jwt\",\"user\":{\"id\":\"user_id\",\"email\":\"test@example.com\",\"plan\":\"FREE\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/refresh" },
+          "response": [
+            {
+              "name": "Refreshed",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/auth/refresh" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"accessToken\":\"new_jwt\"}"
+            }
+          ]
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/auth/me"
+          },
+          "response": [
+            {
+              "name": "Current User",
+              "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"id\":\"user_id\",\"name\":\"Test User\",\"email\":\"test@example.com\",\"plan\":\"FREE\",\"analysesCount\":0,\"dailyAnalysesUsed\":0}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/logout" },
+          "response": [
+            {
+              "name": "Logged Out",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/auth/logout" },
+              "status": "OK",
+              "code": 200,
+              "body": "{\"success\":true}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ingest",
+      "item": [
+        {
+          "name": "Ingest Raw Text",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.documentId) pm.collectionVariables.set('documentId', data.documentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/ingest",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"inputType\":\"raw_text\",\"text\":\"Apple's revenue reached $383 billion in fiscal year 2023. The company was founded by Steve Jobs in 1976. Global inflation rose 3.2% in October.\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [
+            {
+              "name": "Document Created",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/ingest" },
+              "status": "Accepted",
+              "code": 202,
+              "body": "{\"documentId\":\"document_id\",\"status\":\"PENDING\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Analyze",
+      "item": [
+        {
+          "name": "Start Analysis",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data.analysisId) pm.collectionVariables.set('analysisId', data.analysisId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/analyze",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"documentId\":\"{{documentId}}\"}",
+              "options": { "raw": { "language": "json" } }
+            }
+          },
+          "response": [
+            {
+              "name": "Analysis Queued",
+              "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/analyze" },
+              "status": "Accepted",
+              "code": 202,
+              "body": "{\"analysisId\":\"analysis_id\",\"status\":\"QUEUED\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "List Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/documents?page=1&limit=20"
+          },
+          "response": [{ "name": "Documents", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/documents" }, "status": "OK", "code": 200, "body": "{\"documents\":[],\"total\":0,\"page\":1,\"totalPages\":0}" }]
+        },
+        {
+          "name": "Get Document",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/documents/{{documentId}}"
+          },
+          "response": [{ "name": "Document", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/documents/{{documentId}}" }, "status": "OK", "code": 200, "body": "{\"_id\":\"document_id\",\"status\":\"READY\",\"sentences\":[]}" }]
+        },
+        {
+          "name": "Get Document Status",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/documents/{{documentId}}/status"
+          },
+          "response": [{ "name": "Status", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/documents/{{documentId}}/status" }, "status": "OK", "code": 200, "body": "{\"documentId\":\"document_id\",\"status\":\"READY\",\"sentenceCount\":3,\"charCount\":156}" }]
+        },
+        {
+          "name": "Delete Document",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/documents/{{documentId}}"
+          },
+          "response": [{ "name": "Deleted", "originalRequest": { "method": "DELETE", "url": "{{baseUrl}}/api/documents/{{documentId}}" }, "status": "OK", "code": 200, "body": "{\"deleted\":true}" }]
+        }
+      ]
+    },
+    {
+      "name": "Analyses",
+      "item": [
+        {
+          "name": "List Analyses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/analyses?page=1&limit=20"
+          },
+          "response": [{ "name": "Analyses", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/analyses" }, "status": "OK", "code": 200, "body": "{\"analyses\":[],\"total\":0,\"page\":1,\"totalPages\":0}" }]
+        },
+        {
+          "name": "Get Analysis",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/analyses/{{analysisId}}"
+          },
+          "response": [{ "name": "Analysis", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/analyses/{{analysisId}}" }, "status": "OK", "code": 200, "body": "{\"_id\":\"analysis_id\",\"status\":\"COMPLETE\",\"claims\":[],\"credibilityScore\":62}" }]
+        },
+        {
+          "name": "Get Public Share",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/analyses/{{analysisId}}/share" },
+          "response": [{ "name": "Shared Analysis", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/analyses/{{analysisId}}/share" }, "status": "OK", "code": 200, "body": "{\"_id\":\"analysis_id\",\"status\":\"COMPLETE\",\"credibilityScore\":62}" }]
+        },
+        {
+          "name": "Delete Analysis",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/analyses/{{analysisId}}"
+          },
+          "response": [{ "name": "Deleted", "originalRequest": { "method": "DELETE", "url": "{{baseUrl}}/api/analyses/{{analysisId}}" }, "status": "OK", "code": 200, "body": "{\"deleted\":true}" }]
+        }
+      ]
+    },
+    {
+      "name": "Stats and Metrics",
+      "item": [
+        {
+          "name": "User Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/stats"
+          },
+          "response": [{ "name": "Stats", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/stats" }, "status": "OK", "code": 200, "body": "{\"totalAnalyses\":1,\"completedAnalyses\":1,\"avgCredibilityScore\":62}" }]
+        },
+        {
+          "name": "Admin Metrics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/metrics"
+          },
+          "response": [{ "name": "Metrics", "originalRequest": { "method": "GET", "url": "{{baseUrl}}/api/metrics" }, "status": "OK", "code": 200, "body": "{\"latency\":{\"total\":{\"p50\":8240,\"p95\":14130}},\"cacheHitRate\":0.312}" }]
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Requeue Dead Letter Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/requeue/{{jobId}}"
+          },
+          "response": [{ "name": "Requeued", "originalRequest": { "method": "POST", "url": "{{baseUrl}}/api/admin/requeue/{{jobId}}" }, "status": "OK", "code": 200, "body": "{\"requeued\":true,\"newJobId\":\"new_job_id\"}" }]
+        }
+      ]
+    }
+  ]
+}

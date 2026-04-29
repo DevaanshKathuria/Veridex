@@ -7,7 +7,7 @@ import asyncio
 import argparse
 from typing import Any
 
-from common import VERDICTS, confusion_matrix, load_dataset, macro_f1, post_json, print_confusion, verdict_from_claim_text, write_results
+from common import DATASET_DIR, VERDICTS, confusion_matrix, load_dataset, macro_f1, post_json, print_confusion, print_eval_header, verdict_from_claim_text, write_results
 
 
 def claim_payload(row: dict[str, Any]) -> dict[str, Any]:
@@ -75,6 +75,8 @@ async def evaluate(
     ml_url: str = "http://localhost:8000",
     strategy: str = "hybrid_reranked",
 ) -> dict[str, Any]:
+    if verbose:
+        print_eval_header("Verification", str(DATASET_DIR / "verification_test.json"), live)
     rows = load_dataset("verification_test.json")
     if limit:
         rows = rows[:limit]
@@ -121,8 +123,8 @@ async def evaluate(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate verification accuracy.")
     parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
-    parser.add_argument("--fixture", action="store_true", help="Use local fixture evidence for CI.")
+    parser.add_argument("--fixture", action="store_true", default=True, help="Use deterministic fixture data (default).")
     parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
     parser.add_argument("--strategy", default="hybrid_reranked", help="Retrieval strategy to use in live mode.")
     args = parser.parse_args()
-    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url, strategy=args.strategy))
+    asyncio.run(evaluate(live=args.live, ml_url=args.ml_url, strategy=args.strategy))

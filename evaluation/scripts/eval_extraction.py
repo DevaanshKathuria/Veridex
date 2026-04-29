@@ -7,7 +7,7 @@ import asyncio
 import argparse
 from typing import Any
 
-from common import load_dataset, post_json, precision_recall_f1, word_similarity, write_results
+from common import DATASET_DIR, load_dataset, post_json, precision_recall_f1, print_eval_header, word_similarity, write_results
 
 
 class FixtureClaim:
@@ -47,6 +47,7 @@ async def live_extract(case: dict[str, Any], ml_url: str) -> list[dict[str, Any]
 
 
 async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict[str, float]:
+    print_eval_header("Claim Extraction", str(DATASET_DIR / "claim_extraction_test.json"), live)
     test_cases = load_dataset("claim_extraction_test.json")
     results = {
         "total": len(test_cases),
@@ -111,7 +112,7 @@ async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") ->
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate claim extraction.")
     parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
-    parser.add_argument("--fixture", action="store_true", help="Use local fixture extraction for CI.")
+    parser.add_argument("--fixture", action="store_true", default=True, help="Use deterministic fixture data (default).")
     parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
     args = parser.parse_args()
-    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))
+    asyncio.run(evaluate(live=args.live, ml_url=args.ml_url))

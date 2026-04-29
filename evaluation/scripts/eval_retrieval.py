@@ -7,7 +7,7 @@ import asyncio
 import argparse
 from typing import Any
 
-from common import lexical_rank, load_dataset, post_json, retrieval_metrics, write_results
+from common import DATASET_DIR, lexical_rank, load_dataset, post_json, print_eval_header, retrieval_metrics, write_results
 
 
 STRATEGIES = ["dense_only", "bm25_only", "hybrid", "hybrid_reranked"]
@@ -73,6 +73,7 @@ async def evaluate_strategy(strategy: str, live: bool = False, ml_url: str = "ht
 
 
 async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict[str, Any]:
+    print_eval_header("Retrieval", str(DATASET_DIR / "retrieval_test.json"), live)
     strategy_results = [await evaluate_strategy(strategy, live=live, ml_url=ml_url) for strategy in STRATEGIES]
     payload = {"mode": "live" if live else "fixture", "mlServiceUrl": ml_url if live else None, "strategies": strategy_results}
     write_results("retrieval_results.json", payload)
@@ -91,7 +92,7 @@ async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") ->
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate retrieval strategies.")
     parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
-    parser.add_argument("--fixture", action="store_true", help="Use local fixture ranking for CI.")
+    parser.add_argument("--fixture", action="store_true", default=True, help="Use deterministic fixture data (default).")
     parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
     args = parser.parse_args()
-    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))
+    asyncio.run(evaluate(live=args.live, ml_url=args.ml_url))

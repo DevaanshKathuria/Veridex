@@ -36,6 +36,14 @@ def write_results(name: str, payload: dict[str, Any]) -> None:
         json.dump(payload, handle, indent=2, sort_keys=True)
 
 
+def print_eval_header(script_name: str, dataset_path: str, live: bool) -> None:
+    print("=" * 60)
+    print(f"Veridex Evaluation: {script_name}")
+    print(f"Mode: {'LIVE (real ML pipeline)' if live else 'FIXTURE (deterministic fallbacks)'}")
+    print(f"Dataset: {dataset_path}")
+    print("=" * 60)
+
+
 def post_json(url: str, payload: dict[str, Any], timeout: int = 120) -> dict[str, Any]:
     body = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(

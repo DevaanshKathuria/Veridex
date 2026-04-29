@@ -38,3 +38,15 @@ jobs:
         with:
           python-version: "3.11"
       - run: cd ml && pip install -r requirements.txt && python -m py_compile app/main.py app/pipeline/*.py
+
+  eval-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install numpy pandas
+      - run: cd evaluation/scripts && python eval_extraction.py --fixture
+      - run: cd evaluation/scripts && python eval_retrieval.py --fixture
+      - run: cd evaluation/scripts && python eval_verification.py --fixture

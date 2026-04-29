@@ -4,9 +4,10 @@
 from __future__ import annotations
 
 import os
+import argparse
 from datetime import UTC, datetime
 
-from common import percentile, write_results
+from common import DATASET_DIR, percentile, print_eval_header, write_results
 
 
 def fixture_logs() -> list[dict]:
@@ -23,7 +24,10 @@ def fixture_logs() -> list[dict]:
     ]
 
 
-def fetch_logs() -> tuple[list[dict], bool]:
+def fetch_logs(live: bool) -> tuple[list[dict], bool]:
+    if not live:
+        return fixture_logs(), True
+
     try:
         from pymongo import MongoClient
     except Exception:
@@ -39,8 +43,9 @@ def fetch_logs() -> tuple[list[dict], bool]:
         return fixture_logs(), True
 
 
-def evaluate() -> dict:
-    logs, used_fixture = fetch_logs()
+def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict:
+    print_eval_header("Latency", str(DATASET_DIR / "PerformanceLog collection"), live)
+    logs, used_fixture = fetch_logs(live)
     total = [float(row.get("totalLatencyMs", 0)) for row in logs]
     retrieval = [float(row.get("retrievalLatencyMs", 0)) for row in logs]
     judgment = [float(row.get("judgmentLatencyMs", 0)) for row in logs]
@@ -48,6 +53,8 @@ def evaluate() -> dict:
     tokens = sum(float(row.get("openaiTokensUsed", 0)) for row in logs)
     payload = {
         "sampleSize": len(logs),
+        "mode": "live" if live else "fixture",
+        "mlServiceUrl": ml_url if live else None,
         "usedFixtureData": used_fixture,
         "totalLatencyMs": {"p50": percentile(total, 0.5), "p95": percentile(total, 0.95)},
         "retrievalLatencyMs": {"p50": percentile(retrieval, 0.5), "p95": percentile(retrieval, 0.95)},
@@ -70,4 +77,9 @@ def evaluate() -> dict:
 
 
 if __name__ == "__main__":
-    evaluate()
+    parser = argparse.ArgumentParser(description="Evaluate latency from PerformanceLog entries.")
+    parser.add_argument("--live", action="store_true", help="Call real services and read MongoDB PerformanceLog data.")
+    parser.add_argument("--fixture", action="store_true", default=True, help="Use deterministic fixture data (default).")
+    parser.add_argument("--ml-url", default="http://localhost:8000", help="ML service URL for --live mode.")
+    args = parser.parse_args()
+    evaluate(live=args.live, ml_url=args.ml_url)

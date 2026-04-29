@@ -12,12 +12,13 @@ SCRIPT_DIR = Path(__file__).resolve().parents[1] / "scripts"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from common import load_dataset, write_results  # noqa: E402
+from common import DATASET_DIR, load_dataset, print_eval_header, write_results  # noqa: E402
 from eval_retrieval import STRATEGIES, evaluate_strategy  # noqa: E402
 from eval_verification import evaluate as evaluate_verification  # noqa: E402
 
 
 async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict:
+    print_eval_header("Retrieval Ablation", str(DATASET_DIR / "retrieval_test.json"), live)
     rows = []
     for strategy in STRATEGIES:
         retrieval = await evaluate_strategy(strategy, live=live, ml_url=ml_url)
@@ -61,7 +62,7 @@ async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") ->
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run retrieval and verification ablations.")
     parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
-    parser.add_argument("--fixture", action="store_true", help="Use local fixture rankings for CI.")
+    parser.add_argument("--fixture", action="store_true", default=True, help="Use deterministic fixture data (default).")
     parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
     args = parser.parse_args()
-    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))
+    asyncio.run(evaluate(live=args.live, ml_url=args.ml_url))
