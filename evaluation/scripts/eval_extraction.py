@@ -4,17 +4,10 @@
 from __future__ import annotations
 
 import asyncio
+import argparse
+from typing import Any
 
-from common import load_dataset, precision_recall_f1, word_similarity, write_results
-
-try:
-    from app.pipeline.extract_claims import ExtractRequest, extract_claims
-except Exception as import_error:  # pragma: no cover - exercised in minimal Python envs
-    ExtractRequest = None  # type: ignore[assignment]
-    extract_claims = None  # type: ignore[assignment]
-    PIPELINE_IMPORT_ERROR = str(import_error)
-else:
-    PIPELINE_IMPORT_ERROR = ""
+from common import load_dataset, post_json, precision_recall_f1, word_similarity, write_results
 
 
 class FixtureClaim:
@@ -32,7 +25,28 @@ def fixture_extract(sentence: str) -> list[FixtureClaim]:
     return [FixtureClaim(part) for part in (parts or [sentence])]
 
 
-async def evaluate() -> dict[str, float]:
+def _claim_text(claim: Any) -> str:
+    if isinstance(claim, dict):
+        return str(claim.get("claimText") or claim.get("text") or "")
+    return str(getattr(claim, "claimText", ""))
+
+
+async def live_extract(case: dict[str, Any], ml_url: str) -> list[dict[str, Any]]:
+    sentence = case["sentence"]
+    response = await asyncio.to_thread(
+        post_json,
+        f"{ml_url.rstrip('/')}/process/extract",
+        {
+            "documentId": case["id"],
+            "cleanedText": sentence,
+            "sentences": [{"index": 0, "text": sentence, "paragraphIndex": 0, "charOffset": 0, "charEnd": len(sentence)}],
+        },
+        120,
+    )
+    return response.get("claims", [])
+
+
+async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict[str, float]:
     test_cases = load_dataset("claim_extraction_test.json")
     results = {
         "total": len(test_cases),
@@ -47,16 +61,7 @@ async def evaluate() -> dict[str, float]:
     failures = []
     for case in test_cases:
         sentence = case["sentence"]
-        if ExtractRequest is not None and extract_claims is not None:
-            req = ExtractRequest(
-                documentId=case["id"],
-                cleanedText=sentence,
-                sentences=[{"index": 0, "text": sentence, "paragraphIndex": 0, "charOffset": 0, "charEnd": len(sentence)}],
-            )
-            response = await extract_claims(req)
-            extracted = response.claims
-        else:
-            extracted = fixture_extract(sentence)
+        extracted = await live_extract(case, ml_url) if live else fixture_extract(sentence)
         gt = case["groundTruth"]
 
         predicted_factual = len(extracted) > 0
@@ -68,7 +73,7 @@ async def evaluate() -> dict[str, float]:
         results["total_extracted_claims"] += len(extracted)
 
         for gt_claim in gt_claims:
-            matched = any(word_similarity(gt_claim["claimText"], ex.claimText) > 0.75 for ex in extracted)
+            matched = any(word_similarity(gt_claim["claimText"], _claim_text(ex)) > 0.75 for ex in extracted)
             if matched:
                 results["true_positives"] += 1
             else:
@@ -76,9 +81,10 @@ async def evaluate() -> dict[str, float]:
                 failures.append({"id": case["id"], "type": "missed", "claim": gt_claim["claimText"]})
 
         for ex in extracted:
-            if not any(word_similarity(gt_c["claimText"], ex.claimText) > 0.75 for gt_c in gt_claims):
+            text = _claim_text(ex)
+            if not any(word_similarity(gt_c["claimText"], text) > 0.75 for gt_c in gt_claims):
                 results["false_positives"] += 1
-                failures.append({"id": case["id"], "type": "spurious", "claim": ex.claimText})
+                failures.append({"id": case["id"], "type": "spurious", "claim": text})
 
     prf = precision_recall_f1(results["true_positives"], results["false_positives"], results["false_negatives"])
     classification_acc = results["correct_factual_classification"] / max(results["total"], 1)
@@ -87,8 +93,8 @@ async def evaluate() -> dict[str, float]:
         **prf,
         "classification_acc": classification_acc,
         "sample_failures": failures[:10],
-        "usedFixtureExtractor": ExtractRequest is None,
-        "pipelineImportError": PIPELINE_IMPORT_ERROR,
+        "mode": "live" if live else "fixture",
+        "mlServiceUrl": ml_url if live else None,
     }
     write_results("extraction_results.json", payload)
 
@@ -103,4 +109,9 @@ async def evaluate() -> dict[str, float]:
 
 
 if __name__ == "__main__":
-    asyncio.run(evaluate())
+    parser = argparse.ArgumentParser(description="Evaluate claim extraction.")
+    parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
+    parser.add_argument("--fixture", action="store_true", help="Use local fixture extraction for CI.")
+    parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
+    args = parser.parse_args()
+    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))

@@ -1,52 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, ChevronDown } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { useState } from "react";
 import type { ManipulationTactic } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-export function ManipulationWarning({
-  tactics,
-  overallScore,
-  label,
-}: {
-  tactics: ManipulationTactic[];
-  overallScore: number;
-  label: string;
-}) {
-  const [open, setOpen] = useState(true);
+export function ManipulationWarning({ tactics, overallScore, label }: { tactics: ManipulationTactic[]; overallScore: number; label: string }) {
+  const [open, setOpen] = useState(false);
   if (!tactics?.length) return null;
 
   return (
-    <div className="rounded-lg border border-[#E85D04]/50 bg-[#E85D04]/10">
-      <button className="flex w-full items-center justify-between gap-3 p-4 text-left" onClick={() => setOpen((value) => !value)}>
-        <span className="flex items-center gap-3">
-          <AlertTriangle className="size-5 text-[#ffab70]" />
-          <span>
-            <span className="block text-sm font-semibold text-text-primary">Manipulation signals detected</span>
-            <span className="text-xs text-text-secondary">{label} framing risk, score {overallScore}/100</span>
-          </span>
+    <div className="overflow-hidden rounded-lg border border-manipulation/20 bg-manipulation/5">
+      <button className="flex h-10 w-full items-center justify-between border-t border-manipulation/30 px-3 text-left" onClick={() => setOpen((value) => !value)}>
+        <span className="flex items-center gap-2 text-[13px] text-text-primary">
+          <AlertTriangle className="size-3.5 text-manipulation" />
+          {tactics.length} manipulation tactics detected - {label}
+          <span className="font-mono text-[11px] text-text-tertiary">{overallScore}/100</span>
         </span>
-        <ChevronDown className={cn("size-4 text-text-secondary transition-transform", open && "rotate-180")} />
+        <span className="flex items-center gap-1 text-xs text-text-secondary">
+          View <ChevronDown className={cn("size-3 transition-transform", open && "rotate-180")} />
+        </span>
       </button>
-      {open ? (
-        <div className="grid gap-3 border-t border-[#E85D04]/30 p-4 md:grid-cols-2">
-          {tactics.map((tactic, index) => (
-            <div key={`${tactic.tactic}-${index}`} className="rounded-md border border-border bg-background/50 p-3">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <span className="rounded bg-[#E85D04]/20 px-2 py-0.5 text-xs font-medium text-[#ffab70]">
-                  {tactic.tactic.replaceAll("_", " ")}
-                </span>
-                <span className="text-xs text-text-secondary">{Math.round(tactic.intensityScore * 100)}%</span>
-              </div>
-              <code className="block rounded border border-border bg-surface-2 p-2 text-xs text-text-primary">{tactic.excerpt}</code>
-              <p className="mt-2 text-xs leading-5 text-text-secondary">{tactic.explanation}</p>
-              <Progress value={Math.round(tactic.intensityScore * 100)} className="mt-3" />
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+            <div className="grid gap-3 p-3 md:grid-cols-2">
+              {tactics.map((tactic, index) => (
+                <div key={`${tactic.tactic}-${index}`} className="rounded-md border border-manipulation/15 bg-manipulation-dim p-3">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-manipulation">{tactic.tactic.replaceAll("_", " ")}</p>
+                  <code className="mt-2 block rounded bg-black/30 p-2 font-mono text-xs italic text-text-secondary">{tactic.excerpt}</code>
+                  <p className="mt-2 text-xs leading-5 text-text-tertiary">{tactic.explanation}</p>
+                  <div className="mt-3 h-1 overflow-hidden rounded-full bg-void">
+                    <div className="h-full rounded-full bg-gradient-to-r from-verdict-disputed to-verdict-false" style={{ width: `${Math.round(tactic.intensityScore * 100)}%` }} />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

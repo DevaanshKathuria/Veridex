@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import argparse
 import sys
 from pathlib import Path
 
@@ -16,11 +17,11 @@ from eval_retrieval import STRATEGIES, evaluate_strategy  # noqa: E402
 from eval_verification import evaluate as evaluate_verification  # noqa: E402
 
 
-async def evaluate() -> dict:
+async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict:
     rows = []
     for strategy in STRATEGIES:
-        retrieval = await evaluate_strategy(strategy)
-        verification = await evaluate_verification(limit=10, write=False, verbose=False)
+        retrieval = await evaluate_strategy(strategy, live=live, ml_url=ml_url)
+        verification = await evaluate_verification(limit=10, write=False, verbose=False, live=live, ml_url=ml_url, strategy=strategy)
         rows.append(
             {
                 "strategy": strategy,
@@ -28,7 +29,7 @@ async def evaluate() -> dict:
                 "mrr": retrieval["mrr"],
                 "ndcg@5": retrieval["ndcg@5"],
                 "verifyAcc": verification["accuracy"],
-                "usedFallbackRanking": retrieval["usedFallbackRanking"],
+                "mode": "live" if live else "fixture",
             }
         )
 
@@ -39,7 +40,7 @@ async def evaluate() -> dict:
         "recallAt5ImprovementPct": ((best["recall@5"] - dense["recall@5"]) / max(dense["recall@5"], 1e-9)) * 100,
         "mrrImprovementPct": ((best["mrr"] - dense["mrr"]) / max(dense["mrr"], 1e-9)) * 100,
     }
-    payload = {"rows": rows, "improvement": improvement, "datasetSize": len(load_dataset("retrieval_test.json"))}
+    payload = {"mode": "live" if live else "fixture", "mlServiceUrl": ml_url if live else None, "rows": rows, "improvement": improvement, "datasetSize": len(load_dataset("retrieval_test.json"))}
     write_results("ablation_results.json", payload)
 
     print("\n=== RETRIEVAL ABLATION ===")
@@ -58,4 +59,9 @@ async def evaluate() -> dict:
 
 
 if __name__ == "__main__":
-    asyncio.run(evaluate())
+    parser = argparse.ArgumentParser(description="Run retrieval and verification ablations.")
+    parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
+    parser.add_argument("--fixture", action="store_true", help="Use local fixture rankings for CI.")
+    parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
+    args = parser.parse_args()
+    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))

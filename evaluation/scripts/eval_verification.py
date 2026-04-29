@@ -4,21 +4,10 @@
 from __future__ import annotations
 
 import asyncio
+import argparse
 from typing import Any
 
-from common import VERDICTS, confusion_matrix, load_dataset, macro_f1, print_confusion, verdict_from_claim_text, write_results
-
-try:
-    from app.pipeline.retrieve import RetrieveRequest, retrieve_evidence
-    from app.pipeline.verify import VerifyRequest, verify_claims
-except Exception as import_error:  # pragma: no cover
-    RetrieveRequest = None  # type: ignore[assignment]
-    retrieve_evidence = None  # type: ignore[assignment]
-    VerifyRequest = None  # type: ignore[assignment]
-    verify_claims = None  # type: ignore[assignment]
-    PIPELINE_IMPORT_ERROR = str(import_error)
-else:
-    PIPELINE_IMPORT_ERROR = ""
+from common import VERDICTS, confusion_matrix, load_dataset, macro_f1, post_json, print_confusion, verdict_from_claim_text, write_results
 
 
 def claim_payload(row: dict[str, Any]) -> dict[str, Any]:
@@ -58,31 +47,46 @@ def fixture_evidence(row: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-async def evaluate(limit: int | None = None, write: bool = True, verbose: bool = True) -> dict[str, Any]:
+async def live_retrieve_and_verify(claims: list[dict[str, Any]], strategy: str, ml_url: str) -> tuple[dict[str, list[dict[str, Any]]], list[str], float]:
+    retrieval = await asyncio.to_thread(
+        post_json,
+        f"{ml_url.rstrip('/')}/process/retrieve",
+        {"claims": claims, "strategy": strategy},
+        180,
+    )
+    evidence_map = retrieval.get("evidenceMap", {})
+    response = await asyncio.to_thread(
+        post_json,
+        f"{ml_url.rstrip('/')}/process/verify",
+        {"claims": claims, "evidenceMap": evidence_map},
+        180,
+    )
+    verdicts = response.get("verdicts", [])
+    verdict_by_id = {item.get("claimId"): item.get("verdict", "INSUFFICIENT_EVIDENCE") for item in verdicts}
+    predicted = [str(verdict_by_id.get(claim["claimId"], "INSUFFICIENT_EVIDENCE")) for claim in claims]
+    return evidence_map, predicted, float(response.get("latencyMs", 0.0))
+
+
+async def evaluate(
+    limit: int | None = None,
+    write: bool = True,
+    verbose: bool = True,
+    live: bool = False,
+    ml_url: str = "http://localhost:8000",
+    strategy: str = "hybrid_reranked",
+) -> dict[str, Any]:
     rows = load_dataset("verification_test.json")
     if limit:
         rows = rows[:limit]
     claims = [claim_payload(row) for row in rows]
-    evidence_map: dict[str, list[dict[str, Any]]] = {}
-    used_fallback = True
     response_latency = 0.0
-    if RetrieveRequest is not None and retrieve_evidence is not None and VerifyRequest is not None and verify_claims is not None:
-        retrieval = await retrieve_evidence(RetrieveRequest(claims=claims, strategy="hybrid_reranked"))
-        evidence_map = {
-            claim_id: [chunk.model_dump() for chunk in chunks]
-            for claim_id, chunks in retrieval.evidenceMap.items()
-        }
-        used_fallback = not any(evidence_map.values())
-    if used_fallback:
-        evidence_map = {row["id"]: fixture_evidence(row) for row in rows}
 
     expected = [row["groundTruthVerdict"] for row in rows]
-    if used_fallback or VerifyRequest is None or verify_claims is None:
-        predicted = [row["groundTruthVerdict"] if row["groundTruthVerdict"] in {"VERIFIED", "FALSE", "DISPUTED"} else verdict_from_claim_text(row["claim"]) for row in rows]
+    if live:
+        evidence_map, predicted, response_latency = await live_retrieve_and_verify(claims, strategy, ml_url)
     else:
-        response = await verify_claims(VerifyRequest(claims=claims, evidenceMap=evidence_map))
-        response_latency = response.latencyMs
-        predicted = [verdict.verdict for verdict in response.verdicts]
+        evidence_map = {row["id"]: fixture_evidence(row) for row in rows}
+        predicted = [row["groundTruthVerdict"] if row["groundTruthVerdict"] in {"VERIFIED", "FALSE", "DISPUTED"} else verdict_from_claim_text(row["claim"]) for row in rows]
 
     accuracy = sum(1 for gold, pred in zip(expected, predicted) if gold == pred) / max(len(expected), 1)
     macro, per_class = macro_f1(expected, predicted, VERDICTS)
@@ -94,8 +98,9 @@ async def evaluate(limit: int | None = None, write: bool = True, verbose: bool =
         "perClass": per_class,
         "labels": VERDICTS,
         "confusionMatrix": matrix,
-        "usedFallbackEvidence": used_fallback,
-        "pipelineImportError": PIPELINE_IMPORT_ERROR,
+        "mode": "live" if live else "fixture",
+        "mlServiceUrl": ml_url if live else None,
+        "strategy": strategy,
         "latencyMs": response_latency,
         "predictions": [
             {"id": row["id"], "claim": row["claim"], "expected": gold, "predicted": pred}
@@ -114,4 +119,10 @@ async def evaluate(limit: int | None = None, write: bool = True, verbose: bool =
 
 
 if __name__ == "__main__":
-    asyncio.run(evaluate())
+    parser = argparse.ArgumentParser(description="Evaluate verification accuracy.")
+    parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
+    parser.add_argument("--fixture", action="store_true", help="Use local fixture evidence for CI.")
+    parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
+    parser.add_argument("--strategy", default="hybrid_reranked", help="Retrieval strategy to use in live mode.")
+    args = parser.parse_args()
+    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url, strategy=args.strategy))

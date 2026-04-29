@@ -4,18 +4,10 @@
 from __future__ import annotations
 
 import asyncio
+import argparse
 from typing import Any
 
-from common import lexical_rank, load_dataset, retrieval_metrics, write_results
-
-try:
-    from app.pipeline.retrieve import RetrieveRequest, retrieve_evidence
-except Exception as import_error:  # pragma: no cover
-    RetrieveRequest = None  # type: ignore[assignment]
-    retrieve_evidence = None  # type: ignore[assignment]
-    PIPELINE_IMPORT_ERROR = str(import_error)
-else:
-    PIPELINE_IMPORT_ERROR = ""
+from common import lexical_rank, load_dataset, post_json, retrieval_metrics, write_results
 
 
 STRATEGIES = ["dense_only", "bm25_only", "hybrid", "hybrid_reranked"]
@@ -33,52 +25,56 @@ def claim_payload(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-async def retrieved_ids_for_strategy(rows: list[dict[str, Any]], strategy: str) -> tuple[dict[str, list[str]], bool]:
+async def retrieved_ids_live(rows: list[dict[str, Any]], strategy: str, ml_url: str) -> dict[str, list[str]]:
+    response = await asyncio.to_thread(
+        post_json,
+        f"{ml_url.rstrip('/')}/process/retrieve",
+        {"claims": [claim_payload(row) for row in rows], "strategy": strategy},
+        180,
+    )
+    evidence_map = response.get("evidenceMap", {})
+    return {
+        claim_id: [chunk.get("chunkId", "") for chunk in chunks if chunk.get("chunkId")]
+        for claim_id, chunks in evidence_map.items()
+    }
+
+
+def retrieved_ids_fixture(rows: list[dict[str, Any]], strategy: str) -> dict[str, list[str]]:
     retrieved: dict[str, list[str]] = {}
-    used_fallback = True
-    if RetrieveRequest is not None and retrieve_evidence is not None:
-        req = RetrieveRequest(claims=[claim_payload(row) for row in rows], strategy=strategy)
-        response = await retrieve_evidence(req)
-        retrieved = {
-            claim_id: [chunk.chunkId for chunk in chunks]
-            for claim_id, chunks in response.evidenceMap.items()
-        }
-        used_fallback = not any(retrieved.values())
-    if used_fallback:
-        all_ids = sorted({chunk for row in rows for chunk in row["groundTruthChunkIds"]})
-        distractors = [f"noise-{index:03d}" for index in range(1, 61)]
-        for row in rows:
-            row_index = int(row["id"].split("-")[-1])
-            noise = [item for item in all_ids + distractors if item not in row["groundTruthChunkIds"]]
-            if strategy == "dense_only":
-                prefix = noise[: 6 if row_index % 3 == 0 else 3 if row_index % 2 == 0 else 1]
-                candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
-                ranked = candidates[:30]
-            elif strategy == "bm25_only":
-                prefix = noise[: 5 if row["claimType"] == "scientific" and row_index % 2 == 0 else 2 if row_index % 4 == 0 else 0]
-                candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
-                ranked = candidates[:30]
-            elif strategy == "hybrid":
-                prefix = noise[: 2 if row_index % 5 == 0 else 0]
-                candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
-                ranked = candidates[:30]
-            else:
-                candidates = row["groundTruthChunkIds"] + noise
-                ranked = lexical_rank(row["claim"], candidates[:30], row["relevantKeywords"], strategy)
-            retrieved[row["id"]] = ranked
-    return retrieved, used_fallback
+    all_ids = sorted({chunk for row in rows for chunk in row["groundTruthChunkIds"]})
+    distractors = [f"noise-{index:03d}" for index in range(1, 61)]
+    for row in rows:
+        row_index = int(row["id"].split("-")[-1])
+        noise = [item for item in all_ids + distractors if item not in row["groundTruthChunkIds"]]
+        if strategy == "dense_only":
+            prefix = noise[: 6 if row_index % 3 == 0 else 3 if row_index % 2 == 0 else 1]
+            candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
+            ranked = candidates[:30]
+        elif strategy == "bm25_only":
+            prefix = noise[: 5 if row["claimType"] == "scientific" and row_index % 2 == 0 else 2 if row_index % 4 == 0 else 0]
+            candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
+            ranked = candidates[:30]
+        elif strategy == "hybrid":
+            prefix = noise[: 2 if row_index % 5 == 0 else 0]
+            candidates = prefix + row["groundTruthChunkIds"] + noise[len(prefix) :]
+            ranked = candidates[:30]
+        else:
+            candidates = row["groundTruthChunkIds"] + noise
+            ranked = lexical_rank(row["claim"], candidates[:30], row["relevantKeywords"], strategy)
+        retrieved[row["id"]] = ranked
+    return retrieved
 
 
-async def evaluate_strategy(strategy: str) -> dict[str, Any]:
+async def evaluate_strategy(strategy: str, live: bool = False, ml_url: str = "http://localhost:8000") -> dict[str, Any]:
     rows = load_dataset("retrieval_test.json")
-    retrieved, used_fallback = await retrieved_ids_for_strategy(rows, strategy)
+    retrieved = await retrieved_ids_live(rows, strategy, ml_url) if live else retrieved_ids_fixture(rows, strategy)
     metrics = retrieval_metrics(rows, retrieved)
-    return {"strategy": strategy, "usedFallbackRanking": used_fallback, "pipelineImportError": PIPELINE_IMPORT_ERROR, **metrics}
+    return {"strategy": strategy, "mode": "live" if live else "fixture", **metrics}
 
 
-async def evaluate() -> dict[str, Any]:
-    strategy_results = [await evaluate_strategy(strategy) for strategy in STRATEGIES]
-    payload = {"strategies": strategy_results}
+async def evaluate(live: bool = False, ml_url: str = "http://localhost:8000") -> dict[str, Any]:
+    strategy_results = [await evaluate_strategy(strategy, live=live, ml_url=ml_url) for strategy in STRATEGIES]
+    payload = {"mode": "live" if live else "fixture", "mlServiceUrl": ml_url if live else None, "strategies": strategy_results}
     write_results("retrieval_results.json", payload)
 
     print("\n=== RETRIEVAL EVALUATION ===")
@@ -89,10 +85,13 @@ async def evaluate() -> dict[str, Any]:
             f"{row['recall@5']:.3f}  {row['recall@10']:.3f}  {row['precision@5']:.3f}  "
             f"{row['mrr']:.3f}  {row['ndcg@5']:.3f}"
         )
-    if any(row["usedFallbackRanking"] for row in strategy_results):
-        print("Note: external retrieval returned no chunks; deterministic lexical fixture ranking was used.")
     return payload
 
 
 if __name__ == "__main__":
-    asyncio.run(evaluate())
+    parser = argparse.ArgumentParser(description="Evaluate retrieval strategies.")
+    parser.add_argument("--live", action="store_true", help="Call the running ML service over HTTP.")
+    parser.add_argument("--fixture", action="store_true", help="Use local fixture ranking for CI.")
+    parser.add_argument("--ml-url", default="http://localhost:8000", help="Base URL for the live ML service.")
+    args = parser.parse_args()
+    asyncio.run(evaluate(live=args.live and not args.fixture, ml_url=args.ml_url))

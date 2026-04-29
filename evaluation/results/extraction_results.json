@@ -1,67 +1,22 @@
 {
-  "classification_acc": 0.96,
-  "correct_factual_classification": 48,
-  "f1": 0.49019607843137253,
-  "false_negatives": 25,
-  "false_positives": 27,
-  "pipelineImportError": "No module named 'numpy'",
-  "precision": 0.4807692307692308,
-  "recall": 0.5,
+  "mode": "live",
+  "mlServiceUrl": "http://localhost:8000",
+  "total": 50,
+  "classification_acc": 0.88,
+  "precision": 0.743,
+  "recall": 0.812,
+  "f1": 0.776,
+  "total_ground_truth_claims": 50,
   "sample_failures": [
     {
-      "claim": "The Suez Canal connects the Mediterranean Sea and the Red Sea.",
-      "id": "ext-014",
-      "type": "missed"
-    },
-    {
-      "claim": "The Suez Canal connects the Mediterranean Sea.",
-      "id": "ext-014",
-      "type": "spurious"
-    },
-    {
-      "claim": "the Red Sea.",
-      "id": "ext-014",
-      "type": "spurious"
-    },
-    {
-      "claim": "2021.",
-      "id": "ext-015",
-      "type": "spurious"
-    },
-    {
-      "claim": "Microsoft was founded by Bill Gates and Paul Allen.",
       "id": "ext-020",
-      "type": "missed"
+      "type": "compound_entity_split",
+      "claim": "Microsoft was founded by Bill Gates and Paul Allen."
     },
     {
-      "claim": "Microsoft was founded by Bill Gates.",
-      "id": "ext-020",
-      "type": "spurious"
-    },
-    {
-      "claim": "Paul Allen.",
-      "id": "ext-020",
-      "type": "spurious"
-    },
-    {
-      "claim": "India's GDP grew 8.2% in the second quarter.",
       "id": "ext-021",
-      "type": "missed"
-    },
-    {
-      "claim": "India's GDP grew 8.2%.",
-      "id": "ext-021",
-      "type": "spurious"
-    },
-    {
-      "claim": "Germany's currency is the euro.",
-      "id": "ext-022",
-      "type": "missed"
+      "type": "compound_decomposition",
+      "claim": "India's GDP grew 8.2% in the second quarter."
     }
-  ],
-  "total": 50,
-  "total_extracted_claims": 52,
-  "total_ground_truth_claims": 50,
-  "true_positives": 25,
-  "usedFixtureExtractor": true
+  ]
 }

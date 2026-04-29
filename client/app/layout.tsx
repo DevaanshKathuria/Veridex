@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
+import { PageTransition } from "@/components/layout/PageTransition";
 import { Providers } from "@/components/layout/Providers";
 import { Toaster } from "@/components/layout/Toaster";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Veridex",
@@ -19,10 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} min-h-screen bg-background font-sans text-text-primary antialiased`}>
+      <body className="min-h-screen bg-void font-sans text-text-primary antialiased">
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main className="pt-[52px]">
+            <PageTransition>{children}</PageTransition>
+          </main>
           <Toaster />
         </Providers>
       </body>
