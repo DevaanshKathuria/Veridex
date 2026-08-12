@@ -149,6 +149,7 @@ async def verify_claims(req: VerifyRequest) -> VerifyResponse:
 
             supporting = [chunk for chunk in evidence if chunk.get("nliStance") == "entailment"]
             contradicting = [chunk for chunk in evidence if chunk.get("nliStance") == "contradiction"]
+            nli_available = any(float(chunk.get("nliConfidence", 0.0)) > 0 for chunk in evidence)
 
             support_score = sum(
                 float(chunk.get("nliConfidence", 0.0)) * TIER_WEIGHTS.get(int(chunk.get("reliabilityTier", 4)), 0.3)
@@ -158,7 +159,12 @@ async def verify_claims(req: VerifyRequest) -> VerifyResponse:
                 float(chunk.get("nliConfidence", 0.0)) * TIER_WEIGHTS.get(int(chunk.get("reliabilityTier", 4)), 0.3)
                 for chunk in contradicting
             ) / max(len(contradicting), 1)
-            sufficiency_score = min(len([chunk for chunk in evidence if chunk.get("nliStance") != "neutral"]) / 3, 1.0)
+            if nli_available:
+                sufficiency_score = min(len([chunk for chunk in evidence if chunk.get("nliStance") != "neutral"]) / 3, 1.0)
+            else:
+                # When local NLI is disabled, evidence quantity provides a
+                # conservative sufficiency signal and GPT evaluates relevance.
+                sufficiency_score = min(len(evidence) / 3, 1.0)
 
             neutral_score = max(0.0, 1 - support_score - contradiction_score)
             stance_breakdown = {
@@ -171,10 +177,10 @@ async def verify_claims(req: VerifyRequest) -> VerifyResponse:
             verdict = str(result.get("verdict", "INSUFFICIENT_EVIDENCE"))
             calibration_override = False
 
-            if verdict == "VERIFIED" and contradiction_score > 0.6:
+            if nli_available and verdict == "VERIFIED" and contradiction_score > 0.6:
                 verdict = "DISPUTED"
                 calibration_override = True
-            elif verdict == "FALSE" and support_score > 0.7:
+            elif nli_available and verdict == "FALSE" and support_score > 0.7:
                 verdict = "DISPUTED"
                 calibration_override = True
             elif sufficiency_score < 0.3:

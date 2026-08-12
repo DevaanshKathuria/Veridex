@@ -367,14 +367,15 @@ async def _normalize_claim(claim_text: str) -> str:
 
 
 async def _embedding_for_text(text: str) -> list[float]:
-    cached = await get_embedding_cache(text)
+    model_key = "sentence-transformers:all-MiniLM-L6-v2:384"
+    cached = await get_embedding_cache(text, model_key)
     if cached:
         return cached
 
     embedder = _get_embedder()
     vector = await asyncio.to_thread(embedder.encode, text, convert_to_numpy=True)
     vector_list = vector.tolist()
-    await set_embedding_cache(text, vector_list)
+    await set_embedding_cache(text, vector_list, model_key)
     return vector_list
 
 

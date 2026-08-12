@@ -15,14 +15,14 @@ def _hash_key(prefix: str, value: str, suffix: str | None = None) -> str:
     return f"{base}:{suffix}" if suffix else base
 
 
-async def get_embedding_cache(text: str) -> list[float] | None:
-    key = _hash_key("emb", text)
+async def get_embedding_cache(text: str, model_key: str = "default") -> list[float] | None:
+    key = _hash_key("emb", f"{model_key}:{text}")
     val = await redis.get(key)
     return json.loads(val) if val else None
 
 
-async def set_embedding_cache(text: str, vector: list[float]) -> None:
-    key = _hash_key("emb", text)
+async def set_embedding_cache(text: str, vector: list[float], model_key: str = "default") -> None:
+    key = _hash_key("emb", f"{model_key}:{text}")
     await redis.setex(key, 604800, json.dumps(vector))
 
 

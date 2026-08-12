@@ -8,6 +8,7 @@ from typing import Any, TYPE_CHECKING
 
 import numpy as np
 from elasticsearch import AsyncElasticsearch
+from openai import OpenAI
 from pinecone import Pinecone
 from pydantic import BaseModel, Field
 
@@ -25,6 +26,10 @@ if TYPE_CHECKING:
 ELASTICSEARCH_URL = os.environ.get("ELASTICSEARCH_URL", "http://localhost:9200")
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY", "")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "veridex-kb")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
+EMBEDDING_DIMENSIONS = int(os.environ.get("EMBEDDING_DIMENSIONS", "384"))
+embedding_client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 
 def _load_dense_model() -> SentenceTransformer | None:
@@ -46,6 +51,11 @@ def _load_reranker() -> CrossEncoder | None:
 
 
 def _load_nli_pipeline() -> Any:
+    # BART-MNLI is substantially larger than the retrieval and reranking models
+    # combined. Keep it opt-in so the default Docker stack can run reliably on
+    # memory-constrained hosts; GPT verification remains the final judge.
+    if os.environ.get("ENABLE_LOCAL_NLI", "false").lower() not in {"1", "true", "yes"}:
+        return None
     try:
         from transformers import pipeline as hf_pipeline
 
@@ -145,20 +155,35 @@ def _build_pinecone_filter(claim: dict[str, Any], req: RetrieveRequest) -> dict[
 
 
 async def _encode_text(text: str) -> list[float]:
-    cached = await get_embedding_cache(text)
+    embedding_model_key = (
+        f"openai:{EMBEDDING_MODEL}:{EMBEDDING_DIMENSIONS}"
+        if embedding_client is not None
+        else "sentence-transformers:all-MiniLM-L6-v2:384"
+    )
+    cached = await get_embedding_cache(text, embedding_model_key)
     if cached:
         return cached
 
-    model = _get_dense_model()
-    if model is None:
-        return []
-
-    vector = await asyncio.to_thread(model.encode, text)
-    if hasattr(vector, "tolist"):
-        encoded = vector.tolist()
+    if embedding_client is not None:
+        response = await asyncio.to_thread(
+            embedding_client.embeddings.create,
+            model=EMBEDDING_MODEL,
+            input=text,
+            dimensions=EMBEDDING_DIMENSIONS,
+        )
+        encoded = list(response.data[0].embedding)
     else:
-        encoded = list(vector)
-    await set_embedding_cache(text, encoded)
+        # Local fallback is useful for development only. A Pinecone index must
+        # always be seeded with the same embedding provider/model used here.
+        model = _get_dense_model()
+        if model is None:
+            return []
+        vector = await asyncio.to_thread(model.encode, text)
+        if hasattr(vector, "tolist"):
+            encoded = vector.tolist()
+        else:
+            encoded = list(vector)
+    await set_embedding_cache(text, encoded, embedding_model_key)
     return encoded
 
 
@@ -381,7 +406,11 @@ async def retrieve_evidence(req: RetrieveRequest) -> RetrieveResponse:
         claim_id = str(claim["claimId"])
         claim_text = str(claim.get("normalizedClaim") or claim.get("claimText") or "")
 
-        cached = await get_retrieval_cache(claim_text, req.strategy)
+        retrieval_cache_key = (
+            f"{req.strategy}:openai:{EMBEDDING_MODEL}:{EMBEDDING_DIMENSIONS}:"
+            f"nli={os.environ.get('ENABLE_LOCAL_NLI', 'false').lower()}"
+        )
+        cached = await get_retrieval_cache(claim_text, retrieval_cache_key)
         if cached:
             return claim_id, [EvidenceChunkDTO(**chunk) for chunk in cached]
 
@@ -409,7 +438,7 @@ async def retrieve_evidence(req: RetrieveRequest) -> RetrieveResponse:
             )
             for chunk in selected
         ]
-        await set_retrieval_cache(claim_text, req.strategy, [chunk.model_dump() for chunk in evidence_chunks])
+        await set_retrieval_cache(claim_text, retrieval_cache_key, [chunk.model_dump() for chunk in evidence_chunks])
         return claim_id, evidence_chunks
 
     start = time.time()
