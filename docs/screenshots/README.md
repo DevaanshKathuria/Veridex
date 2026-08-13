@@ -1,19 +1,9 @@
 # Veridex Screenshots
 
-This directory is reserved for screenshots generated from a local or deployed Veridex run.
+These assets were captured from a real local Docker Compose run backed by the seeded Pinecone and Elasticsearch evidence indexes.
 
-To generate screenshots:
-
-1. Run `docker-compose up --build`.
-2. Seed the knowledge base with `docker-compose exec worker npx ts-node scripts/seedKnowledgeBase.ts`.
-3. Open `http://localhost:3000`.
-4. Register an account and run an analysis on any news article.
-
-Capture these screens:
-
-- Landing page hero
-- `/analyze` while the pipeline is running and claim cards are streaming in
-- Completed analysis with credibility gauge, manipulation warning, and claim cards
-- Dashboard with trend chart and recent analyses
-
-Use descriptive filenames such as `landing-hero.png`, `analyze-streaming.png`, `analysis-complete.png`, and `dashboard.png`.
+- `demo.gif` — input-to-verdict pipeline replay
+- `landing.png` — landing-page hero
+- `analyze-streaming.png` — four claim cards during live retrieval
+- `analysis-complete.png` — completed 68/100 report with credibility gauge
+- `claim-card-expanded.png` — false verdict with its NASA evidence expanded

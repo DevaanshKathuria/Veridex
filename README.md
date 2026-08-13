@@ -13,8 +13,26 @@ Not a wrapper. Not a demo. A four-service production system with an evaluation f
 
 ---
 
+## Demo
+
+![Veridex live analysis demo](docs/screenshots/demo.gif)
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/analyze-streaming.png" alt="Claims streaming in real time" width="400"/></td>
+    <td><img src="docs/screenshots/analysis-complete.png" alt="Completed analysis with credibility score" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Claims streaming live via Socket.IO</em></td>
+    <td align="center"><em>Credibility gauge, verdicts, manipulation tactics</em></td>
+  </tr>
+</table>
+
+---
+
 ## Table of Contents
 
+- [Demo](#demo)
 - [How it works](#how-it-works)
 - [Architecture](#architecture)
 - [Tech stack](#tech-stack)
