@@ -197,7 +197,7 @@ const TemporalContextSchema = new Schema<ITemporalContext>(
 const NumericalValueSchema = new Schema<INumericalValue>(
   {
     value: { type: Number, required: true },
-    unit: { type: String, required: true },
+    unit: { type: String, default: "" },
     rawText: { type: String, required: true },
   },
   { _id: false },

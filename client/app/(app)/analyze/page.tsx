@@ -27,6 +27,22 @@ const inputTypes = [
   { key: "product", label: "Product", icon: Package },
 ];
 
+const apiInputTypes: Record<string, string> = {
+  text: "raw_text",
+  url: "article_url",
+  pdf: "pdf_upload",
+  transcript: "transcript_upload",
+  tweet: "tweet_text",
+  product: "product_claim",
+};
+
+const documentStageCopy: Record<string, [string, string]> = {
+  PENDING: ["INGESTING", "Queued for document processing..."],
+  CLEANING: ["CLEANING", "Cleaning and normalizing the source..."],
+  SEGMENTING: ["SEGMENTING", "Segmenting the source into sentences..."],
+  EXTRACTING_CLAIMS: ["EXTRACTING", "Extracting atomic claims..."],
+};
+
 export default function AnalyzePage() {
   useAnalysisSocket();
   const [inputType, setInputType] = useState("text");
@@ -67,16 +83,31 @@ export default function AnalyzePage() {
           ? (() => {
               const form = new FormData();
               form.append("file", file);
-              form.append("inputType", inputType);
+              form.append("inputType", apiInputTypes[inputType]);
               return form;
             })()
           : inputType === "url"
-            ? { inputType, url }
-            : { inputType, text };
+            ? { inputType: apiInputTypes[inputType], url }
+            : { inputType: apiInputTypes[inputType], text };
       store.setStatus("INGESTING", "Cleaning and segmenting the source...");
       const ingest = await ingestAPI.create(payload);
       const documentId = ingest.data.documentId || ingest.data.document?._id;
       if (!documentId) throw new Error("Ingestion did not return a document id");
+
+      const deadline = Date.now() + 60_000;
+      while (Date.now() < deadline) {
+        const { data: documentStatus } = await documentAPI.status(documentId);
+        if (documentStatus.status === "READY") break;
+        if (documentStatus.status === "FAILED") throw new Error("Document processing failed");
+
+        const [stage, subtext] = documentStageCopy[documentStatus.status] ?? ["INGESTING", "Preparing the document..."];
+        store.setStatus(stage, subtext);
+        await new Promise((resolve) => window.setTimeout(resolve, 500));
+      }
+
+      const finalStatus = await documentAPI.status(documentId);
+      if (finalStatus.data.status !== "READY") throw new Error("Document processing timed out");
+
       const doc = await documentAPI.getOne(documentId).catch(() => null);
       setCleanedText(doc?.data?.cleanedText || text || url);
       const analysis = await analyzeAPI.start(documentId);
