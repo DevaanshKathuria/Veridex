@@ -6,13 +6,13 @@ import time
 from typing import Any
 
 import spacy
-from openai import OpenAI
 from pydantic import BaseModel
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+from app.ai import AI_API_KEY, CHAT_MODEL, create_ai_client
 
 analyzer = SentimentIntensityAnalyzer()
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
+client = create_ai_client()
 
 
 def _load_nlp() -> Any:
@@ -320,13 +320,13 @@ def detect_fear_appeal(text: str) -> list[ManipulationTactic]:
 
 
 async def detect_missing_context(text: str, claims: list[dict[str, Any]]) -> ManipulationTactic | None:
-    if not os.environ.get("OPENAI_API_KEY"):
+    if not AI_API_KEY or client is None:
         return None
 
     try:
         response = await asyncio.to_thread(
             client.chat.completions.create,
-            model="gpt-4o",
+            model=CHAT_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": "You are a media critic. Identify if this text omits critical context."},

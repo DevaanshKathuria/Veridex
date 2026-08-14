@@ -5,12 +5,12 @@ import time
 from pathlib import Path
 from typing import Any
 
-from openai import OpenAI
 from pydantic import BaseModel
 
+from app.ai import AI_API_KEY, CHAT_MODEL, create_ai_client
 
 WEIGHTS_PATH = Path(__file__).resolve().parent.parent / "config" / "scoring_weights.json"
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
+client = create_ai_client()
 weights: dict[str, float] = {}
 
 
@@ -75,13 +75,13 @@ async def _build_summary(final_score: int, label: str, verified: float, false_: 
         f"The analysis received a {label.lower()} credibility score of {final_score}/100. "
         f"{int(verified * 100)}% of analyzed claims were verified, {int(false_ * 100)}% were false, and manipulation was rated {manipulation_label}."
     )
-    if not os.environ.get("OPENAI_API_KEY"):
+    if not AI_API_KEY or client is None:
         return fallback
 
     try:
         summary_response = await asyncio.to_thread(
             client.chat.completions.create,
-            model="gpt-4o",
+            model=CHAT_MODEL,
             messages=[
                 {
                     "role": "system",

@@ -6,6 +6,7 @@ from elasticsearch import AsyncElasticsearch
 from fastapi import FastAPI
 from pinecone import Pinecone
 
+from app.ai import AI_API_KEY
 from app.cache import ping as redis_ping, redis
 from app.pipeline.extract_claims import ExtractRequest, extract_claims
 from app.pipeline.ingest import IngestRequest, process_ingest
@@ -22,8 +23,10 @@ EVIDENCE_INDEX_NAME = "veridex-evidence"
 
 @app.on_event("startup")
 async def validate_environment_and_services() -> None:
-    required = ["OPENAI_API_KEY", "PINECONE_API_KEY", "ELASTICSEARCH_URL", "REDIS_URL"]
+    required = ["PINECONE_API_KEY", "ELASTICSEARCH_URL", "REDIS_URL"]
     missing = [key for key in required if not os.environ.get(key)]
+    if not AI_API_KEY:
+        missing.append("AI_API_KEY (or OPENAI_API_KEY)")
     if missing:
         raise RuntimeError(f"Missing required env var(s): {', '.join(missing)}")
 

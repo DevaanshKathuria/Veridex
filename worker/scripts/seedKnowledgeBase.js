@@ -17,9 +17,12 @@ const ELASTICSEARCH_URL = process.env.ELASTICSEARCH_URL ?? "http://127.0.0.1:920
 const PINECONE_API_KEY = process.env.PINECONE_API_KEY ?? "";
 const PINECONE_INDEX_NAME = process.env.PINECONE_INDEX_NAME ?? "veridex-kb";
 const PINECONE_NAMESPACE = "kb-v1";
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
+const AI_API_KEY = process.env.AI_API_KEY ?? process.env.OPENAI_API_KEY ?? "";
+const AI_BASE_URL = (process.env.AI_BASE_URL ?? process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1").replace(/\/$/, "");
+const EMBEDDING_PROVIDER = (process.env.EMBEDDING_PROVIDER ?? "openai").toLowerCase();
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL ?? "text-embedding-3-small";
 const EMBEDDING_DIMENSIONS = Number(process.env.EMBEDDING_DIMENSIONS ?? 384);
+const FORCE_REEMBED = ["1", "true", "yes"].includes((process.env.FORCE_REEMBED ?? "false").toLowerCase());
 const EVIDENCE_INDEX = "veridex-evidence";
 const redis = new ioredis_1.default(REDIS_URL, { maxRetriesPerRequest: null });
 const es = new elasticsearch_1.Client({ node: ELASTICSEARCH_URL });
@@ -91,14 +94,45 @@ function deterministicEmbedding(text) {
     const norm = Math.sqrt(vector.reduce((sum, value) => sum + value * value, 0)) || 1;
     return vector.map((value) => value / norm);
 }
+async function withEmbeddingRetry(operation) {
+    let lastError;
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+        try {
+            return await operation();
+        }
+        catch (error) {
+            lastError = error;
+            const status = Number(error?.response?.status ?? 0);
+            if (status !== 429 && status < 500)
+                throw error;
+            const retryAfter = Number(error?.response?.headers?.["retry-after"] ?? 0);
+            const delayMs = retryAfter > 0 ? retryAfter * 1000 : Math.min(2 ** attempt * 1000, 30000);
+            console.warn(`Embedding request limited (HTTP ${status || "network"}); retrying in ${delayMs / 1000}s.`);
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+    }
+    throw lastError;
+}
 async function getEmbedding(text) {
-    const cacheKey = `embedding:${EMBEDDING_MODEL}:${node_crypto_1.default.createHash("sha256").update(text).digest("hex")}`;
+    const cacheKey = `embedding:${EMBEDDING_PROVIDER}:${EMBEDDING_MODEL}:${node_crypto_1.default.createHash("sha256").update(text).digest("hex")}`;
     const cached = await redis.get(cacheKey);
     if (cached)
         return JSON.parse(cached);
     let embedding = deterministicEmbedding(text);
-    if (OPENAI_API_KEY) {
-        const response = await axios_1.default.post("https://api.openai.com/v1/embeddings", { model: EMBEDDING_MODEL, input: text, dimensions: EMBEDDING_DIMENSIONS }, { headers: { Authorization: `Bearer ${OPENAI_API_KEY}` }, timeout: 30000 });
+    if (AI_API_KEY && EMBEDDING_PROVIDER === "gemini") {
+        const model = EMBEDDING_MODEL.replace(/^models\//, "");
+        const response = await withEmbeddingRetry(() => axios_1.default.post(`https://generativelanguage.googleapis.com/v1beta/models/${model}:embedContent`, {
+            model: `models/${model}`,
+            content: { parts: [{ text }] },
+            taskType: "RETRIEVAL_DOCUMENT",
+            outputDimensionality: EMBEDDING_DIMENSIONS,
+        }, { headers: { "x-goog-api-key": AI_API_KEY }, timeout: 30000 }));
+        embedding = response.data.embedding.values;
+        const norm = Math.sqrt(embedding.reduce((sum, value) => sum + value * value, 0)) || 1;
+        embedding = embedding.map((value) => value / norm);
+    }
+    else if (AI_API_KEY && EMBEDDING_PROVIDER === "openai") {
+        const response = await withEmbeddingRetry(() => axios_1.default.post(`${AI_BASE_URL}/embeddings`, { model: EMBEDDING_MODEL, input: text, dimensions: EMBEDDING_DIMENSIONS }, { headers: { Authorization: `Bearer ${AI_API_KEY}` }, timeout: 30000 }));
         embedding = response.data.data[0].embedding;
     }
     await redis.set(cacheKey, JSON.stringify(embedding), "EX", 60 * 60 * 24 * 30);
@@ -138,7 +172,7 @@ async function pineconeExists(chunkId) {
     }
 }
 async function upsertChunk(chunk) {
-    const exists = await pineconeExists(chunk.chunkId);
+    const exists = FORCE_REEMBED ? false : await pineconeExists(chunk.chunkId);
     const embedding = exists ? [] : await getEmbedding(chunk.chunkText);
     if (!exists && pinecone) {
         const index = pinecone.index(PINECONE_INDEX_NAME);

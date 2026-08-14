@@ -8,10 +8,16 @@ from typing import Any, TYPE_CHECKING
 
 import numpy as np
 from elasticsearch import AsyncElasticsearch
-from openai import OpenAI
 from pinecone import Pinecone
 from pydantic import BaseModel, Field
 
+from app.ai import (
+    AI_API_KEY,
+    EMBEDDING_DIMENSIONS,
+    EMBEDDING_MODEL,
+    EMBEDDING_PROVIDER,
+    embed_text,
+)
 from app.cache import (
     get_embedding_cache,
     get_retrieval_cache,
@@ -26,10 +32,7 @@ if TYPE_CHECKING:
 ELASTICSEARCH_URL = os.environ.get("ELASTICSEARCH_URL", "http://localhost:9200")
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY", "")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "veridex-kb")
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
-EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "text-embedding-3-small")
-EMBEDDING_DIMENSIONS = int(os.environ.get("EMBEDDING_DIMENSIONS", "384"))
-embedding_client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+external_embeddings_enabled = bool(AI_API_KEY and EMBEDDING_PROVIDER in {"openai", "gemini"})
 
 
 def _load_dense_model() -> SentenceTransformer | None:
@@ -156,22 +159,18 @@ def _build_pinecone_filter(claim: dict[str, Any], req: RetrieveRequest) -> dict[
 
 async def _encode_text(text: str) -> list[float]:
     embedding_model_key = (
-        f"openai:{EMBEDDING_MODEL}:{EMBEDDING_DIMENSIONS}"
-        if embedding_client is not None
+        f"{EMBEDDING_PROVIDER}:{EMBEDDING_MODEL}:{EMBEDDING_DIMENSIONS}"
+        if external_embeddings_enabled
         else "sentence-transformers:all-MiniLM-L6-v2:384"
     )
     cached = await get_embedding_cache(text, embedding_model_key)
     if cached:
         return cached
 
-    if embedding_client is not None:
-        response = await asyncio.to_thread(
-            embedding_client.embeddings.create,
-            model=EMBEDDING_MODEL,
-            input=text,
-            dimensions=EMBEDDING_DIMENSIONS,
-        )
-        encoded = list(response.data[0].embedding)
+    if external_embeddings_enabled:
+        encoded = await asyncio.to_thread(embed_text, text, "RETRIEVAL_QUERY")
+        if encoded is None:
+            return []
     else:
         # Local fallback is useful for development only. A Pinecone index must
         # always be seeded with the same embedding provider/model used here.

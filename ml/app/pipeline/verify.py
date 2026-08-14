@@ -5,14 +5,14 @@ import re
 import time
 from typing import Any
 
-from openai import OpenAI
 from pydantic import BaseModel, Field
 
+from app.ai import AI_API_KEY, CHAT_MODEL, create_ai_client
 from app.pipeline.numerical import compare_numerical_claims, extract_numerical_values
 from app.pipeline.temporal import apply_temporal_reasoning
 
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
+client = create_ai_client()
 TIER_WEIGHTS = {1: 1.0, 2: 0.8, 3: 0.6, 4: 0.3}
 
 
@@ -80,7 +80,7 @@ async def _call_gpt_verifier(claim_text: str, evidence: list[dict[str, Any]]) ->
         ]
     )
 
-    if not os.environ.get("OPENAI_API_KEY"):
+    if not AI_API_KEY or client is None:
         if not evidence:
             return {
                 "verdict": "UNSUPPORTED",
@@ -112,7 +112,7 @@ async def _call_gpt_verifier(claim_text: str, evidence: list[dict[str, Any]]) ->
 
     response = await asyncio.to_thread(
         client.chat.completions.create,
-        model="gpt-4o",
+        model=CHAT_MODEL,
         response_format={"type": "json_object"},
         messages=[
             {

@@ -39,6 +39,7 @@ Not a wrapper. Not a demo. A four-service production system with an evaluation f
 - [Evaluation results](#evaluation-results)
 - [Sample analysis output](#sample-analysis-output)
 - [Quick start](#quick-start)
+- [Free deployment](#free-deployment)
 - [Environment variables](#environment-variables)
 - [API reference](#api-reference)
 - [Project structure](#project-structure)
@@ -49,8 +50,8 @@ Not a wrapper. Not a demo. A four-service production system with an evaluation f
 ## How It Works
 
 ```
-Input text  →  Atomic claim extraction  →  Hybrid retrieval  →  Reranking  →  NLI stance  →  GPT-4o judgment  →  Credibility score
-                 (GPT-4o + spaCy)           (Pinecone + ES)    (cross-encoder)  (BART-MNLI)     (calibrated)        (weighted formula)
+Input text  →  Atomic claim extraction  →  Hybrid retrieval  →  Reranking  →  NLI stance  →  LLM judgment  →  Credibility score
+              (configured LLM + spaCy)      (Pinecone + ES)    (cross-encoder)  (BART-MNLI)    (calibrated)       (weighted formula)
 ```
 
 Each stage runs asynchronously in a BullMQ worker and emits Socket.IO events to the browser as it completes — so the user watches claims appear and get verified in real time rather than waiting for a single response.
@@ -136,7 +137,7 @@ sequenceDiagram
 | Embeddings | sentence-transformers all-MiniLM-L6-v2 | Dense retrieval + deduplication |
 | Reranking | cross-encoder/ms-marco-MiniLM-L-6-v2 | Joint (claim, evidence) scoring |
 | Stance | facebook/bart-large-mnli (zero-shot NLI) | entailment / contradiction / neutral per chunk |
-| Claim extraction | GPT-4o (structured JSON output) + spaCy | Classification, decomposition, NER, SPO triples |
+| Claim extraction | Configurable OpenAI-compatible LLM + spaCy | Classification, decomposition, NER, SPO triples |
 | Vector store | Pinecone (namespace kb-v1) | Dense ANN retrieval, metadata filtering |
 | Keyword search | Elasticsearch 8 | BM25 multi-match with entity boosts |
 | Fusion | Reciprocal Rank Fusion (k=60) | Parameter-free combination of dense + BM25 lists |
@@ -270,7 +271,7 @@ Full methodology, confusion matrix, and failure case analysis: [`evaluation/resu
 - Docker + Docker Compose
 - Node.js 20+
 - Python 3.11+
-- Keys: MongoDB Atlas (or local), Pinecone, OpenAI
+- Keys: Pinecone plus an AI provider (OpenAI by default)
 
 ### 1. Clone and configure
 
@@ -278,7 +279,7 @@ Full methodology, confusion matrix, and failure case analysis: [`evaluation/resu
 git clone https://github.com/DevaanshKathuria/Veridex
 cd Veridex
 cp .env.example .env
-# Fill in MONGODB_URI, REDIS_URL, OPENAI_API_KEY,
+# Fill in MONGODB_URI, REDIS_URL, OPENAI_API_KEY (or AI_API_KEY),
 # PINECONE_API_KEY, JWT_ACCESS_SECRET, JWT_REFRESH_SECRET
 ```
 
@@ -330,6 +331,24 @@ Import [`docs/Veridex.postman_collection.json`](docs/Veridex.postman_collection.
 
 ---
 
+## Free Deployment
+
+The production profile runs the complete stack on one Oracle Cloud Always Free
+Ampere A1 VM behind Caddy. Gemini's free tier supplies structured chat and
+384-dimensional embeddings, Pinecone Starter remains the vector store, and an
+IP-based `sslip.io` hostname provides HTTPS without buying a domain.
+
+```bash
+docker compose --env-file .env.production -f docker-compose.production.yml up -d --build
+```
+
+See [`deploy/README.md`](deploy/README.md) for the exact Oracle shape, firewall
+rules, free API setup, first-run re-embedding, verification, updates, and cost
+guardrails. Only Caddy publishes ports; MongoDB, Redis, Elasticsearch, the API,
+and the ML service stay private to Docker.
+
+---
+
 ## Environment Variables
 
 | Variable | Service | Description | Example |
@@ -341,7 +360,12 @@ Import [`docs/Veridex.postman_collection.json`](docs/Veridex.postman_collection.
 | `CLIENT_URL` | API | CORS + Socket.IO origin | `http://localhost:3000` |
 | `NEXT_PUBLIC_API_URL` | Client | API base URL for browser | `http://localhost:4000` |
 | `ML_SERVICE_URL` | API, Worker | Internal ML service URL | `http://ml:8000` |
-| `OPENAI_API_KEY` | ML | GPT-4o + embeddings | `sk-...` |
+| `AI_API_KEY` | ML, Worker | Preferred provider key; falls back to `OPENAI_API_KEY` | `...` |
+| `AI_BASE_URL` | ML, Worker | Optional OpenAI-compatible chat base URL | `https://.../openai/` |
+| `CHAT_MODEL` | ML | Provider chat model | `gpt-4o` |
+| `OPENAI_API_KEY` | ML, Worker | Backward-compatible OpenAI key | `sk-...` |
+| `EMBEDDING_PROVIDER` | ML, Worker | `openai` or native `gemini` embeddings | `openai` |
+| `EMBEDDING_MODEL` | ML, Worker | Embedding model used for both seed and query | `text-embedding-3-small` |
 | `PINECONE_API_KEY` | ML, Worker | Vector store | `pcsk_...` |
 | `PINECONE_INDEX_NAME` | ML, Worker | Index name | `veridex-kb` |
 | `ELASTICSEARCH_URL` | ML, Worker | BM25 index | `http://elasticsearch:9200` |

@@ -23,6 +23,12 @@ import { startSocketBridge } from "./lib/socketBridge";
 
 export const app = express();
 
+if (process.env.NODE_ENV === "production") {
+  // The production API is reachable only through the Caddy container. Trust
+  // that single proxy so IP-based rate limits use the actual client address.
+  app.set("trust proxy", 1);
+}
+
 const validateEnv = (): void => {
   const required = ["MONGODB_URI", "REDIS_URL", "JWT_ACCESS_SECRET", "JWT_REFRESH_SECRET", "ML_SERVICE_URL"];
   const missing = required.filter((key) => !process.env[key]);

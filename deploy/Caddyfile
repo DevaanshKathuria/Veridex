@@ -1,0 +1,14 @@
+{$APP_DOMAIN} {
+  encode zstd gzip
+
+  header {
+    -Server
+    Referrer-Policy "strict-origin-when-cross-origin"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "DENY"
+  }
+
+  @backend path /api/* /socket.io/*
+  reverse_proxy @backend api:4000
+  reverse_proxy client:3000
+}

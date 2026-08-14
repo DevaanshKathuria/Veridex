@@ -9,9 +9,9 @@ from typing import Any
 
 import numpy as np
 import spacy
-from openai import OpenAI
 from pydantic import BaseModel
 
+from app.ai import AI_API_KEY, CHAT_MODEL, create_ai_client
 from app.cache import get_embedding_cache, get_norm_cache, set_embedding_cache, set_norm_cache
 
 
@@ -26,7 +26,7 @@ def _load_extract_nlp() -> Any:
 
 
 nlp = _load_extract_nlp()
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", ""))
+client = create_ai_client()
 _embedder: Any = None
 
 RELATIVE_TEMPORAL_PATTERN = re.compile(
@@ -152,13 +152,13 @@ def _heuristic_claim_type(text: str) -> str:
 
 
 async def _call_openai_json(system_prompt: str, user_prompt: str) -> dict[str, Any] | None:
-    if not os.environ.get("OPENAI_API_KEY"):
+    if not AI_API_KEY or client is None:
         return None
 
     try:
         response = await asyncio.to_thread(
             client.chat.completions.create,
-            model="gpt-4o",
+            model=CHAT_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": system_prompt},
